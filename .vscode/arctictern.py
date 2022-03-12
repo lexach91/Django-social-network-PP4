@@ -89,8 +89,8 @@ def needs_upgrade():
         THIS_VERSION = 1.0
         with open(".vscode/version.txt", "w") as f:
             f.write(str(THIS_VERSION))
-    
-    r = requests.get(BASE_URL + ".vscode/version.txt")
+
+    r = requests.get(f'{BASE_URL}.vscode/version.txt')
     CURRENT_VERSION = float(r.content)
     print(f"Upstream version: {CURRENT_VERSION}")
     print(f"Local version: {THIS_VERSION}")
@@ -100,7 +100,7 @@ def needs_upgrade():
 
 def build_post_upgrade():
 
-    r = requests.get(BASE_URL + ".vscode/upgrades.json")
+    r = requests.get(f'{BASE_URL}.vscode/upgrades.json')
     upgrades = json.loads(r.content.decode("utf-8"))
     content = ""
 
@@ -113,7 +113,7 @@ def build_post_upgrade():
         content += FINAL_LINES
         with open(".vscode/post_upgrade.sh", "w") as f:
             f.writelines(content)
-    
+
     print("Built post_upgrade.sh. Restart your workspace for it to take effect")
 
 
