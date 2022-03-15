@@ -30,7 +30,12 @@ class Profile(models.Model):
         blank=True,
         null=True
     )
-    
+    friends = models.ManyToManyField(
+        'self',
+        blank=True,
+        related_name='friends'
+    )
+
     def __str__(self):
         if self.first_name and self.last_name:
             return f'{self.first_name} {self.last_name}'
