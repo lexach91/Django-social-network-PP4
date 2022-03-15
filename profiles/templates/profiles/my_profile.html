@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My profile</h1>
+<ul>
+    <li>Avatar: {{ request.user.profile.avatar }}</li>
+    <li>First name: {{ request.user.profile.first_name }}</li>
+    <li>Last name: {{ request.user.profile.last_name }}</li>
+    <li>Birth date: {{ request.user.profile.birth_date }}</li>
+    <li>My friends:
+        <ul>
+            {% for friend in request.user.profile.friends.all %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+
+{% endblock %}
