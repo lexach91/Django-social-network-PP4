@@ -18,6 +18,7 @@
 </head>
 <body>
         {% if user.is_authenticated %}
+            <a href="{% url 'my_profile' %}">My profile</a>
             <a href="{% url 'account_logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'account_signup' %}">SignUp</a>

@@ -11,7 +11,7 @@
     <li>My friends:
         <ul>
             {% for friend in request.user.profile.friends.all %}
-                <li>{{ friend }}</li>
+                <li><a href="{% url 'user_profile' username=friend.user.username %}">{{ friend }}</a></li>
             {% endfor %}
         </ul>
     </li>

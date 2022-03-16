@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user_profile.first_name %}
+    {% if user_profile.last_name %}
+        <h1>{{ user_profile.first_name }} {{ user_profile.last_name }}'s profile</h1>
+    {% else %}
+        <h1>{{ user_profile.first_name }}</h1>
+    {% endif %}
+
+{% else %}
+    <h1>{{ user_profile.user.username }}'s profile</h1>
+{% endif %}
+
+<ul>
+    <li>Avatar: {{ user_profile.avatar }}</li>
+    <li>First name: {{ user_profile.first_name }}</li>
+    <li>Last name: {{ user_profile.last_name }}</li>
+    <li>Birth date: {{ user_profile.birth_date }}</li>
+    <li>Friends:
+        <ul>
+            {% for friend in user_profile.friends.all %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+
+    
+{% endblock %}
