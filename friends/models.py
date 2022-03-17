@@ -15,6 +15,7 @@ class FriendRequest(models.Model):
     )
     
     accepted = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.from_profile} to {self.to_profile}'
