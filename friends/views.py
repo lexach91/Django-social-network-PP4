@@ -46,3 +46,14 @@ class DeclineFriendRequest(View):
             friend_request.save()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})
+    
+class RemoveFriend(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            remover = request.user.profile
+            friend = get_object_or_404(Profile, id=request.POST.get('id'))
+            remover.friends.remove(friend)
+            friend.friends.remove(remover)
+            remover.save()
+            friend.save()
+            return JsonResponse({'status': 'ok'})
