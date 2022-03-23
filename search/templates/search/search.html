@@ -3,9 +3,12 @@
 {% block content %}
 
     <form action="{% url 'search' %}" method="post">
+        {% csrf_token %}
         <input type="text" name="search_query" placeholder="Search...">
-        <input type="radio" name="People" value="people">
-        <input type="radio" name="Communities" value="communities">
+        <label for="people">People</label>
+        <input id="people" type="radio" name="search_type" value="people">
+        <label for="communities">Communities</label>
+        <input id="communities" type="radio" name="search_type" value="communities">
         <input type="submit">
     </form>
 
@@ -14,7 +17,7 @@
         <ul>
             {% for person in search_results_people %}
                 <li>
-                    <a href="{% url 'profile' person.id %}">
+                    <a href="{% url 'user_profile' person.user.username %}">
                         {{ person}}
                     </a>
                 </li>
