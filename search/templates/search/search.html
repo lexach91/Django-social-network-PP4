@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form action="{% url 'search' %}" method="post">
+        <input type="text" name="search_query" placeholder="Search...">
+        <input type="radio" name="People" value="people">
+        <input type="radio" name="Communities" value="communities">
+        <input type="submit">
+    </form>
+
+    {% if search_results_people %}
+        <h2>Search results:</h2>
+        <ul>
+            {% for person in search_results_people %}
+                <li>
+                    <a href="{% url 'profile' person.id %}">
+                        {{ person}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}
