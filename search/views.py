@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from more_itertools import first
 from profiles.models import Profile
 from communities.models import Community
 
@@ -17,7 +18,10 @@ class SearchView(View):
             profiles = Profile.objects.filter(
                 Q(user__username__icontains=search_query) |
                 Q(first_name__icontains=search_query) |
-                Q(last_name__icontains=search_query)
+                Q(last_name__icontains=search_query) |
+                # if query is first and last name together, search for both
+                Q(first_name__icontains=search_query.split()[0], last_name__icontains=search_query.split()[-1]) |
+                Q(first_name__icontains=search_query.split()[-1], last_name__icontains=search_query.split()[0])
             )
             return render(request, 'search/search.html', {'search_results_people': profiles})
         if search_type == 'communities':
