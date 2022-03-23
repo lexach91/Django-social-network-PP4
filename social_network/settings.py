@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'home',
     'profiles',
     'friends',
+    'communities',
+    'search',
 ]
 
 MIDDLEWARE = [
