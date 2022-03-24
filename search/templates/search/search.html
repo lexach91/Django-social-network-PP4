@@ -18,11 +18,61 @@
             {% for person in search_results_people %}
                 <li>
                     <a href="{% url 'user_profile' person.user.username %}">
-                        {{ person}}
+                        {{ person }} 
+
                     </a>
+                    {% if person in user.profile.friends.all %}
+                        <button class="removeFriend" data-id="{{ person.id }}">Unfriend</button>
+                    {% else %}
+                        <button class="addFriend" data-id="{{ person.id }}">Add friend</button>
+
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
+
+    <script>
+        const addFriendUrl = "{% url 'send-friend-request' %}";
+        const removeFriendUrl = "{% url 'remove-friend' %}";
+        
+
+        $('.addFriend').click(function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: addFriendUrl,
+                method: 'POST',
+                data: {
+                    'id': id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    console.log(data);
+                    // need to replace the button with the message that the request has been sent
+                    $('.addFriend[data-id=' + id + ']').replaceWith('<span>Friend request sent</span>');
+                }
+            });
+        });
+
+        $('.removeFriend').click(function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: removeFriendUrl,
+                method: 'POST',
+                data: {
+                    'id': id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    console.log(data);
+                    // need to replace the button with the add friend button
+                    $('.removeFriend[data-id=' + id + ']').replaceWith('<button class="addFriend" data-id="' + id + '">Add friend</button>'); 
+                }
+            });
+        });
+
+        
+        
+    </script>
 
 {% endblock %}
