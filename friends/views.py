@@ -11,6 +11,12 @@ class SendFriendRequest(View):
             from_profile = request.user.profile
             profile_id = request.POST.get('id')
             to_profile = get_object_or_404(Profile, id=profile_id)
+            # need to check if the request is already sent
+            if FriendRequest.objects.filter(
+                from_profile=from_profile,
+                to_profile=to_profile
+            ).exists():
+                return JsonResponse({'status': 'error'})
             friend_request = FriendRequest(
                 from_profile=from_profile,
                 to_profile=to_profile

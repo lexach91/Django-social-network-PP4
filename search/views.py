@@ -28,4 +28,6 @@ class SearchView(View):
             if search_type == 'communities':
                 communities = Community.objects.filter(name__icontains=search_query)
                 return render(request, 'search/search.html', {'communities': communities})
-        return HttpResponseRedirect(reverse('search'))
+        profiles = Profile.objects.all()
+        return render(request, 'search/search.html', {'search_results_people': profiles})
+        

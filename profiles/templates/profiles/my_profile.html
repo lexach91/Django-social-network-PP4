@@ -15,6 +15,18 @@
             {% endfor %}
         </ul>
     </li>
+    <li>Friend requests:
+        <ul>Incoming:
+            {% for friend in request.user.profile.friend_request_to_profile.all %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+
+        </ul>
+        <ul>Outgoing:
+            {% for friend in request.user.profile.friend_request_from_profile.all %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+    </li>
 </ul>
 
 
