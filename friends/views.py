@@ -63,3 +63,10 @@ class RemoveFriend(View):
             remover.save()
             friend.save()
             return JsonResponse({'status': 'ok'})
+
+class MyFriendsView(View):
+    def get(self, request, *args, **kwargs):
+        friends = request.user.profile.friends.all()
+        return render(request, 'friends/my_friends.html', {
+            'friends': friends,
+        })
