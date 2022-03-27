@@ -9,5 +9,12 @@
             <li>{{ friend }}</li>
         {% endfor %}
     </ul>
+    <h1>Pending requests</h1>
+    <ul>
+        {% for friend_request in pending_requests %}
+            <li>{{ friend_request }}</li>
+        {% endfor %}
+    </ul>
+    
 
     {% endblock %}

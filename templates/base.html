@@ -26,7 +26,8 @@
             <a href="#">My feed</a>
             <a href="{% url 'my-friends' %}">My friends</a>
             <a href="#">My communities</a>
-            <a href="#">My messages</a>            
+            <a href="#">My messages</a>
+            <a href="{% url 'search' %}">Search</a>
             <a href="{% url 'account_logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'account_signup' %}">SignUp</a>

@@ -23,3 +23,29 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return f'{self.from_profile} to {self.to_profile}'
+    
+    def accept(self):
+        self.accepted = True
+        self.save()
+        
+    def decline(self):
+        self.declined = True
+        self.save()
+    
+    def is_accepted(self):
+        return self.accepted
+    
+    def is_declined(self):
+        return self.declined
+    
+    def is_pending(self):
+        return not (self.accepted or self.declined)
+    
+    @classmethod
+    def get_all_requests(self):
+        return FriendRequest.objects.all()
+    
+    @classmethod
+    def get_pending_requests(self):
+        return FriendRequest.objects.filter(accepted=False, declined=False)
+    

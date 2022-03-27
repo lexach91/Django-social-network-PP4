@@ -67,6 +67,10 @@ class RemoveFriend(View):
 class MyFriendsView(View):
     def get(self, request, *args, **kwargs):
         friends = request.user.profile.friends.all()
+        pending_requests = FriendRequest.get_pending_requests().filter(
+            to_profile=request.user.profile
+        )
         return render(request, 'friends/my_friends.html', {
             'friends': friends,
+            'pending_requests': pending_requests
         })
