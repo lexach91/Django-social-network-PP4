@@ -8,69 +8,6 @@
     <li>First name: {{ request.user.profile.first_name }}</li>
     <li>Last name: {{ request.user.profile.last_name }}</li>
     <li>Birth date: {{ request.user.profile.birth_date }}</li>
-    <li>My friends:
-        <ul>
-            {% for friend in request.user.profile.friends.all %}
-                <li><a href="{% url 'user_profile' username=friend.user.username %}">{{ friend }}</a></li>
-            {% endfor %}
-        </ul>
-    </li>
-    <li>Friend requests:
-        <ul>Incoming:
-            {% for friend_request in request.user.profile.friend_request_to_profile.all %}
-                <li>{{ friend_request }}
-                    <button class="acceptFriend" data-id="{{ friend_request.id }}">Accept</button>
-                    <button class="declineFriend" data-id="{{ friend_request.id }}">Decline</button>
-                </li>
-            {% endfor %}
-
-        </ul>
-        <ul>Outgoing:
-            {% for friend_request in request.user.profile.friend_request_from_profile.all %}
-                <li>{{ friend_request }}</li>
-            {% endfor %}
-    </li>
 </ul>
-
-
-<script>
-    const acceptFriendUrl = "{% url 'accept-friend-request' %}";
-    const declineFriendUrl = "{% url 'decline-friend-request' %}";
-
-    $('.acceptFriend').click(function() {
-        const id = $(this).data('id');
-        $.ajax({
-            url: acceptFriendUrl,
-            method: 'POST',
-            data: {
-                'id': id,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(data) {
-                console.log(data);
-                // need to replace the button with the message that the request has been sent
-                $('.acceptFriend[data-id=' + id + ']').replaceWith('<span>Friend request accepted</span>');
-            }
-        });
-    });
-
-    $('.declineFriend').click(function() {
-        const id = $(this).data('id');
-        $.ajax({
-            url: declineFriendUrl,
-            method: 'POST',
-            data: {
-                'id': id,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(data) {
-                console.log(data);
-                // need to replace the button with the message that the request has been sent
-                $('.declineFriend[data-id=' + id + ']').replaceWith('<span>Friend request declined</span>');
-            }
-        });
-    });
-</script>
-
 
 {% endblock %}
