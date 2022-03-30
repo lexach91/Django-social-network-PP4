@@ -1,9 +1,5 @@
-import profile
-from turtle import update
 from django.db import models
 from django.contrib.auth.models import User
-from matplotlib import image
-from numpy import imag
 from profiles.models import Profile
 from communities.models import Community
 from cloudinary.models import CloudinaryField
@@ -19,6 +15,7 @@ class Post(models.Model):
         User,
         on_delete=models.SET_NULL,
         related_name='posts',
+        null=True,
     )
     content = models.TextField(max_length=500)
     image = CloudinaryField(

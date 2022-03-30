@@ -1,7 +1,4 @@
-from pyexpat import model
-from attr import field
 from django import forms
-from matplotlib import widgets
 from .models import Post
 
 
@@ -10,6 +7,6 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['content', 'image']
         widgets = {
-            'content': widgets.Textarea(attrs={'rows': 3, 'cols': 40}),
-            'image': widgets.FileInput(attrs={'accept': 'image/*'})
+            'content': forms.Textarea(attrs={'rows': 3}),
+            'image': forms.ClearableFileInput(attrs={'multiple': False}),
         }

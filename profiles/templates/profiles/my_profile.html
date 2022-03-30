@@ -10,4 +10,9 @@
     <li>Birth date: {{ request.user.profile.birth_date }}</li>
 </ul>
 
+<form>
+    {% csrf_token %}
+    {{ form }}
+</form>
+
 {% endblock %}
