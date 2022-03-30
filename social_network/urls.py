@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('home.urls')),
     path('profiles/', include('profiles.urls')),
     path('friends/', include('friends.urls')),
-    # path('communities/', include('communities.urls')),
+    path('communities/', include('communities.urls')),
     path('search/', include('search.urls')),
 ]
