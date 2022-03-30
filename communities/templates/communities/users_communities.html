@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+    
+    {% block content %}
+    <h1>My communities</h1>
+    {% if communities %}
+    <ul>
+        {% for community in communities %}
+        <li>{{ community.name }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You are not a member of any community.</p>
+    {% endif %}
+
+    {% endblock %}
