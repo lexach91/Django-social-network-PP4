@@ -23,13 +23,35 @@
 </head>
 <body>
         {% if user.is_authenticated %}
-            <a href="{% url 'my_profile' %}">My profile</a>
-            <a href="#">My feed</a>
-            <a href="{% url 'my-friends' %}">My friends</a>
-            <a href="{% url 'users_communities' %}">My communities</a>
-            <a href="#">My messages</a>
-            <a href="{% url 'search' %}">Search</a>
-            <a href="{% url 'account_logout' %}">Logout</a>
+            {% block navbar %}
+            <nav id="nav-bar">
+                <ul class="navigation">
+                    <li class="navigation-item">
+                        <a href="{% url 'my_profile' %}">My profile</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="#">My feed</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="{% url 'my-friends' %}">My friends</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="{% url 'users_communities' %}">My communities</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="#">My messages</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="{% url 'search' %}">Search</a>
+                    </li>
+                    <li class="navigation-item">
+                        <a href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+            {% endblock %}
         {% else %}
             <a href="{% url 'account_signup' %}">SignUp</a>
             <a href="{% url 'account_login' %}">Login</a>
