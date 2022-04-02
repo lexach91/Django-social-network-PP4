@@ -13,6 +13,7 @@
 
     {% block extrajs %}
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://kit.fontawesome.com/8e4b08b302.js" crossorigin="anonymous"></script>
     {% endblock %}
 
     {% block corecss %}
@@ -27,25 +28,25 @@
             <nav id="nav-bar">
                 <ul class="navigation">
                     <li class="navigation-item">
-                        <a href="{% url 'my_profile' %}">My profile</a>
+                        <a href="{% url 'my_profile' %}"><i class="fas fa-user"></i>My profile</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="#">My feed</a>
+                        <a href="#"><i class="fas fa-newspaper"></i>My feed</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="{% url 'my-friends' %}">My friends</a>
+                        <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>My friends</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="{% url 'users_communities' %}">My communities</a>
+                        <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>My communities</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="#">My messages</a>
+                        <a href="#"><i class="fas fa-comments"></i>My messages</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="{% url 'search' %}">Search</a>
+                        <a href="{% url 'search' %}"><i class="fas fa-search"></i>Search</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="{% url 'account_logout' %}">Logout</a>
+                        <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out"></i>Logout</a>
                     </li>
 
                 </ul>

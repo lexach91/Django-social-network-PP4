@@ -5,3 +5,34 @@
     margin: 0;
     padding: 0;
 }
+
+#nav-bar {
+    height: 100vh;
+    width: 15em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: yellow;
+}
+
+.navigation {
+    height: 100%;
+    width: 100%;
+    padding-left: 2em;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+    list-style: none;
+}
+
+.navigation-item a {
+   text-decoration: none;
+   height: 2em;
+}
+
+.navigation-item a i {
+    font-size: 1.5em;
+    margin-right: .5em;
+}
