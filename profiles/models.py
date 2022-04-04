@@ -35,6 +35,21 @@ class Profile(models.Model):
         blank=True,
         related_name='friends'
     )
+    country = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    city = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    bio = models.TextField(
+        max_length=500,
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         if self.first_name and self.last_name:
