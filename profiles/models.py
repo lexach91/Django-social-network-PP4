@@ -64,3 +64,13 @@ class Profile(models.Model):
             today = date.today()
             return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
         return None
+
+    @property
+    def location(self):
+        if self.country and self.city:
+            return f'{self.country}, {self.city}'
+        if self.country:
+            return self.country
+        if self.city:
+            return self.city
+        return None
