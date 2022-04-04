@@ -1,14 +1,46 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-<h1>My profile</h1>
-<ul>
-    <li>Avatar: {{ request.user.profile.avatar }}</li>
-    <li>First name: {{ request.user.profile.first_name }}</li>
-    <li>Last name: {{ request.user.profile.last_name }}</li>
-    <li>Birth date: {{ request.user.profile.birth_date }}</li>
-</ul>
+<div class="profile-container">
+    <div class="profile-info">
+        <div class="avatar-container">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="avatar" class="avatar">
+            {% else %}
+                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+            {% endif %}
+            <i class="fas fa-edit edit-avatar"></i>
+        </div>
+
+    </div>
+    <div class="profile-bio">
+        <div class="profile-name">
+            <strong>Name: </strong>{{ user.profile }}
+        </div>
+        <div class="profile-age">
+            <strong>Age: </strong>{{ user.profile.age }} years old
+        </div>
+        <div class="profile-location">
+            <strong>Location:</strong>
+            {% if user.profile.location %}
+                Lives in {{ user.profile.location }}
+            {% else %}
+                No location specified...
+            {% endif %}
+        </div>
+        <div class="profile-bio-text">
+            <strong>Bio:</strong>            
+            {% if user.profile.bio %}
+                {{ user.profile.bio }}
+            {% else %}
+                No bio
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 
 <form>
     {% csrf_token %}
