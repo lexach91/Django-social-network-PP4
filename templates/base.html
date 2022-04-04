@@ -34,7 +34,11 @@
                         <a href="#"><i class="fas fa-newspaper"></i>My feed</a>
                     </li>
                     <li class="navigation-item">
-                        <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>My friends</a>
+                        <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>My friends
+                        {% if user.profile.friend_request_to_profile %}
+                            <span class="badge"> ({{ user.profile.friend_request_to_profile.count }})</span>
+                        {% endif %}
+                        </a>
                     </li>
                     <li class="navigation-item">
                         <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>My communities</a>
