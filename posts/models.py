@@ -1,3 +1,4 @@
+from click import edit
 from django.db import models
 from django.contrib.auth.models import User
 from profiles.models import Profile
@@ -26,6 +27,7 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    edited = models.BooleanField(default=False)
     post_type = models.IntegerField(choices=POST_TYPE_CHOICES)
     community = models.ForeignKey(
         Community,
