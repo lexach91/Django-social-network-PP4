@@ -76,11 +76,33 @@
         </div>
     </div>
     {% endfor %}
-    <form>
+    <form class="post-form">
         {% csrf_token %}
         {{ form }}
+        <button type="submit" class="post-submit">Post</button>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        const createPostUrl = "{% url 'create_post_ajax' %}";
+        $('.post-form').on('submit', (e) => {
+            e.preventDefault();
+            // set post_type value of the form to 1
+            $('.post-form').find('input[name="post_type"]').val(1);
+            $('.post-form').find('input[name="profile"]').val({{ user.profile.id }});
+            $.ajax({
+                url: createPostUrl,
+                type: 'POST',
+                data: $('.post-form').serialize(),
+                success: (data) => {
+                    $('.post-wall').prepend(data);
+                    $('.post-form').find('textarea').val('');
+                }
+            });
+        })
+    });
+</script>
 
 
 {% endblock %}

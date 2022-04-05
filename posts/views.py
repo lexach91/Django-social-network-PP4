@@ -9,10 +9,11 @@ from .forms import PostForm
 class CreatePostAjaxView(View):
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
             return JsonResponse({'success': True})
         else:
-            return JsonResponse({'success': False})
+            return JsonResponse({'success': False, 'errors': form.errors})
