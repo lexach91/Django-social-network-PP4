@@ -9,7 +9,8 @@ from .models import Profile
 class MyProfileView(View):
     def get(self, request, *args, **kwargs):
         form = PostForm()
-        return render(request, 'profiles/my_profile.html', {'form': form})
+        posts = Profile.objects.get(user=request.user).posts.all()
+        return render(request, 'profiles/my_profile.html', {'form': form, 'posts': posts})
     
     
 class UserProfileView(View):

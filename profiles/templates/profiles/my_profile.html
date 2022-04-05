@@ -40,11 +40,47 @@
         </div>
     </div>
 </div>
+<div class="post-wall">
+    {% for post in posts %}
+    <div class="post">
+        <div class="post-info">
+            <div class="post-author">
+                {% if post.author.profile.avatar %}
+                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="post-author-name">
+                    <strong>{{ post.author.profile }}</strong>
+                </div>
+            </div>
+            <div class="post-time">
+                {% if post.edited %}
+                    <em>Edited at
+                        {{ post.updated_at|date:"d/m/Y H:i" }}
+                    </em>
+                {% else %} 
+                    <em>Posted at
+                        {{ post.created_at|date:"d/m/Y H:i" }}
+                    </em>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post-content">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="post image" class="post-image">
+            {% endif %}
+            <div class="post-text">
+                {{ post.content }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <form>
+        {% csrf_token %}
+        {{ form }}
+    </form>
+</div>
 
-
-<form>
-    {% csrf_token %}
-    {{ form }}
-</form>
 
 {% endblock %}
