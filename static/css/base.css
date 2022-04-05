@@ -93,3 +93,30 @@ body {
     font-size: large;
     line-height: 1.5em;
 }
+
+/* ---------------- Posts -------------------- */
+
+.post {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.post-author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.post-avatar {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    margin-right: .5em;
+}

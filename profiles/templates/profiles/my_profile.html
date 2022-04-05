@@ -46,9 +46,9 @@
         <div class="post-info">
             <div class="post-author">
                 {% if post.author.profile.avatar %}
-                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="avatar">
+                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
                 {% else %}
-                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
                 {% endif %}
                 <div class="post-author-name">
                     <strong>{{ post.author.profile }}</strong>
