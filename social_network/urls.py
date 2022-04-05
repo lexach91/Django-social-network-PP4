@@ -24,4 +24,5 @@ urlpatterns = [
     path('friends/', include('friends.urls')),
     path('communities/', include('communities.urls')),
     path('search/', include('search.urls')),
+    path('posts/', include('posts.urls')),
 ]
