@@ -17,4 +17,5 @@ class UserProfileView(View):
     def get(self, request, username, *args, **kwargs):
         user_profile = Profile.objects.get(user__username=username)
         form = PostForm()
-        return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'form': form})
+        posts = user_profile.posts.all()
+        return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'form': form, 'posts': posts})

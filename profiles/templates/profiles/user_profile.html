@@ -1,31 +1,139 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-{% if user_profile.first_name %}
-    {% if user_profile.last_name %}
-        <h1>{{ user_profile.first_name }} {{ user_profile.last_name }}'s profile</h1>
-    {% else %}
-        <h1>{{ user_profile.first_name }}</h1>
-    {% endif %}
+<div class="profile-container">
+    <div class="profile-info">
+        <div class="avatar-container">
+            {% if user_profile.avatar %}
+                <img src="{{ user_profile.avatar.url }}" alt="avatar" class="avatar">
+            {% else %}
+                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+            {% endif %}
+        </div>
+    </div>
+    <div class="profile-bio">
+        <div class="profile-name">
+            <strong>Name: </strong>{{ user_profile }}
+        </div>
+        <div class="profile-age">
+            <strong>Age: </strong>{{ user_profile.age }} years old
+        </div>
+        <div class="profile-location">
+            <strong>Location:</strong>
+            {% if user_profile.location %}
+                Lives in {{ user_profile.location }}
+            {% else %}
+                No location specified...
+            {% endif %}
+        </div>
+        <div class="profile-bio-text">
+            <strong>Bio:</strong>            
+            {% if user_profile.bio %}
+                {{ user_profile.bio }}
+            {% else %}
+                No bio
+            {% endif %}
+        </div>
+    </div>
 
-{% else %}
-    <h1>{{ user_profile.user.username }}'s profile</h1>
-{% endif %}
+</div>
+<div class="post-wall">
+    {% for post in posts %}
+    <div class="post">
+        <div class="post-info">
+            <div class="post-author">
+                {% if post.author.profile.avatar %}
+                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
+                {% endif %}
+                <div class="post-author-name">
+                    <strong>
+                        <a href="{% url 'user_profile' post.author.username %}">
+                            {{ post.author.profile }}
+                        </a>
+                    </strong>
+                </div>
+            </div>
+            <div class="post-time">
+                {% if post.edited %}
+                    <em>Edited at
+                        {{ post.updated_at|date:"d/m/Y H:i" }}
+                    </em>
+                {% else %} 
+                    <em>Posted at
+                        {{ post.created_at|date:"d/m/Y H:i" }}
+                    </em>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post-content">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="post image" class="post-image">
+            {% endif %}
+            <div class="post-text">
+                {{ post.content }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<form class="post-form">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="post-submit">Post</button>
+</form>
 
-<ul>
-    <li>Avatar: {{ user_profile.avatar }}</li>
-    <li>First name: {{ user_profile.first_name }}</li>
-    <li>Last name: {{ user_profile.last_name }}</li>
-    <li>Birth date: {{ user_profile.birth_date }}</li>
-    <li>Friends:
-        <ul>
-            {% for friend in user_profile.friends.all %}
-                <li>{{ friend }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-</ul>
-
+<script>
+    $(document).ready(function() {
+        const createPostUrl = "{% url 'create_post_ajax' %}";
+        $('.post-form').on('submit', (e) => {
+            e.preventDefault();
+            // set post_type value of the form to 1
+            $('.post-form').find('input[name="post_type"]').val(1);
+            $('.post-form').find('input[name="profile"]').val('{{ user_profile.id }}');
+            $.ajax({
+                url: createPostUrl,
+                type: 'POST',
+                data: $('.post-form').serialize(),
+                success: (data) => {
+                    let post = data.post;
+                    let avatarUrl;
+                    if(post.avatar) {
+                        avatarUrl = post.avatar.url;
+                    } else {
+                        avatarUrl = "{% static 'images/default_avatar.svg' %}";
+                    }
+                    let author = post.author;
+                    let postContent = post.content;
+                    let createdAt = post.created_at;
+                    $('.post-wall').append(`
+                        <div class="post">
+                            <div class="post-info">
+                                <div class="post-author">
+                                    <img src="${avatarUrl}" alt="avatar" class="post-avatar">
+                                    <div class="post-author-name">
+                                        <strong>${author}</strong>
+                                    </div>
+                                </div>
+                                <div class="post-time">
+                                    <em>Posted at ${createdAt}</em>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <div class="post-text">
+                                    ${postContent}
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                    $('.post-form').find('textarea').val('');                    
+                }
+            });
+        })
+    });
+</script>
     
 {% endblock %}
