@@ -14,6 +14,18 @@ class CreatePostAjaxView(View):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return JsonResponse({'success': True})
+            # need to return the post object
+            if post.author.profile.avatar:
+                avatar = post.author.profile.avatar.url
+            else:
+                avatar = None
+            post_data = {
+                'author': str(post.author.profile),
+                'avatar': avatar,
+                # created_at should be in format as it is in temlate date:"d/m/Y H:i"
+                'created_at': post.created_at.strftime("%d/%m/%Y %H:%M"),
+                'content': post.content,
+            }
+            return JsonResponse({'success': True, 'post': post_data})
         else:
             return JsonResponse({'success': False, 'errors': form.errors})

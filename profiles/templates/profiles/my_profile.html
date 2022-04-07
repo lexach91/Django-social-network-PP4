@@ -76,12 +76,12 @@
         </div>
     </div>
     {% endfor %}
-    <form class="post-form">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="post-submit">Post</button>
-    </form>
 </div>
+<form class="post-form">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="post-submit">Post</button>
+</form>
 
 <script>
     $(document).ready(function() {
@@ -90,13 +90,42 @@
             e.preventDefault();
             // set post_type value of the form to 1
             $('.post-form').find('input[name="post_type"]').val(1);
-            $('.post-form').find('input[name="profile"]').val({{ user.profile.id }});
+            $('.post-form').find('input[name="profile"]').val('{{ user.profile.id }}');
             $.ajax({
                 url: createPostUrl,
                 type: 'POST',
                 data: $('.post-form').serialize(),
                 success: (data) => {
-                    $('.post-wall').prepend(data);
+                    let post = data.post;
+                    let avatarUrl;
+                    if(post.avatar) {
+                        avatarUrl = post.avatar.url;
+                    } else {
+                        avatarUrl = "{% static 'images/default_avatar.svg' %}";
+                    }
+                    let author = post.author;
+                    let postContent = post.content;
+                    let createdAt = post.created_at;
+                    $('.post-wall').append(`
+                        <div class="post">
+                            <div class="post-info">
+                                <div class="post-author">
+                                    <img src="${avatarUrl}" alt="avatar" class="post-avatar">
+                                    <div class="post-author-name">
+                                        <strong>${author}</strong>
+                                    </div>
+                                </div>
+                                <div class="post-time">
+                                    <em>Posted at ${createdAt}</em>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <div class="post-text">
+                                    ${postContent}
+                                </div>
+                            </div>
+                        </div>
+                    `);
                     $('.post-form').find('textarea').val('');
                 }
             });
