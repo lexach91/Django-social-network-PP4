@@ -74,3 +74,7 @@ class Profile(models.Model):
         if self.city:
             return self.city
         return None
+
+    @property
+    def pending_friend_requests(self):
+        return self.friend_request_to_profile.filter(accepted=False, declined=False)
