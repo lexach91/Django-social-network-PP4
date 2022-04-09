@@ -120,3 +120,67 @@ body {
     border-radius: 50%;
     margin-right: .5em;
 }
+
+/* ---------------- Profiles/Friends/Requests list -------------------- */
+
+.friends-container {
+    width: 100%;
+    padding: 2em;
+}
+
+.profiles-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.profile-list-card {
+    width: 14em;
+    padding: 1em;
+    margin: .5em;
+    /* height: 80%; */
+    /* background-color: red; */
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.profile-list-avatar {
+    width: 11em;
+    height: 11em;
+    border-radius: 50%;
+    /* margin: 0 auto; */
+}
+
+.profile-list-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.profile-list-name {
+    /* font-size: 1.2em; */
+    /* margin-top: .5em; */
+    height: 2em;
+    display: flex;
+    align-items: center;
+}
+
+.friend-buttons {
+    height: 2em;
+    display: flex;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.active {
+    background-color: red;
+}

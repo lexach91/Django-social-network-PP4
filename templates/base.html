@@ -35,7 +35,7 @@
                     </li>
                     <li class="navigation-item">
                         <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>My friends
-                        {% if user.profile.friend_request_to_profile %}
+                        {% if user.profile.pending_friend_requests %}
                             <span class="badge"> ({{ user.profile.pending_friend_requests.count }})</span>
                         {% endif %}
                         </a>
