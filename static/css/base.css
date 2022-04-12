@@ -184,3 +184,34 @@ body {
 .active {
     background-color: red;
 }
+
+/* ---------------- Communities list -------------------- */
+
+.communities-container {
+    width: 100%;
+    padding: 2em;
+}
+
+.community {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em;
+    margin: .5em;
+    border: 1px solid black;
+}
+
+.community-logo {
+    width: 14em;
+    height: 10em;
+    margin-right: .5em;
+}
+
+.community-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}

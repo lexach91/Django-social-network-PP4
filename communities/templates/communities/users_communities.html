@@ -10,9 +10,9 @@
             <div class="community">
                 <div class="community-logo">
                     {% if community.logo %}
-                        <img src="{{ community.logo.url }}" alt="logo" class="community-logo">
+                        <img src="{{ community.logo.url }}" alt="logo" class="community-logo-img">
                     {% else %}
-                        <img src="{% static 'images/default-logo.png' %}" alt="logo" class="community-logo">
+                        <img src="{% static 'images/default-logo.png' %}" alt="logo" class="community-logo-img">
                     {% endif %}
                 </div>
                 <div class="community-info">
