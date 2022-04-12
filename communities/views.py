@@ -11,6 +11,6 @@ class UsersCommunitiesView(View):
 
 
 class CommunityView(View):
-    def get(self, request, name, *args, **kwargs):
-        community = Community.objects.get(name=name)
+    def get(self, request, slug, *args, **kwargs):
+        community = Community.objects.get(slug=slug)
         return render(request, 'communities/community.html', {'community': community})

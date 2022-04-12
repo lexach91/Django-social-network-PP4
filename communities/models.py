@@ -2,6 +2,8 @@ from turtle import update
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+
 
 # Create your models here.
 class Community(models.Model):
@@ -36,6 +38,6 @@ class Community(models.Model):
     def get_posts(self):
         return self.posts.all()
     
-    @property
-    def get_slug(self):
-        return self.name.replace(' ', '-')
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
