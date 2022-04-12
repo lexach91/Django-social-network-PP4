@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Community(models.Model):
     name = models.CharField(max_length=100, unique=True, blank=False)
+    slug = models.SlugField(max_length=100, unique=True, blank=False)
     description = models.TextField(blank=True)
     bg_image = CloudinaryField(
         'community_bg_image',
@@ -27,5 +28,14 @@ class Community(models.Model):
     def __str__(self):
         return self.name
     
+    @property
     def member_count(self):
         return self.members.count()
+
+    @property
+    def get_posts(self):
+        return self.posts.all()
+    
+    @property
+    def get_slug(self):
+        return self.name.replace(' ', '-')

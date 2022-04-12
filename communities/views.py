@@ -8,3 +8,9 @@ class UsersCommunitiesView(View):
         user = request.user
         communities = Community.objects.filter(members__in=[user])
         return render(request, 'communities/users_communities.html', {'communities': communities})
+
+
+class CommunityView(View):
+    def get(self, request, name, *args, **kwargs):
+        community = Community.objects.get(name=name)
+        return render(request, 'communities/community.html', {'community': community})
