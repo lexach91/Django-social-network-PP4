@@ -1,14 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
 
     
     {% block content %}
     <h1>My communities</h1>
     {% if communities %}
-    <ul>
+    <div class="communities-container">
         {% for community in communities %}
-        <li>{{ community.name }}</li>
+            <div class="community">
+                <div class="community-logo">
+                    {% if community.logo %}
+                        <img src="{{ community.logo.url }}" alt="logo" class="community-logo">
+                    {% else %}
+                        <img src="{% static 'images/default-logo.png' %}" alt="logo" class="community-logo">
+                    {% endif %}
+                </div>
+                <div class="community-info">
+                    <div class="community-name">
+                        <a href="{% url 'community' community.slug %}">
+                            {{ community }}
+                        </a>
+                    </div>
+                    <div class="community-description">
+                        {{ community.description }}
+                    </div>
+                    <div class="members-count">
+                        {{ community.member_count }} members
+                    </div>
+                    <div class="community-buttons">
+                        <a href="{% url 'community' community.slug %}">
+                            View community
+                        </a>
+                        <a href="#">
+                            Leave community
+                        </a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
     {% else %}
     <p>You are not a member of any community.</p>
     {% endif %}
