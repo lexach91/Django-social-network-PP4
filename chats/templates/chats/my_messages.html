@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<ul>
+    {% for chat in chats %}
+        <li>
+                {{ chat }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
