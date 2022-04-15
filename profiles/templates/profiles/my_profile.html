@@ -41,6 +41,11 @@
     </div>
 </div>
 <div class="post-wall">
+    <form class="post-form">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="post-submit">Post</button>
+    </form>
     {% for post in posts %}
     <div class="post">
         <div class="post-info">
@@ -81,11 +86,7 @@
     </div>
     {% endfor %}
 </div>
-<form class="post-form">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="post-submit">Post</button>
-</form>
+
 
 <script>
     $(document).ready(function() {

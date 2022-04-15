@@ -1,4 +1,3 @@
-from bottle_websocket import websocket
 from django.urls import re_path
 from .consumers import ChatConsumer
 

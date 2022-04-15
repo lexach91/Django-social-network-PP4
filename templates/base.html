@@ -62,10 +62,10 @@
             <a href="{% url 'account_login' %}">Login</a>
         {% endif %}
 
-
+    <div class="main-content">
     {% block content %}
     {% endblock %}
-    
+    </div>
     {% block corejs %}
     <script src="{% static 'js/base.js' %}"></script>
     {% endblock %}
