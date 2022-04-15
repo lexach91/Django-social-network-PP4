@@ -25,4 +25,5 @@ urlpatterns = [
     path('communities/', include('communities.urls')),
     path('search/', include('search.urls')),
     path('posts/', include('posts.urls')),
+    path('my_messages/', include('chats.urls')),
 ]
