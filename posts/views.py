@@ -21,6 +21,7 @@ class CreatePostAjaxView(View):
                 avatar = None
             post_data = {
                 'author': str(post.author.profile),
+                'author_url': f'/profiles/{post.author.username}',
                 'avatar': avatar,
                 # created_at should be in format as it is in temlate date:"d/m/Y H:i"
                 'created_at': post.created_at.strftime("%d/%m/%Y %H:%M"),
