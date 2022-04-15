@@ -7,11 +7,16 @@ from cloudinary.models import CloudinaryField
 class Chat(models.Model):
     members = models.ManyToManyField(User, related_name='chats')
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    last_message_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return f'Chat between {self.members.all()[0]} and {self.members.all()[1]}'
     
+    def get_last_message(self):
+        return self.messages.last()
+    
+    class Meta:
+        ordering = ['-last_message_at']
     
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
@@ -35,3 +40,6 @@ class Message(models.Model):
     
     def __str__(self):
         return self.content
+
+    class Meta:
+        ordering = ['created_at']
