@@ -43,3 +43,6 @@ class Post(models.Model):
         null=True,
         blank=True
     )
+
+    class Meta:
+        ordering = ['-created_at']
