@@ -15,6 +15,9 @@ class Chat(models.Model):
     def get_last_message(self):
         return self.messages.last()
     
+    def unread_messages_count(self):
+        return self.messages.filter(is_read=False).count()
+    
     class Meta:
         ordering = ['-last_message_at']
     
