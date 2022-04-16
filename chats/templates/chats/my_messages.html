@@ -5,6 +5,7 @@
     {% for chat in chats %}
         <li>
                 {{ chat }}
+                {{ chat.get_last_message }}
         </li>
     {% endfor %}
 </ul>

@@ -10,7 +10,7 @@ class Chat(models.Model):
     last_message_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'Chat between {self.members.all()[0]} and {self.members.all()[1]}'
+        return f'Chat with {self.members.all()[1]}'
     
     def get_last_message(self):
         return self.messages.last()
@@ -23,6 +23,7 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
     content = models.TextField()
     has_media = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False)
     image = CloudinaryField(
         'message_image',
         folder = 'messages',
