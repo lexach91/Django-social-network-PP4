@@ -3,4 +3,45 @@
 {% block content %}
 {{ chat }}
 {{ chat.messages.all }}
+
+<div class="chat-container">
+    <div class="chat-messages">
+        {% for message in chat.messages.all %}
+            <div class="chat-message">
+                <div class="message-author">
+                    {% if message.author.profile.avatar.url %}
+                        <img src="{{ message.author.profile.avatar.url }}" alt="{{ message.author }}" />
+                    {% else %}
+                        <img src="{% static 'images/default_avatar.svg' %}" alt="{{ message.author }}" />
+                    {% endif %}
+                    {{ message.author.profile }}
+                </div>
+                {% if message.has_media %}
+                    <div class="message-media">
+                    {% if message.image.url %}
+                        <img src="{{ message.image.url }}" alt="{{ message.image }}" />
+                    {% else %}
+                        <video controls>
+                            <source src="{{ message.video.url }}" type="video/mp4">
+                        </video>
+                    {% endif %}
+                    </div>
+                {% endif %}
+                <div class="message-text">
+                    {{ message.content }}
+                </div>
+                <div class="message-time">
+                    {{ message.created_at }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="chat-input-container">
+        <input class="chat-input" type="text">
+        <button class="chat-send-button">Send</button>
+        {{ room_name|json_script:"room-name" }}
+    </div>
+    <script src="{% static 'js/chatRoom.js' %}"></script>
+</div>
+
 {% endblock %}
