@@ -39,9 +39,10 @@
     <div class="chat-input-container">
         <input class="chat-input" type="text">
         <button class="chat-send-button">Send</button>
-        {{ room_name|json_script:"room-name" }}
+        <input type="hidden" id="username" value="{{ request.user.username }}">
+        <input type="hidden" id="chatId" value="{{ chat.id }}">
     </div>
-    <script src="{% static 'js/chatRoom.js' %}"></script>
 </div>
+<script src="{% static 'js/chatRoom.js' %}"></script>
 
 {% endblock %}
