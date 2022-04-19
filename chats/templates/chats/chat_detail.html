@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{{ chat }}
-{{ chat.messages.all }}
 
 <div class="chat-container">
     <div class="chat-messages">
         {% for message in chat.messages.all %}
-            <div class="chat-message">
+            {% if message.author == request.user %}
+            <div class="chat-message my-message">
+            {% else %}
+            <div class="chat-message other-message">
+            {% endif %}
                 <div class="message-author">
                     {% if message.author.profile.avatar.url %}
-                        <img src="{{ message.author.profile.avatar.url }}" alt="{{ message.author }}" />
+                        <img class="message-avatar" src="{{ message.author.profile.avatar.url }}" alt="{{ message.author }}" />
                     {% else %}
-                        <img src="{% static 'images/default_avatar.svg' %}" alt="{{ message.author }}" />
+                        <img class="message-avatar" src="{% static 'images/default_avatar.svg' %}" alt="{{ message.author }}" />
                     {% endif %}
                     {{ message.author.profile }}
                 </div>
@@ -37,7 +39,7 @@
         {% endfor %}
     </div>
     <div class="chat-input-container">
-        <input class="chat-input" type="text">
+        <textarea class="chat-input" placeholder="Type your message here..."></textarea>
         <button class="chat-send-button">Send</button>
         <input type="hidden" id="username" value="{{ request.user.username }}">
         <input type="hidden" id="chatId" value="{{ chat.id }}">

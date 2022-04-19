@@ -18,6 +18,9 @@ class Chat(models.Model):
     def unread_messages_count(self):
         return self.messages.filter(is_read=False).count()
     
+    def get_second_member(self, request):
+        return self.members.exclude(username=request.user.username).first()
+    
     class Meta:
         ordering = ['-last_message_at']
     

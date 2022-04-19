@@ -1,11 +1,8 @@
 import json
-from os import sync
 from channels.generic.websocket import AsyncWebsocketConsumer
-from sympy import content
 from .models import Message, Chat
 from django.contrib.auth.models import User
 from channels.db import database_sync_to_async
-from asgiref.sync import async_to_sync, sync_to_async
 
 
 # consumer for one-to-one chat
@@ -42,7 +39,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = await self.save_message(message, username, chat_id)
         print(message)
         avatar_url = await self.get_avatar_url(username)
-        username = await self.get_profile_username(username)
+        profile = await self.get_profile(username)
+        
 
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -54,10 +52,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'timestamp': message.created_at.strftime('%B %d, %Y, %I:%M %p'),
                     },
                 'author': {
-                    'username': username,
+                    'username': str(profile),
                     'avatar': avatar_url,
                     },
-                'chatId': chat_id
+                'chatId': chat_id,
+                'sendBy': username,
             }
         )
 
@@ -65,6 +64,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_message(self, event):
         message = event['message']
         author = event['author']
+        send_by = event['sendBy']
         # chat_id = event['chatId']
         print(message)
         print(author)
@@ -73,6 +73,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': message,
             'author': author,
+            'sendBy': send_by,
             # 'chatId': chat_id
         }))
         
@@ -98,6 +99,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return user.profile.avatar.url if user.profile.avatar else None
     
     @database_sync_to_async
-    def get_profile_username(self, username):
-        user = User.objects.get(username=username)
-        return str(user.profile)
+    def get_profile(self, username):
+        profile = User.objects.get(username=username).profile
+        return profile

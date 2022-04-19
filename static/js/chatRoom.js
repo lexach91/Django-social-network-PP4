@@ -6,20 +6,33 @@ $(document).ready(function() {
     const socket = new WebSocket(socketProtocol + '//' + window.location.host + window.location.pathname);
 
     const messageContainer = $('.chat-messages');
+    messageContainer.scrollTop(messageContainer.prop('scrollHeight'));
+
+    const username = document.getElementById("username").value;
+    const chatId = document.getElementById("chatId").value;
+
+
 
     socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
         console.log(data);
         const chatMessage = $('<div class="chat-message"></div>');
         const messageAuthor = $('<div class="message-author"></div>');
+        if(data.sendBy===username){
+            chatMessage.addClass('my-message');
+        } else {
+            chatMessage.addClass('other-message');
+        }
         const messageText = $('<div class="message-text"></div>');
         const messageTime = $('<div class="message-time"></div>');
         let authorAvatar;
         if (data.author.avatar) {
-            authorAvatar = $('<img class="author-avatar" src="' + data.author.avatar + '" />');
+            authorAvatar = $(
+              '<img class="message-avatar" src="' + data.author.avatar + '" />'
+            );
         } else {
             authorAvatar = $(
-              '<img class="author-avatar" src="/static/images/default_avatar.svg" />'
+              '<img class="message-avatar" src="/static/images/default_avatar.svg" />'
             );
         }
         messageAuthor.append(authorAvatar);
@@ -30,6 +43,9 @@ $(document).ready(function() {
         chatMessage.append(messageText);
         chatMessage.append(messageTime);
         messageContainer.append(chatMessage);
+
+        // Scroll to the bottom of the chat messages
+        messageContainer.scrollTop(messageContainer[0].scrollHeight + 1000);
         
     };
 
@@ -44,8 +60,6 @@ $(document).ready(function() {
 
     $('.chat-send-button').click(function() {
         const message = $('.chat-input').val();
-        const username = document.getElementById('username').value;
-        const chatId = document.getElementById('chatId').value;
         // console.log(username);
         if (message.length > 0) {
             socket.send(
