@@ -39,6 +39,11 @@
     </div>
 
 </div>
+<form class="post-form">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="post-submit">Post</button>
+</form>
 <div class="post-wall">
     {% for post in posts %}
     <div class="post">
@@ -80,11 +85,7 @@
     </div>
     {% endfor %}
 </div>
-<form class="post-form">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="post-submit">Post</button>
-</form>
+
 
 <script>
     $(document).ready(function() {
@@ -93,7 +94,7 @@
             e.preventDefault();
             // set post_type value of the form to 1
             $('.post-form').find('input[name="post_type"]').val(1);
-            $('.post-form').find('input[name="profile"]').val('{{ user_profile.id }}');
+            $('.post-form').find('input[name="profile"]').val('{{ user.profile.id }}');
             $.ajax({
                 url: createPostUrl,
                 type: 'POST',
@@ -107,15 +108,20 @@
                         avatarUrl = "{% static 'images/default_avatar.svg' %}";
                     }
                     let author = post.author;
+                    let authorUrl = post.author_url;
                     let postContent = post.content;
                     let createdAt = post.created_at;
-                    $('.post-wall').append(`
+                    $('.post-wall').prepend(`
                         <div class="post">
                             <div class="post-info">
                                 <div class="post-author">
                                     <img src="${avatarUrl}" alt="avatar" class="post-avatar">
                                     <div class="post-author-name">
-                                        <strong>${author}</strong>
+                                        <strong>
+                                            <a href="${authorUrl}">
+                                                ${author}
+                                            </a>
+                                        </strong>
                                     </div>
                                 </div>
                                 <div class="post-time">
