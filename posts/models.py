@@ -53,6 +53,12 @@ class Post(models.Model):
         related_name='disliked_posts',
         blank=True
     )
+    
+    def get_likes(self):
+        return self.likes.count()
+    
+    def get_dislikes(self):
+        return self.dislikes.count()
 
     class Meta:
         ordering = ['-created_at']
