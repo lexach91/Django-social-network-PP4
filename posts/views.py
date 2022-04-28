@@ -45,3 +45,17 @@ class LikePostAjaxView(View):
             post.likes.add(request.user)
         post.save()
         return JsonResponse({'success': True})
+    
+class DislikePostAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        if request.user in post.dislikes.all():
+            post.dislikes.remove(request.user)
+        elif request.user in post.likes.all():
+            post.likes.remove(request.user)
+            post.dislikes.add(request.user)
+        else:
+            post.dislikes.add(request.user)
+        post.save()
+        return JsonResponse({'success': True})
