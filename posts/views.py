@@ -30,3 +30,18 @@ class CreatePostAjaxView(View):
             return JsonResponse({'success': True, 'post': post_data})
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
+        
+
+class LikePostAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        elif request.user in post.dislikes.all():
+            post.dislikes.remove(request.user)
+            post.likes.add(request.user)
+        else:
+            post.likes.add(request.user)
+        post.save()
+        return JsonResponse({'success': True})
