@@ -40,11 +40,21 @@ class LikePostAjaxView(View):
             post.likes.remove(request.user)
         elif request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
-            post.likes.add(request.user)
+            # post.likes.add(request.user)
         else:
             post.likes.add(request.user)
         post.save()
-        return JsonResponse({'success': True})
+        likes_count = post.get_likes()
+        dislikes_count = post.get_dislikes()
+        liked = True if request.user in post.likes.all() else False
+        disliked = True if request.user in post.dislikes.all() else False
+        return JsonResponse({
+            'success': True,
+            'likes_count': likes_count,
+            'dislikes_count': dislikes_count,
+            'liked': liked,
+            'disliked': disliked
+            })
     
 class DislikePostAjaxView(View):
     def post(self, request, *args, **kwargs):
@@ -54,8 +64,18 @@ class DislikePostAjaxView(View):
             post.dislikes.remove(request.user)
         elif request.user in post.likes.all():
             post.likes.remove(request.user)
-            post.dislikes.add(request.user)
+            # post.dislikes.add(request.user)
         else:
             post.dislikes.add(request.user)
         post.save()
-        return JsonResponse({'success': True})
+        likes_count = post.get_likes()
+        dislikes_count = post.get_dislikes()
+        liked = True if request.user in post.likes.all() else False
+        disliked = True if request.user in post.dislikes.all() else False
+        return JsonResponse({
+            'success': True,
+            'likes_count': likes_count,
+            'dislikes_count': dislikes_count,
+            'disliked': disliked,
+            'liked': liked
+            })

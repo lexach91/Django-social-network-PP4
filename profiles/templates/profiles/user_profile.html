@@ -109,6 +109,8 @@
 <script>
     $(document).ready(function() {
         const createPostUrl = "{% url 'create_post_ajax' %}";
+        const likePostUrl = "{% url 'like_post_ajax' %}";
+        const dislikePostUrl = "{% url 'dislike_post_ajax' %}";
         $('.post-form').on('submit', (e) => {
             e.preventDefault();
             // set post_type value of the form to 1
@@ -158,6 +160,60 @@
                 }
             });
         })
+        $('.like-button').click(function() {
+            let postId = $(this).data('post-id');
+            $.ajax({
+                url: likePostUrl,
+                type: 'POST',
+                data: {
+                    post_id: postId,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: (data) => {
+                    let likesCount = data.likes_count;
+                    let dislikesCount = data.dislikes_count;
+                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
+                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    if(data.liked){
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    } else if (data.disliked) {
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                    } else {
+                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    }
+                }
+            });
+        });
+        $('.dislike-button').click(function() {
+            let postId = $(this).data('post-id');
+            $.ajax({
+                url: dislikePostUrl,
+                type: 'POST',
+                data: {
+                    post_id: postId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: (data) => {                    
+                    let likesCount = data.likes_count;
+                    let dislikesCount = data.dislikes_count;
+                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
+                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    if(data.liked){
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    } else if (data.disliked) {
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                    } else {
+                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    }
+                }
+            });
+        });
     });
 </script>
     
