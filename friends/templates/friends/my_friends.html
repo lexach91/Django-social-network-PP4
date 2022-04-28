@@ -29,7 +29,7 @@
                         <a href="{% url 'user_profile' friend.user.username %}">
                             View profile
                         </a>
-                        <a href="#">
+                        <a class="removeFriend" data-friend-id="{{ friend.id }}" href="javascript:void(0);">
                             Unfriend
                         </a>
                     </div>
@@ -58,10 +58,10 @@
                         <a href="{% url 'user_profile' friend_request.from_profile.user.username %}">
                             View profile
                         </a>
-                        <a href="#">
+                        <a class="acceptFriend" data-request-id="{{ friend_request.id }}" href="javascript:void(0);">
                             Accept
                         </a>
-                        <a href="#">
+                        <a class="declineFriend" data-request-id="{{ friend_request.id }}" href="javascript:void(0);">
                             Decline
                         </a>
                     </div>
@@ -100,7 +100,7 @@
 
 
     $('.acceptFriend').click(function() {
-        const id = $(this).data('id');
+        const id = $(this).data('request-id');
         $.ajax({
             url: acceptFriendUrl,
             method: 'POST',
@@ -110,14 +110,16 @@
             },
             success: function(data) {
                 console.log(data);
-                // need to replace the button with the message that the request has been sent
-                $('.acceptFriend[data-id=' + id + ']').replaceWith('<span>Friend request accepted</span>');
+                // need to remove the friend request from the list
+                // $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().remove();
+                // need to remove it with animation
+                $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().slideUp();
             }
         });
     });
 
     $('.declineFriend').click(function() {
-        const id = $(this).data('id');
+        const id = $(this).data('request-id');
         $.ajax({
             url: declineFriendUrl,
             method: 'POST',
@@ -128,7 +130,8 @@
             success: function(data) {
                 console.log(data);
                 // need to replace the button with the message that the request has been sent
-                $('.declineFriend[data-id=' + id + ']').replaceWith('<span>Friend request declined</span>');
+                // $('.declineFriend[data-id=' + id + ']').replaceWith('<span>Friend request declined</span>');
+                $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().slideUp();
             }
         });
     });

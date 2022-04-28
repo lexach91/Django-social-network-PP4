@@ -19,6 +19,7 @@ class Post(models.Model):
         null=True,
     )
     content = models.TextField(max_length=500)
+    has_media = models.BooleanField(default=False)
     image = CloudinaryField(
         'post_image',
         folder = 'posts',
