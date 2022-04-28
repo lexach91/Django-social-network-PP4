@@ -1,4 +1,3 @@
-from click import edit
 from django.db import models
 from django.contrib.auth.models import User
 from profiles.models import Profile
@@ -44,11 +43,24 @@ class Post(models.Model):
         null=True,
         blank=True
     )
+    likes = models.ManyToManyField(
+        User,
+        related_name='liked_posts',
+        blank=True
+    )
+    dislikes = models.ManyToManyField(
+        User,
+        related_name='disliked_posts',
+        blank=True
+    )
 
     class Meta:
         ordering = ['-created_at']
         
-        
+    def __str__(self):
+        return self.content
+
+
 class Comment(models.Model):
     author = models.ForeignKey(
         User,
