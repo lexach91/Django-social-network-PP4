@@ -47,3 +47,27 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        
+        
+class Comment(models.Model):
+    author = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name='comments',
+        null=True,
+    )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    content = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    edited = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return self.content
