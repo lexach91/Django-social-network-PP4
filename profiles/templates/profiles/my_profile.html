@@ -47,62 +47,69 @@
 </form>
 <div class="post-wall">
     {% for post in posts %}
-    <div class="post">
-        <div class="post-info">
-            <div class="post-author">
-                {% if post.author.profile.avatar %}
-                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
-                {% else %}
-                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
-                {% endif %}
-                <div class="post-author-name">
-                    <strong>
-                        <a href="{% url 'user_profile' post.author.username %}">
-                            {{ post.author.profile }}
-                        </a>
-                    </strong>
+        <div class="post" data-post-id="{{ post.id }}">
+            <div class="post-info">
+                <div class="post-author">
+                    {% if post.author.profile.avatar %}
+                        <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
+                    {% else %}
+                        <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
+                    {% endif %}
+                    <div class="post-author-name">
+                        <strong>
+                            <a href="{% url 'user_profile' post.author.username %}">
+                                {{ post.author.profile }}
+                            </a>
+                        </strong>
+                    </div>
+                </div>
+                <div class="post-time">
+                    {% if post.edited %}
+                        <em>Edited at
+                            {{ post.updated_at|date:"d/m/Y H:i" }}
+                        </em>
+                    {% else %} 
+                        <em>Posted at
+                            {{ post.created_at|date:"d/m/Y H:i" }}
+                        </em>
+                    {% endif %}
                 </div>
             </div>
-            <div class="post-time">
-                {% if post.edited %}
-                    <em>Edited at
-                        {{ post.updated_at|date:"d/m/Y H:i" }}
-                    </em>
-                {% else %} 
-                    <em>Posted at
-                        {{ post.created_at|date:"d/m/Y H:i" }}
-                    </em>
+            <div class="post-content">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="post image" class="post-image">
                 {% endif %}
+                <div class="post-text">
+                    {{ post.content }}
+                </div>
             </div>
-        </div>
-        <div class="post-content">
-            {% if post.image %}
-                <img src="{{ post.image.url }}" alt="post image" class="post-image">
-            {% endif %}
-            <div class="post-text">
-                {{ post.content }}
-            </div>
-        </div>
-        <div class="likes-dislikes">
-            <div class="likes">
-                {% if request.user in post.likes.all %}
-                    <i class="fas fa-heart like-button" data-post-id="{{ post.id }}"></i>
-                {% else %}
-                    <i class="far fa-heart like-button" data-post-id="{{ post.id }}"></i>
-                {% endif %}
-                <span class="likes-count">{{ post.get_likes }}</span>
-            </div>
-            <div class="dislikes">
-                {% if request.user in post.dislikes.all %}
-                    <i class="fas fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
-                {% else %}
-                    <i class="far fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
-                {% endif %}
-                <span class="dislikes-count">{{ post.get_dislikes }}</span>
-            </div>
+            <div class="likes-dislikes">
+                <div class="likes">
+                    {% if request.user in post.likes.all %}
+                        <i class="fas fa-heart like-button" data-post-id="{{ post.id }}"></i>
+                    {% else %}
+                        <i class="far fa-heart like-button" data-post-id="{{ post.id }}"></i>
+                    {% endif %}
+                    <span class="likes-count">{{ post.get_likes }}</span>
+                </div>
+                <div class="dislikes">
+                    {% if request.user in post.dislikes.all %}
+                        <i class="fas fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
+                    {% else %}
+                        <i class="far fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
+                    {% endif %}
+                    <span class="dislikes-count">{{ post.get_dislikes }}</span>
+                </div>
 
+            </div>
         </div>
-    </div>
+        <div class="comments-container" data-for-post="{{ post.id }}">
+            {% for comment in post.get_comments %}
+                <div class="comment" data-comment-id="{{ comment.id }}">
+                    {% comment %} code for comments {% endcomment %}
+                </div>
+            {% endfor %}
+        </div>
     {% endfor %}
 </div>
 
@@ -110,6 +117,8 @@
 <script>
     $(document).ready(function() {
         const createPostUrl = "{% url 'create_post_ajax' %}";
+        const likePostUrl = "{% url 'like_post_ajax' %}";
+        const dislikePostUrl = "{% url 'dislike_post_ajax' %}";
         $('.post-form').on('submit', (e) => {
             e.preventDefault();
             // set post_type value of the form to 1
@@ -158,7 +167,61 @@
                     $('.post-form').find('textarea').val('');                    
                 }
             });
-        })
+        });
+        $('.like-button').click(function() {
+            let postId = $(this).data('post-id');
+            $.ajax({
+                url: likePostUrl,
+                type: 'POST',
+                data: {
+                    post_id: postId,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: (data) => {
+                    let likesCount = data.likes_count;
+                    let dislikesCount = data.dislikes_count;
+                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
+                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    if(data.liked){
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    } else if (data.disliked) {
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                    } else {
+                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    }
+                }
+            });
+        });
+        $('.dislike-button').click(function() {
+            let postId = $(this).data('post-id');
+            $.ajax({
+                url: dislikePostUrl,
+                type: 'POST',
+                data: {
+                    post_id: postId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: (data) => {                    
+                    let likesCount = data.likes_count;
+                    let dislikesCount = data.dislikes_count;
+                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
+                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    if(data.liked){
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    } else if (data.disliked) {
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
+                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                    } else {
+                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
+                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                    }
+                }
+            });
+        });
     });
 </script>
 
