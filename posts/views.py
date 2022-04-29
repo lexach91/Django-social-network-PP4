@@ -103,3 +103,51 @@ class CreateCommentAjaxView(View):
             'content': comment.content,
         }
         return JsonResponse({'success': True, 'comment': comment_data})
+
+class LikeCommentAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        comment_id = request.POST.get('comment_id')
+        comment = Comment.objects.get(id=comment_id)
+        if request.user in comment.likes.all():
+            comment.likes.remove(request.user)
+        elif request.user in comment.dislikes.all():
+            comment.dislikes.remove(request.user)
+            # comment.likes.add(request.user)
+        else:
+            comment.likes.add(request.user)
+        comment.save()
+        likes_count = comment.get_likes()
+        dislikes_count = comment.get_dislikes()
+        liked = True if request.user in comment.likes.all() else False
+        disliked = True if request.user in comment.dislikes.all() else False
+        return JsonResponse({
+            'success': True,
+            'likes_count': likes_count,
+            'dislikes_count': dislikes_count,
+            'liked': liked,
+            'disliked': disliked
+            })
+        
+class DislikeCommentAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        comment_id = request.POST.get('comment_id')
+        comment = Comment.objects.get(id=comment_id)
+        if request.user in comment.dislikes.all():
+            comment.dislikes.remove(request.user)
+        elif request.user in comment.likes.all():
+            comment.likes.remove(request.user)
+            # comment.dislikes.add(request.user)
+        else:
+            comment.dislikes.add(request.user)
+        comment.save()
+        likes_count = comment.get_likes()
+        dislikes_count = comment.get_dislikes()
+        liked = True if request.user in comment.likes.all() else False
+        disliked = True if request.user in comment.dislikes.all() else False
+        return JsonResponse({
+            'success': True,
+            'likes_count': likes_count,
+            'dislikes_count': dislikes_count,
+            'disliked': disliked,
+            'liked': liked
+            })
