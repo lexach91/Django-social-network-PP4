@@ -83,6 +83,7 @@ class DislikePostAjaxView(View):
 class CreateCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
+        print(post_id)
         post = Post.objects.get(id=post_id)
         comment_content = request.POST.get('comment_content')
         comment = Comment(
@@ -101,6 +102,7 @@ class CreateCommentAjaxView(View):
             'avatar': avatar,
             'created_at': comment.created_at.strftime("%d/%m/%Y %H:%M"),
             'content': comment.content,
+            'id': comment.id
         }
         return JsonResponse({'success': True, 'comment': comment_data})
 

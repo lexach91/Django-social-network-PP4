@@ -42,7 +42,7 @@
 </div>
 <form class="post-form">
     {% csrf_token %}
-    {{ form }}
+    {{ post_form }}
     <button type="submit" class="post-submit">Post</button>
 </form>
 <div class="post-wall">
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="comments-container" data-for-post="{{ post.id }}">
+        <div class="comments-container" data-for-post="{{ post.id }}">            
             {% for comment in post.get_comments %}
                 <div class="comment" data-comment-id="{{ comment.id }}">
                     <div class="comment-info">
@@ -153,6 +153,11 @@
                     </div>
                 </div>
             {% endfor %}
+            <form class="comment-form" data-post-id="{{ post.id }}">
+                {% csrf_token %}
+                {{ comment_form }}
+                <button type="submit" class="comment-submit">Comment</button>
+            </form>
         </div>
     {% endfor %}
 </div>
@@ -160,6 +165,8 @@
 
 <script>
     $(document).ready(function() {
+        // all comment containers should be hidden by default, so we can use animate height toggle on them later
+        $('.comments-container').hide();
         const createPostUrl = "{% url 'create_post_ajax' %}";
         const likePostUrl = "{% url 'like_post_ajax' %}";
         const dislikePostUrl = "{% url 'dislike_post_ajax' %}";
@@ -296,6 +303,85 @@
             $(`div[data-for-post=${postId}]`).animate({
                 height: 'toggle'
             }, 500);
+        })
+        $('.comment-form').on('submit', (e) => {
+            e.preventDefault();
+            console.log(e.target);
+            let postId = $(e.target).data('post-id');
+            // console.log(postId);
+            let commentContent = $(e.target).find('textarea').val();
+            $.ajax({
+                url: createCommentUrl,
+                type: 'POST',
+                data: {
+                    post_id: postId,
+                    comment_content: commentContent,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: (data) => {
+                    let comment = data.comment;
+                    let avatarUrl;
+                    if(comment.avatar) {
+                        avatarUrl = comment.avatar.url;
+                    } else {
+                        avatarUrl = "{% static 'images/default_avatar.svg' %}";
+                    }
+                    let author = comment.author;
+                    let authorUrl = comment.author_url;
+                    let commentContent = comment.content;
+                    let createdAt = comment.created_at;
+                    let commentId = comment.id;
+                    // need to create html for comment and append it to the .comments-container but before the comment form
+                    let commentHtml = `
+                        <div class="comment">
+                            <div class="comment-info">
+                                <div class="comment-author">
+                                    <img src="${avatarUrl}" alt="avatar" class="comment-avatar">
+                                    <div class="comment-author-name">
+                                        <strong>
+                                            <a href="${authorUrl}">
+                                                ${author}
+                                            </a>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="comment-time">
+                                    <em>Posted at ${createdAt}</em>
+                                </div>
+                            </div>
+                            <div class="comment-content">
+                                <div class="comment-text">
+                                    ${commentContent}
+                                </div>
+                            </div>
+                            <div class="likes-dislikes">
+                                <div class="likes">
+                                    <i class="far fa-heart like-button" data-comment-id="${commentId}"></i>
+                                    <span class="likes-count">0</span>
+                                </div>
+                                <div class="dislikes">
+                                    <i class="far fa-times-circle dislike-button" data-comment-id="${commentId}"></i>
+                                    <span class="dislikes-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    // need to append the comment html to the .comments-container between the last comment and the comment form
+                    let commentsContainer = $(`div[data-for-post=${postId}]`);
+                    // append the comment html to the .comments-container after the last comment and before the comment form
+                    let lastComment = commentsContainer.find('.comment').last();
+                    if(lastComment.length) {
+                        lastComment.after(commentHtml);
+                    } else {
+                        commentsContainer.prepend(commentHtml);
+                    }
+
+                    // need to include this post's like/dislike button into event listener above
+
+                    // need to clear the textarea
+                    $(this).find('textarea').val('');
+                }
+            });
         })
     });
 </script>
