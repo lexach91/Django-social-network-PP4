@@ -160,6 +160,9 @@
         const createPostUrl = "{% url 'create_post_ajax' %}";
         const likePostUrl = "{% url 'like_post_ajax' %}";
         const dislikePostUrl = "{% url 'dislike_post_ajax' %}";
+        const createCommentUrl = "{% url 'create_comment_ajax' %}";
+        const likeCommentUrl = "{% url 'like_comment_ajax' %}";
+        const dislikeCommentUrl = "{% url 'dislike_comment_ajax' %}";
         $('.post-form').on('submit', (e) => {
             e.preventDefault();
             // set post_type value of the form to 1
@@ -211,54 +214,76 @@
         });
         $('.like-button').click(function() {
             let postId = $(this).data('post-id');
+            let commentId = $(this).data('comment-id');
+            let url;
+            if(commentId) {
+                url = likeCommentUrl;
+            } else {
+                url = likePostUrl;
+            }
             $.ajax({
-                url: likePostUrl,
+                url: url,
                 type: 'POST',
                 data: {
                     post_id: postId,
+                    comment_id: commentId,
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: (data) => {
                     let likesCount = data.likes_count;
                     let dislikesCount = data.dislikes_count;
-                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
-                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    let id = postId || commentId;
+                    let postOrComment = postId ? 'data-post-id=' : 'data-comment-id=';
+                    let selector = `i[${postOrComment}${id}]`;
+                    $(selector).parent().find('.likes-count').text(likesCount);
+                    $(selector).parent().find('.dislikes-count').text(dislikesCount);
                     if(data.liked){
-                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('far').addClass('fas');
+                        $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
                     } else if (data.disliked) {
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
-                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('far').addClass('fas');
+                        $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
                     } else {
-                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('fas').addClass('far');
+                        $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
                     }
                 }
             });
         });
         $('.dislike-button').click(function() {
             let postId = $(this).data('post-id');
+            let commentId = $(this).data('comment-id');
+            let url;
+            if(commentId) {
+                url = dislikeCommentUrl;
+            } else {
+                url = dislikePostUrl;
+            }
             $.ajax({
-                url: dislikePostUrl,
+                url: url,
                 type: 'POST',
                 data: {
                     post_id: postId,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                    comment_id: commentId,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
-                success: (data) => {                    
+                success: (data) => {
                     let likesCount = data.likes_count;
                     let dislikesCount = data.dislikes_count;
-                    $('i[data-post-id="' + postId + '"]').parent().find('.likes-count').text(likesCount);
-                    $('i[data-post-id="' + postId + '"]').parent().find('.dislikes-count').text(dislikesCount);
+                    let id = postId || commentId;
+                    let postOrComment = postId ? 'data-post-id=' : 'data-comment-id=';
+                    let selector = `i[${postOrComment}${id}]`;
+                    $(selector).parent().find('.likes-count').text(likesCount);
+                    $(selector).parent().find('.dislikes-count').text(dislikesCount);
                     if(data.liked){
-                        $('i[data-post-id="' + postId + '"].like-button').removeClass('far').addClass('fas');
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('far').addClass('fas');
+                        $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
                     } else if (data.disliked) {
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('far').addClass('fas');
-                        $('i[data-post-id="' + postId + '"].like-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('fas').addClass('far');
+                        $(`${selector}.dislike-button`).removeClass('far').addClass('fas');
                     } else {
-                        $('i[data-post-id="' + postId + '"]').removeClass('fas').addClass('far');
-                        $('i[data-post-id="' + postId + '"].dislike-button').removeClass('fas').addClass('far');
+                        $(`${selector}.like-button`).removeClass('fas').addClass('far');
+                        $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
                     }
                 }
             });
