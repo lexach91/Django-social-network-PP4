@@ -193,6 +193,50 @@ body {
     cursor: pointer;
 }
 
+/* ---------------- Comments -------------------- */
+.comments-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 2em;
+}
+
+.comment {
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    background-color: #dcddff;
+    padding: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0;
+}
+
+
+.comment-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 0.7em;
+}
+
+.comment-author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.comment-avatar {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    margin-right: .5em;
+}
+
+
 /* ---------------- Profiles/Friends/Requests list -------------------- */
 
 .friends-container {

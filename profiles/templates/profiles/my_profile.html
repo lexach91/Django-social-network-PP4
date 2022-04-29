@@ -130,6 +130,24 @@
                     <div class="comment-content">
                         {{ comment.content }}
                     </div>
+                    <div class="likes-dislikes">
+                        <div class="likes">
+                            {% if request.user in comment.likes.all %}
+                                <i class="fas fa-heart like-button" data-comment-id="{{ comment.id }}"></i>
+                            {% else %}
+                                <i class="far fa-heart like-button" data-comment-id="{{ comment.id }}"></i>
+                            {% endif %}
+                            <span class="likes-count">{{ comment.get_likes }}</span>
+                        </div>
+                        <div class="dislikes">
+                            {% if request.user in comment.dislikes.all %}
+                                <i class="fas fa-times-circle dislike-button" data-comment-id="{{ comment.id }}"></i>
+                            {% else %}
+                                <i class="far fa-times-circle dislike-button" data-comment-id="{{ comment.id }}"></i>
+                            {% endif %}
+                            <span class="dislikes-count">{{ comment.get_dislikes }}</span>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
