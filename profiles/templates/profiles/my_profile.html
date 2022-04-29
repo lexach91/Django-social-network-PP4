@@ -106,7 +106,30 @@
         <div class="comments-container" data-for-post="{{ post.id }}">
             {% for comment in post.get_comments %}
                 <div class="comment" data-comment-id="{{ comment.id }}">
-                    {% comment %} code for comments {% endcomment %}
+                    <div class="comment-info">
+                        <div class="comment-author">
+                            {% if comment.author.profile.avatar %}
+                                <img src="{{ comment.author.profile.avatar.url }}" alt="avatar" class="comment-avatar">
+                            {% else %}
+                                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="comment-avatar">
+                            {% endif %}
+                            <div class="comment-author-name">
+                                <strong>
+                                    <a href="{% url 'user_profile' comment.author.username %}">
+                                        {{ comment.author.profile }}
+                                    </a>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="comment-time">
+                            <em>
+                                {{ comment.created_at|date:"d/m/Y H:i" }}
+                            </em>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content }}
+                    </div>
                 </div>
             {% endfor %}
         </div>
