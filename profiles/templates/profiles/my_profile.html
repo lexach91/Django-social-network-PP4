@@ -100,7 +100,10 @@
                     {% endif %}
                     <span class="dislikes-count">{{ post.get_dislikes }}</span>
                 </div>
-
+                <div class="comments">
+                    <i class="far fa-comment-alt comment-button" data-post-id="{{ post.id }}"></i>
+                    <span class="comments-count">{{ post.comments_count }}</span>
+                </div>
             </div>
         </div>
         <div class="comments-container" data-for-post="{{ post.id }}">
@@ -288,6 +291,12 @@
                 }
             });
         });
+        $('.comment-button').click(function() {
+            let postId = $(this).data('post-id');
+            $(`div[data-for-post=${postId}]`).animate({
+                height: 'toggle'
+            }, 500);
+        })
     });
 </script>
 

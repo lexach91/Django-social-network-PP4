@@ -184,14 +184,16 @@ body {
     padding-bottom: .5em;
 }
 
-.likes {
+.likes-dislikes>div:not(:last-child) {
     margin-right: .5em;
+}
+
+.likes,
+.dislikes,
+.comments {
     cursor: pointer;
 }
 
-.dislikes {
-    cursor: pointer;
-}
 
 /* ---------------- Comments -------------------- */
 .comments-container {
