@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import JsonResponse
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 
 
@@ -79,3 +79,27 @@ class DislikePostAjaxView(View):
             'disliked': disliked,
             'liked': liked
             })
+        
+class CreateCommentAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        comment_content = request.POST.get('comment_content')
+        comment = Comment(
+            author=request.user,
+            post=post,
+            content=comment_content
+        )
+        comment.save()
+        if comment.author.profile.avatar:
+            avatar = comment.author.profile.avatar.url
+        else:
+            avatar = None
+        comment_data = {
+            'author': str(comment.author.profile),
+            'author_url': f'/profiles/{comment.author.username}',
+            'avatar': avatar,
+            'created_at': comment.created_at.strftime("%d/%m/%Y %H:%M"),
+            'content': comment.content,
+        }
+        return JsonResponse({'success': True, 'comment': comment_data})
