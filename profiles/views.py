@@ -1,4 +1,3 @@
-from calendar import c
 from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.http import JsonResponse, HttpResponseRedirect
