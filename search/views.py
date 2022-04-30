@@ -2,7 +2,6 @@ from django.shortcuts import render, reverse
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.db.models import Q
-from more_itertools import first
 from profiles.models import Profile
 from communities.models import Community
 
