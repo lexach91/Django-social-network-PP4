@@ -41,27 +41,26 @@ ALLOWED_HOSTS = ['django-social-network-project.herokuapp.com', 'localhost', '12
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'django.contrib.sites',
-    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    
-    'channels',
-    
+    'cloudinary_storage',
+    'django.contrib.staticfiles',
+    'cloudinary',
+    'chats',
     'home',
     'profiles',
     'friends',
     'communities',
     'search',
     'posts',
-    'chats',
 ]
 
 MIDDLEWARE = [
