@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+
+import django
+os.environ['DJANGO_SETTINGS_MODULE'] = 'social_network.settings'
+django.setup()
 import dj_database_url
 import django_heroku
 
