@@ -11,7 +11,7 @@ class MyProfileView(View):
         post_form = PostForm()
         comment_form = CommentForm()
         posts = Profile.objects.get(user=request.user).posts.all()
-        return render(request, 'profiles/my_profile.html', {'post_form': post_form, 'comment_form':comment_form, 'posts': posts})
+        return render(request, 'profiles/my_profile.html', {'post_form': post_form, 'comment_form': comment_form, 'posts': posts})
     
     
 class UserProfileView(View):

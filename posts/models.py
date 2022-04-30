@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 from profiles.models import Profile
 from communities.models import Community
-from cloudinary.models import CloudinaryField
 
 
 POST_TYPE_CHOICES = (
