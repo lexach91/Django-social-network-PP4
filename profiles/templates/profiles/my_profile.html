@@ -101,7 +101,7 @@
                     <span class="dislikes-count">{{ post.get_dislikes }}</span>
                 </div>
                 <div class="comments">
-                    <i class="far fa-comment-alt comment-button" data-post-id="{{ post.id }}"></i>
+                    <i class="far fa-comment comment-button" data-post-id="{{ post.id }}"></i>
                     <span class="comments-count">{{ post.comments_count }}</span>
                 </div>
             </div>
@@ -173,7 +173,57 @@
         const createCommentUrl = "{% url 'create_comment_ajax' %}";
         const likeCommentUrl = "{% url 'like_comment_ajax' %}";
         const dislikeCommentUrl = "{% url 'dislike_comment_ajax' %}";
-        $('.post-form').on('submit', (e) => {
+        // $('.post-form').on('submit', (e) => {
+        //     e.preventDefault();
+        //     // set post_type value of the form to 1
+        //     $('.post-form').find('input[name="post_type"]').val(1);
+        //     $('.post-form').find('input[name="profile"]').val('{{ user.profile.id }}');
+        //     $.ajax({
+        //         url: createPostUrl,
+        //         type: 'POST',
+        //         data: $('.post-form').serialize(),
+        //         success: (data) => {
+        //             let post = data.post;
+        //             let avatarUrl;
+        //             if(post.avatar) {
+        //                 avatarUrl = post.avatar.url;
+        //             } else {
+        //                 avatarUrl = "{% static 'images/default_avatar.svg' %}";
+        //             }
+        //             let author = post.author;
+        //             let authorUrl = post.author_url;
+        //             let postContent = post.content;
+        //             let createdAt = post.created_at;
+        //             $('.post-wall').prepend(`
+        //                 <div class="post">
+        //                     <div class="post-info">
+        //                         <div class="post-author">
+        //                             <img src="${avatarUrl}" alt="avatar" class="post-avatar">
+        //                             <div class="post-author-name">
+        //                                 <strong>
+        //                                     <a href="${authorUrl}">
+        //                                         ${author}
+        //                                     </a>
+        //                                 </strong>
+        //                             </div>
+        //                         </div>
+        //                         <div class="post-time">
+        //                             <em>Posted at ${createdAt}</em>
+        //                         </div>
+        //                     </div>
+        //                     <div class="post-content">
+        //                         <div class="post-text">
+        //                             ${postContent}
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             `);
+        //             $('.post-form').find('textarea').val('');                    
+        //         }
+        //     });
+        // });
+        // need to rewrite the event listener above into a function
+        const createPost = (e) => {
             e.preventDefault();
             // set post_type value of the form to 1
             $('.post-form').find('input[name="post_type"]').val(1);
@@ -195,7 +245,7 @@
                     let postContent = post.content;
                     let createdAt = post.created_at;
                     $('.post-wall').prepend(`
-                        <div class="post">
+                        <div class="post" data-post-id='${post.id}'>
                             <div class="post-info">
                                 <div class="post-author">
                                     <img src="${avatarUrl}" alt="avatar" class="post-avatar">
@@ -216,15 +266,92 @@
                                     ${postContent}
                                 </div>
                             </div>
+                            <div class="likes-dislikes">
+                                <div class="likes">
+                                    <i class="far fa-heart like-button" data-post-id="${post.id}"></i>
+                                    <span class="likes-count">0</span>
+                                </div>
+                                <div class="dislikes">
+                                    <i class="far fa-times-circle dislike-button" data-post-id="${post.id}"></i>
+                                    <span class="dislikes-count">0</span>
+                                </div>
+                                <div class="comments">
+                                    <i class="far fa-comment comment-button" data-post-id="${post.id}"></i>
+                                    <span class="comments-count">0</span>
+                                </div>
+                            </div>
                         </div>
                     `);
-                    $('.post-form').find('textarea').val('');                    
+                    // insert comments container and a comment form after the post
+                    // should look like this:
+                    // <div class="comments-container" data-for-post="39" style="display: none;">            
+                    //     <form class="comment-form" data-post-id="39">
+                    //         <input type="hidden" name="csrfmiddlewaretoken" value="MviLsdx9fVgpvupEVl6TMb3OUW1RDXEWfgsUnmWjbLjN51W8tH0Q5fVx3OzvhPse">
+                    //         <label for="id_content">Content:</label><textarea name="content" cols="40" rows="3" maxlength="500" required="" id="id_content"></textarea>
+                    //         <button type="submit" class="comment-submit">Comment</button>
+                    //     </form>
+                    // </div>
+                    $('.post-wall').find(`div[data-post-id='${post.id}']`).after(`
+                        <div class="comments-container" data-for-post="${post.id}" style="display: none;">            
+                            <form class="comment-form" data-post-id="${post.id}">
+                                {% csrf_token %}
+                                {{ comment_form }}
+                                <button type="submit" class="comment-submit">Comment</button>
+                            </form>
+                        </div>
+                    `);
+
+                    $('.post-form').find('textarea').val('');
+                    // put event listeners on the new post's like/dislike buttons
+                    $(`.like-button[data-post-id='${post.id}']`).on('click', likeHandler);
+                    $(`.dislike-button[data-post-id='${post.id}']`).on('click', dislikeHandler);
+                    $(`.comment-button[data-post-id='${post.id}']`).on('click', commentHandler);
+                    $(`.comment-form[data-post-id='${post.id}']`).on('submit', createComment);
                 }
             });
-        });
-        $('.like-button').click(function() {
-            let postId = $(this).data('post-id');
-            let commentId = $(this).data('comment-id');
+        };
+        // $('.like-button').click(function() {
+        //     let postId = $(this).data('post-id');
+        //     let commentId = $(this).data('comment-id');
+        //     let url;
+        //     if(commentId) {
+        //         url = likeCommentUrl;
+        //     } else {
+        //         url = likePostUrl;
+        //     }
+        //     $.ajax({
+        //         url: url,
+        //         type: 'POST',
+        //         data: {
+        //             post_id: postId,
+        //             comment_id: commentId,
+        //             csrfmiddlewaretoken: "{{ csrf_token }}"
+        //         },
+        //         success: (data) => {
+        //             let likesCount = data.likes_count;
+        //             let dislikesCount = data.dislikes_count;
+        //             let id = postId || commentId;
+        //             let postOrComment = postId ? 'data-post-id=' : 'data-comment-id=';
+        //             let selector = `i[${postOrComment}${id}]`;
+        //             $(selector).parent().find('.likes-count').text(likesCount);
+        //             $(selector).parent().find('.dislikes-count').text(dislikesCount);
+        //             if(data.liked){
+        //                 $(`${selector}.like-button`).removeClass('far').addClass('fas');
+        //                 $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
+        //             } else if (data.disliked) {
+        //                 $(`${selector}.like-button`).removeClass('far').addClass('fas');
+        //                 $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
+        //             } else {
+        //                 $(`${selector}.like-button`).removeClass('fas').addClass('far');
+        //                 $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
+        //             }
+        //         }
+        //     });
+        // });
+        // need to rewrite the event listener above into a function
+        const likeHandler = (e) =>{
+            let postId = $(e.target).data('post-id');
+            let commentId = $(e.target).data('comment-id');
             let url;
             if(commentId) {
                 url = likeCommentUrl;
@@ -259,10 +386,50 @@
                     }
                 }
             });
-        });
-        $('.dislike-button').click(function() {
-            let postId = $(this).data('post-id');
-            let commentId = $(this).data('comment-id');
+        };
+         
+        // $('.dislike-button').click(function() {
+        //     let postId = $(this).data('post-id');
+        //     let commentId = $(this).data('comment-id');
+        //     let url;
+        //     if(commentId) {
+        //         url = dislikeCommentUrl;
+        //     } else {
+        //         url = dislikePostUrl;
+        //     }
+        //     $.ajax({
+        //         url: url,
+        //         type: 'POST',
+        //         data: {
+        //             post_id: postId,
+        //             comment_id: commentId,
+        //             csrfmiddlewaretoken: "{{ csrf_token }}"
+        //         },
+        //         success: (data) => {
+        //             let likesCount = data.likes_count;
+        //             let dislikesCount = data.dislikes_count;
+        //             let id = postId || commentId;
+        //             let postOrComment = postId ? 'data-post-id=' : 'data-comment-id=';
+        //             let selector = `i[${postOrComment}${id}]`;
+        //             $(selector).parent().find('.likes-count').text(likesCount);
+        //             $(selector).parent().find('.dislikes-count').text(dislikesCount);
+        //             if(data.liked){
+        //                 $(`${selector}.like-button`).removeClass('far').addClass('fas');
+        //                 $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
+        //             } else if (data.disliked) {
+        //                 $(`${selector}.like-button`).removeClass('fas').addClass('far');
+        //                 $(`${selector}.dislike-button`).removeClass('far').addClass('fas');
+        //             } else {
+        //                 $(`${selector}.like-button`).removeClass('fas').addClass('far');
+        //                 $(`${selector}.dislike-button`).removeClass('fas').addClass('far');
+        //             }
+        //         }
+        //     });
+        // });
+        // need to rewrite the event listener above into a function
+        const dislikeHandler = (e) => {
+            let postId = $(e.target).data('post-id');
+            let commentId = $(e.target).data('comment-id');
             let url;
             if(commentId) {
                 url = dislikeCommentUrl;
@@ -297,14 +464,100 @@
                     }
                 }
             });
-        });
-        $('.comment-button').click(function() {
-            let postId = $(this).data('post-id');
+        };
+        // $('.comment-button').click(function() {
+        //     let postId = $(this).data('post-id');
+        //     $(`div[data-for-post=${postId}]`).animate({
+        //         height: 'toggle'
+        //     }, 500);
+        // })
+        const commentHandler = (e) => {
+            let postId = $(e.target).data('post-id');
             $(`div[data-for-post=${postId}]`).animate({
                 height: 'toggle'
             }, 500);
-        })
-        $('.comment-form').on('submit', (e) => {
+        };
+        // $('.comment-form').on('submit', (e) => {
+        //     e.preventDefault();
+        //     console.log(e.target);
+        //     let postId = $(e.target).data('post-id');
+        //     // console.log(postId);
+        //     let commentContent = $(e.target).find('textarea').val();
+        //     $.ajax({
+        //         url: createCommentUrl,
+        //         type: 'POST',
+        //         data: {
+        //             post_id: postId,
+        //             comment_content: commentContent,
+        //             csrfmiddlewaretoken: "{{ csrf_token }}"
+        //         },
+        //         success: (data) => {
+        //             let comment = data.comment;
+        //             let avatarUrl;
+        //             if(comment.avatar) {
+        //                 avatarUrl = comment.avatar.url;
+        //             } else {
+        //                 avatarUrl = "{% static 'images/default_avatar.svg' %}";
+        //             }
+        //             let author = comment.author;
+        //             let authorUrl = comment.author_url;
+        //             let commentContent = comment.content;
+        //             let createdAt = comment.created_at;
+        //             let commentId = comment.id;
+        //             // need to create html for comment and append it to the .comments-container but before the comment form
+        //             let commentHtml = `
+        //                 <div class="comment">
+        //                     <div class="comment-info">
+        //                         <div class="comment-author">
+        //                             <img src="${avatarUrl}" alt="avatar" class="comment-avatar">
+        //                             <div class="comment-author-name">
+        //                                 <strong>
+        //                                     <a href="${authorUrl}">
+        //                                         ${author}
+        //                                     </a>
+        //                                 </strong>
+        //                             </div>
+        //                         </div>
+        //                         <div class="comment-time">
+        //                             <em>Posted at ${createdAt}</em>
+        //                         </div>
+        //                     </div>
+        //                     <div class="comment-content">
+        //                         <div class="comment-text">
+        //                             ${commentContent}
+        //                         </div>
+        //                     </div>
+        //                     <div class="likes-dislikes">
+        //                         <div class="likes">
+        //                             <i class="far fa-heart like-button" data-comment-id="${commentId}"></i>
+        //                             <span class="likes-count">0</span>
+        //                         </div>
+        //                         <div class="dislikes">
+        //                             <i class="far fa-times-circle dislike-button" data-comment-id="${commentId}"></i>
+        //                             <span class="dislikes-count">0</span>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             `;
+        //             // need to append the comment html to the .comments-container between the last comment and the comment form
+        //             let commentsContainer = $(`div[data-for-post=${postId}]`);
+        //             // append the comment html to the .comments-container after the last comment and before the comment form
+        //             let lastComment = commentsContainer.find('.comment').last();
+        //             if(lastComment.length) {
+        //                 lastComment.after(commentHtml);
+        //             } else {
+        //                 commentsContainer.prepend(commentHtml);
+        //             }
+
+        //             // need to include this post's like/dislike button into event listener above
+
+        //             // need to clear the textarea
+        //             $(this).find('textarea').val('');
+        //         }
+        //     });
+        // })
+        // need to rewrite the event listener above into a function
+        const createComment = (e) =>{
             e.preventDefault();
             console.log(e.target);
             let postId = $(e.target).data('post-id');
@@ -380,9 +633,18 @@
 
                     // need to clear the textarea
                     $(this).find('textarea').val('');
+                    // need to add event listener to the like/dislike buttons
+                    $('.like-button').on('click', likeHandler);
+                    $('.dislike-button').on('click', dislikeHandler);
                 }
             });
-        })
+        };
+
+        $('.post-form').on('submit', createPost);
+        $('.comment-form').on('submit', createComment);
+        $('.like-button').on('click', likeHandler);
+        $('.dislike-button').on('click', dislikeHandler);
+        $('.comment-button').on('click', commentHandler);
     });
 </script>
 

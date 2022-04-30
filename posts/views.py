@@ -26,6 +26,7 @@ class CreatePostAjaxView(View):
                 # created_at should be in format as it is in temlate date:"d/m/Y H:i"
                 'created_at': post.created_at.strftime("%d/%m/%Y %H:%M"),
                 'content': post.content,
+                'id': post.id,
             }
             return JsonResponse({'success': True, 'post': post_data})
         else:
