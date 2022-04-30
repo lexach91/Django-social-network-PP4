@@ -103,7 +103,8 @@ class CreateCommentAjaxView(View):
             'avatar': avatar,
             'created_at': comment.created_at.strftime("%d/%m/%Y %H:%M"),
             'content': comment.content,
-            'id': comment.id
+            'id': comment.id,
+            'comment_count': comment.post.comments_count()
         }
         return JsonResponse({'success': True, 'comment': comment_data})
 

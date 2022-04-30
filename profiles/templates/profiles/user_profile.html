@@ -287,6 +287,11 @@
                         commentsContainer.prepend(commentHtml);
                     }
 
+                    let commentCount = data.comment.comment_count;
+                    console.log(commentCount);
+                    let postElement = $(`.post[data-post-id=${postId}]`);
+                    postElement.find('.comments-count').text(commentCount);
+
 
                     $(this).find('textarea').val('');
                     $('.like-button').on('click', likeHandler);
