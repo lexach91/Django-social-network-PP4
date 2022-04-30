@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 
 import django
-os.environ['DJANGO_SETTINGS_MODULE'] = 'social_network.settings'
-django.setup()
+# os.environ['DJANGO_SETTINGS_MODULE'] = 'social_network.settings'
+# django.setup()
 import dj_database_url
 import django_heroku
 
@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
+ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS"), 'localhost', '127.0.0.1']
 
 
 # Application definition
