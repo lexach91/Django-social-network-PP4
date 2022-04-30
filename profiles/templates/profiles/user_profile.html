@@ -39,71 +39,9 @@
     </div>
 
 </div>
-<form class="post-form">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="post-submit">Post</button>
-</form>
-<div class="post-wall">
-    {% for post in posts %}
-    <div class="post">
-        <div class="post-info">
-            <div class="post-author">
-                {% if post.author.profile.avatar %}
-                    <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
-                {% else %}
-                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
-                {% endif %}
-                <div class="post-author-name">
-                    <strong>
-                        <a href="{% url 'user_profile' post.author.username %}">
-                            {{ post.author.profile }}
-                        </a>
-                    </strong>
-                </div>
-            </div>
-            <div class="post-time">
-                {% if post.edited %}
-                    <em>Edited at
-                        {{ post.updated_at|date:"d/m/Y H:i" }}
-                    </em>
-                {% else %} 
-                    <em>Posted at
-                        {{ post.created_at|date:"d/m/Y H:i" }}
-                    </em>
-                {% endif %}
-            </div>
-        </div>
-        <div class="post-content">
-            {% if post.image %}
-                <img src="{{ post.image.url }}" alt="post image" class="post-image">
-            {% endif %}
-            <div class="post-text">
-                {{ post.content }}
-            </div>
-        </div>
-        <div class="likes-dislikes">
-            <div class="likes">
-                {% if request.user in post.likes.all %}
-                    <i class="fas fa-heart like-button" data-post-id="{{ post.id }}"></i>
-                {% else %}
-                    <i class="far fa-heart like-button" data-post-id="{{ post.id }}"></i>
-                {% endif %}
-                <span class="likes-count">{{ post.get_likes }}</span>
-            </div>
-            <div class="dislikes">
-                {% if request.user in post.dislikes.all %}
-                    <i class="fas fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
-                {% else %}
-                    <i class="far fa-times-circle dislike-button" data-post-id="{{ post.id }}"></i>
-                {% endif %}
-                <span class="dislikes-count">{{ post.get_dislikes }}</span>
-            </div>
 
-        </div>
-    </div>
-    {% endfor %}
-</div>
+{% include 'profiles/post_wall.html' %}
+
 
 
 <script>
