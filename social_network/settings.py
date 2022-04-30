@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 
 import django
-# os.environ['DJANGO_SETTINGS_MODULE'] = 'social_network.settings'
-# django.setup()
+os.environ['DJANGO_SETTINGS_MODULE'] = 'social_network.settings'
+django.setup()
 import dj_database_url
 import django_heroku
 
