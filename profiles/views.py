@@ -20,6 +20,7 @@ class UserProfileView(View):
         user_profile = Profile.objects.get(user__username=username)
         if user_profile.user == request.user:
             return HttpResponseRedirect(reverse('my_profile'))
-        form = PostForm()
+        post_form = PostForm()
+        comment_form = CommentForm()
         posts = user_profile.posts.all()
-        return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'form': form, 'posts': posts})
+        return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'post_form': post_form, 'comment_form':comment_form, 'posts': posts})
