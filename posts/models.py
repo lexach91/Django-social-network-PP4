@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from sqlalchemy import null
 from profiles.models import Profile
 from communities.models import Community
 
@@ -24,6 +25,12 @@ class Post(models.Model):
         folder = 'posts',
         null = True,
         blank = True
+    )
+    video = CloudinaryField(
+        'post_video',
+        folder='posts',
+        null=True,
+        blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

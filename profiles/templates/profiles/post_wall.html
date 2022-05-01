@@ -35,8 +35,16 @@
                 </div>
             </div>
             <div class="post-content">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="post image" class="post-image">
+                {% if post.has_media %}
+                <div class="post-media">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="post image" class="post-image">
+                    {% elif post.video %}
+                        <video controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                        </video>
+                    {% endif %}
+                </div>
                 {% endif %}
                 <div class="post-text">
                     {{ post.content }}
