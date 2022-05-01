@@ -40,7 +40,7 @@
                     {% if post.image %}
                         <img src="{{ post.image.url }}" alt="post image" class="post-image">
                     {% elif post.video %}
-                        <video controls>
+                        <video controls class="post-video">
                             <source src="{{ post.video.url }}" type="video/mp4">
                         </video>
                     {% endif %}

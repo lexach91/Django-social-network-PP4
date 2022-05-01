@@ -194,6 +194,24 @@ body {
     cursor: pointer;
 }
 
+.post-media {
+    width: 100%;
+    height: auto;
+    max-height: 30em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    max-height: 30em;
+    object-fit: cover;
+    object-position: center;
+}
+
 
 /* ---------------- Comments -------------------- */
 .comments-container {
