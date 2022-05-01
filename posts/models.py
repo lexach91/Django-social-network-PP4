@@ -1,10 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
-from sqlalchemy import null
 from profiles.models import Profile
 from communities.models import Community
-
 
 POST_TYPE_CHOICES = (
     (1, 'profile_wall'),

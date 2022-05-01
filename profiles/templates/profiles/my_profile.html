@@ -56,17 +56,37 @@
         
         const createPost = (e) => {
             e.preventDefault();
+            const form = $(e.target);
             $('.post-form').find('input[name="post_type"]').val(1);
             $('.post-form').find('input[name="profile"]').val('{{ user.profile.id }}');
+            // need to get the image url and put it in the form
+            // $('.post-form').find('input[name="image"]').val($('.post-form').find('input[name="image"]').val());
+            // let author = $('.post-form').find('input[name="profile"]').val();
+            // let post_type = $('.post-form').find('input[name="post_type"]').val();
+            // let image = $('.post-form').find('input[name="image"]').val();
+            // let content = $('.post-form').find('textarea[name="content"]').val();
+            // let data = {
+            //     'author': author,
+            //     'post_type': post_type,
+            //     'image': image,
+            //     'content': content,
+            //     'csrfmiddlewaretoken': '{{ csrf_token }}'
+            // }
+            let data = new FormData(form[0]);
+
             $.ajax({
                 url: createPostUrl,
                 type: 'POST',
-                data: $('.post-form').serialize(),
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: data,                
                 success: (data) => {
                     let post = data.post;
+                    console.log(post.avatar);
                     let avatarUrl;
                     if(post.avatar) {
-                        avatarUrl = post.avatar.url;
+                        avatarUrl = post.avatar;
                     } else {
                         avatarUrl = "{% static 'images/default_avatar.svg' %}";
                     }
@@ -112,6 +132,14 @@
                             </div>
                         </div>
                     `);
+                    // check if the post has_media and if it does, add it to the .post-content before .post-text
+                    if(post.has_media) {
+                        $(`.post[data-post-id='${post.id}'] .post-content`).prepend(`
+                            <div class="post-media">
+                                <img src="${post.image}" alt="post-image" class="post-image">
+                            </div>
+                        `);
+                    }
                     
                     $('.post-wall').find(`div[data-post-id='${post.id}']`).after(`
                         <div class="comments-container" data-for-post="${post.id}" style="display: none;">            

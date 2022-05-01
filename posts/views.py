@@ -8,17 +8,26 @@ from .forms import PostForm
 # Create your views here.
 class CreatePostAjaxView(View):
     def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         print(form.is_valid())
         if form.is_valid():
+            print(form.cleaned_data)
             post = form.save(commit=False)
+            post.has_media = True if request.FILES else False
+            if post.has_media:
+                post.image = request.FILES['image']
+            
             post.author = request.user
             post.save()
             # need to return the post object
-            if post.author.profile.avatar:
-                avatar = post.author.profile.avatar.url
-            else:
-                avatar = None
+            avatar = None
+            if request.user.profile.avatar:
+                avatar = request.user.profile.avatar.url
+                print(avatar)
+                print(request.user.profile)
+                print(request.user.profile.avatar)
+                print(request.user.profile.avatar.url)
+            print(avatar)
             post_data = {
                 'author': str(post.author.profile),
                 'author_url': f'/profiles/{post.author.username}',
@@ -27,6 +36,8 @@ class CreatePostAjaxView(View):
                 'created_at': post.created_at.strftime("%d/%m/%Y %H:%M"),
                 'content': post.content,
                 'id': post.id,
+                'has_media': post.has_media,
+                'image': post.image.url if post.has_media else None,
             }
             return JsonResponse({'success': True, 'post': post_data})
         else:
