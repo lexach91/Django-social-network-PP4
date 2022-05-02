@@ -1,9 +1,8 @@
 $(document).ready(function() {
+    const roomName = JSON.parse(document.getElementById('room_name').textContent);
     const socketProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 
-    // socket will connect to the address that looks like:
-    // ws://127.0.0.1:8080/my_messages/chat-with-<str:username>/
-    const socket = new WebSocket(socketProtocol + '//' + window.location.host + window.location.pathname);
+    const socket = new WebSocket(socketProtocol + '//' + window.location.host + '/ws/chat/' + roomName + '/');
 
     const messageContainer = $('.chat-messages');
     messageContainer.scrollTop(messageContainer.prop('scrollHeight'));
@@ -69,6 +68,7 @@ $(document).ready(function() {
                 chatId: chatId
               })
             );
+            $('.emojionearea-editor').html('');
             $('.chat-input').val('');
         }
     }
