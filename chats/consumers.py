@@ -9,7 +9,7 @@ from channels.db import database_sync_to_async
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user = self.scope['user']
-        self.room_name = self.scope['url_route']['kwargs']['username']
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
         # Join room group
         await self.channel_layer.group_add(
@@ -74,7 +74,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'message': message,
             'author': author,
             'sendBy': send_by,
-            # 'chatId': chat_id
+            # 'chatId': chat_id,
         }))
         
     # function to save message to database
