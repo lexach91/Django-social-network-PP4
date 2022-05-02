@@ -11,14 +11,21 @@
 
     {% endblock %}
 
-    {% block extrajs %}
+    {% block jslibraries %}
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://kit.fontawesome.com/8e4b08b302.js" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {% block extrajs %}
     {% endblock %}
 
     {% block corecss %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
+
+    {% block extracss %}
+    {% endblock %}
+
 
     <title>Document</title>
 </head>
