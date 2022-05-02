@@ -22,4 +22,5 @@ class ChatView(View):
             chat.save()
         if not chat.messages.filter(is_read=False).exists():
             chat.messages.update(is_read=True)
-        return render(request, 'chats/chat_detail.html', {'chat': chat})
+        room_name = chat.id
+        return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name})
