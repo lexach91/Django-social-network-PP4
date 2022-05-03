@@ -11,7 +11,7 @@ class ChangeAvatarForm(forms.ModelForm):
         }
         
 
-class EditProfileInfo(forms.ModelForm):
+class EditProfileInfoForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'country', 'city', 'bio', 'birth_date']
