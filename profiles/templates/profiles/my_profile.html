@@ -12,6 +12,8 @@
                 <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
             {% endif %}
             <i class="fas fa-edit edit-avatar"></i>
+            <i class="fas fa-check accept-avatar hidden"></i>
+            <i class="fas fa-times cancel-avatar hidden"></i>
         </div>
 
     </div>
@@ -54,6 +56,8 @@
         const likeCommentUrl = "{% url 'like_comment_ajax' %}";
         const dislikeCommentUrl = "{% url 'dislike_comment_ajax' %}";
         const editAvatarBtn = $('.edit-avatar');
+        const acceptAvatarBtn = $('.accept-avatar');
+        const cancelAvatarBtn = $('.cancel-avatar');
         
         const createPost = (e) => {
             e.preventDefault();
@@ -345,7 +349,17 @@
                 console.log("file selected");
                 // need to replace avatar image with selected file in the frontend
                 let file = e.target.files[0];
+                let currentAvatarUrl = $('.avatar').attr('src');
                 $('.avatar').attr('src', URL.createObjectURL(file));
+                $(editAvatarBtn).addClass('hidden');
+                $(acceptAvatarBtn).removeClass('hidden');
+                $(cancelAvatarBtn).removeClass('hidden');
+                $(cancelAvatarBtn).click(() => {
+                    $('.avatar').attr('src', currentAvatarUrl);
+                    $(editAvatarBtn).removeClass('hidden');
+                    $(acceptAvatarBtn).addClass('hidden');
+                    $(cancelAvatarBtn).addClass('hidden');
+                });
             })
         });
     });
