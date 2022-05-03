@@ -33,3 +33,13 @@ class UserProfileView(View):
         comment_form = CommentForm()
         posts = user_profile.posts.all()
         return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'post_form': post_form, 'comment_form':comment_form, 'posts': posts})
+
+
+class EditAvatarAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        new_avatar = request.FILES['avatar']
+        user.profile.avatar = new_avatar
+        user.profile.save()
+        avatar_url = user.profile.avatar.url
+        return JsonResponse({'success': True, 'avatar_url': avatar_url})

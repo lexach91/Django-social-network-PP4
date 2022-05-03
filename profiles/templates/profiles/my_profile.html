@@ -55,6 +55,7 @@
         const createCommentUrl = "{% url 'create_comment_ajax' %}";
         const likeCommentUrl = "{% url 'like_comment_ajax' %}";
         const dislikeCommentUrl = "{% url 'dislike_comment_ajax' %}";
+        const editAvatarUrl = "{% url 'edit_avatar_ajax' %}";
         const editAvatarBtn = $('.edit-avatar');
         const acceptAvatarBtn = $('.accept-avatar');
         const cancelAvatarBtn = $('.cancel-avatar');
@@ -349,7 +350,7 @@
                 console.log("file selected");
                 // need to replace avatar image with selected file in the frontend
                 let file = e.target.files[0];
-                let currentAvatarUrl = $('.avatar').attr('src');
+                let currentAvatarUrl = "{{ user.avatar.url }}";
                 $('.avatar').attr('src', URL.createObjectURL(file));
                 $(editAvatarBtn).addClass('hidden');
                 $(acceptAvatarBtn).removeClass('hidden');
@@ -359,6 +360,27 @@
                     $(editAvatarBtn).removeClass('hidden');
                     $(acceptAvatarBtn).addClass('hidden');
                     $(cancelAvatarBtn).addClass('hidden');
+                });
+                $(acceptAvatarBtn).click(() => {
+                    let formData = new FormData();
+                    formData.append('avatar', file);
+                    formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+                    $.ajax({
+                        url: editAvatarUrl,
+                        type: 'POST',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        data: formData,
+                        success: (data) => {
+                            console.log(data);
+                            $(editAvatarBtn).removeClass('hidden');
+                            $(acceptAvatarBtn).addClass('hidden');
+                            $(cancelAvatarBtn).addClass('hidden');
+                            // change avatar for this user in all posts
+                            $('img[src="' + currentAvatarUrl + '"]').attr('src', data.avatar_url);
+                        }
+                    });
                 });
             })
         });
