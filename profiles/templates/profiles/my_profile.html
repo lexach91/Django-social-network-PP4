@@ -53,6 +53,7 @@
         const createCommentUrl = "{% url 'create_comment_ajax' %}";
         const likeCommentUrl = "{% url 'like_comment_ajax' %}";
         const dislikeCommentUrl = "{% url 'dislike_comment_ajax' %}";
+        const editAvatarBtn = $('.edit-avatar');
         
         const createPost = (e) => {
             e.preventDefault();
@@ -333,6 +334,20 @@
         $('.like-button').on('click', likeHandler);
         $('.dislike-button').on('click', dislikeHandler);
         $('.comment-button').on('click', commentHandler);
+        $(editAvatarBtn).on('click', () => {
+            // need to open select file dialog
+            let fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.click();
+            $(fileInput).on('change', (e) => {
+                console.log(e.target.files[0]);
+                console.log("file selected");
+                // need to replace avatar image with selected file in the frontend
+                let file = e.target.files[0];
+                $('.avatar').attr('src', URL.createObjectURL(file));
+            })
+        });
     });
 </script>
 

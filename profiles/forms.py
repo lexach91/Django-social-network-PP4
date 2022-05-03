@@ -7,9 +7,12 @@ class ChangeAvatarForm(forms.ModelForm):
         model = Profile
         fields = ['avatar']
         widgets = {
-            'avatar': forms.ClearableFileInput(attrs={'multiple': False, 'class': 'edit-avatar-btn'}),
+            'avatar': forms.ClearableFileInput(attrs={
+                'multiple': False,
+                'class': 'edit-avatar-btn'
+                }),
         }
-        
+
 
 class EditProfileInfoForm(forms.ModelForm):
     class Meta:

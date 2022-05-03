@@ -16,6 +16,7 @@ class CreatePostAjaxView(View):
             post.has_media = True if request.FILES else False
             if post.has_media:
                 post.image = request.FILES['image']
+                print(request.FILES['image'])
             
             post.author = request.user
             post.save()
