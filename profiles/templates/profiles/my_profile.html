@@ -350,7 +350,9 @@
                 console.log("file selected");
                 // need to replace avatar image with selected file in the frontend
                 let file = e.target.files[0];
-                let currentAvatarUrl = "{{ user.avatar.url }}";
+                e.target.value = '';
+                let currentAvatarUrl = "{{ user.profile.avatar.url }}";
+                console.log(currentAvatarUrl);
                 $('.avatar').attr('src', URL.createObjectURL(file));
                 $(editAvatarBtn).addClass('hidden');
                 $(acceptAvatarBtn).removeClass('hidden');
@@ -360,6 +362,10 @@
                     $(editAvatarBtn).removeClass('hidden');
                     $(acceptAvatarBtn).addClass('hidden');
                     $(cancelAvatarBtn).addClass('hidden');
+                    $(fileInput).remove();
+                    $(fileInput).off('change');
+                    $(cancelAvatarBtn).off('click');
+                    $(acceptAvatarBtn).off('click');
                 });
                 $(acceptAvatarBtn).click(() => {
                     let formData = new FormData();
@@ -378,7 +384,14 @@
                             $(acceptAvatarBtn).addClass('hidden');
                             $(cancelAvatarBtn).addClass('hidden');
                             // change avatar for this user in all posts
-                            $('img[src="' + currentAvatarUrl + '"]').attr('src', data.avatar_url);
+                            // $('img[src="' + currentAvatarUrl + '"]').attr('src', data.avatar_url);
+                            $('.post[data-post-id]').each((index, element) => {
+                                $(element).find('.post-avatar').attr('src', data.avatar_url);
+                            });
+                            // remove event handlers from accept and cancel buttons
+                            $(acceptAvatarBtn).off('click');
+                            $(cancelAvatarBtn).off('click');
+                            $(fileInput).remove();
                         }
                     });
                 });
