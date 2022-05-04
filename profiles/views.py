@@ -3,6 +3,8 @@ from django.views import View
 from django.http import JsonResponse, HttpResponseRedirect
 from posts.forms import PostForm, CommentForm
 from .forms import EditProfileInfoForm, ChangeAvatarForm
+# import form for password change from allauth
+from django.contrib.auth.forms import PasswordChangeForm
 
 from .models import Profile
 # Create your views here.
@@ -43,3 +45,16 @@ class EditAvatarAjaxView(View):
         user.profile.save()
         avatar_url = user.profile.avatar.url
         return JsonResponse({'success': True, 'avatar_url': avatar_url})
+    
+
+class EditProfileView(View):
+    def get(self, request, *args, **kwargs):
+        profile_form = EditProfileInfoForm(instance=request.user.profile)
+        password_form = PasswordChangeForm(user=request.user)
+        avatar_form = ChangeAvatarForm(instance=request.user.profile)
+        context = {
+            'profile_form': profile_form,
+            'password_form': password_form,
+            'avatar_form': avatar_form,
+        }
+        return render(request, 'profiles/edit_profile.html', context)
