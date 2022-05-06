@@ -1,7 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{{ profile_form }}
-{{ avatar_form }}
-{{ password_form }}
+    <div class="profile-container">
+        <div class="profile-info">
+            <div class="avatar-container edit-page">
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="avatar-buttons">
+                    <button class="btn edit-avatar-btn" id="edit-avatar-btn">Edit</button>
+                    <button class="btn reset-avatar-btn" id="reset-avatar-btn">Reset</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="profile-bio">
+            <div class="profile-name">
+                <strong>Name: </strong>{{ user.profile }}
+            </div>
+            <div class="profile-age">
+                <strong>Age: </strong>{{ user.profile.age }} years old
+            </div>
+            <div class="profile-location">
+                <strong>Location:</strong>
+                {% if user.profile.location %}
+                    Lives in {{ user.profile.location }}
+                {% else %}
+                    No location specified...
+                {% endif %}
+            </div>
+            <div class="profile-bio-text">
+                <strong>Bio:</strong>            
+                {% if user.profile.bio %}
+                    {{ user.profile.bio }}
+                {% else %}
+                    No bio
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ profile_form }}
+    {{ password_form }}
 {% endblock %}
