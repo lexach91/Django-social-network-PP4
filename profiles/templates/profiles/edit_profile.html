@@ -10,38 +10,36 @@
                     <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
                 {% endif %}
                 <div class="avatar-buttons">
-                    <button class="btn edit-avatar-btn" id="edit-avatar-btn">Edit</button>
-                    <button class="btn reset-avatar-btn" id="reset-avatar-btn">Reset</button>
+                    <button class="edit-avatar-btn" id="edit-avatar-btn">Edit</button>
+                    <button class="reset-avatar-btn" id="reset-avatar-btn">Reset</button>
                 </div>
             </div>
 
         </div>
         <div class="profile-bio">
-            <div class="profile-name">
-                <strong>Name: </strong>{{ user.profile }}
-            </div>
-            <div class="profile-age">
-                <strong>Age: </strong>{{ user.profile.age }} years old
-            </div>
-            <div class="profile-location">
-                <strong>Location:</strong>
-                {% if user.profile.location %}
-                    Lives in {{ user.profile.location }}
-                {% else %}
-                    No location specified...
-                {% endif %}
-            </div>
-            <div class="profile-bio-text">
-                <strong>Bio:</strong>            
-                {% if user.profile.bio %}
-                    {{ user.profile.bio }}
-                {% else %}
-                    No bio
-                {% endif %}
-            </div>
+            <form class="edit-bio">
+                {% csrf_token %}
+                {{ profile_form }}
+            </form>
         </div>
     </div>
 
-    {{ profile_form }}
     {{ password_form }}
+
+    <script>
+        $(document).ready(function() {
+            // need to fetch all the countries from api and populate the select box with id=id_country
+            $.ajax({
+                url: 'https://restcountries.eu/rest/v2/all',
+                type: 'GET',
+                success: function(data) {
+                    var select = $('#id_country');
+                    $.each(data, function(index, value) {
+                        select.append('<option value="' + value.alpha3Code + '">' + value.name + '</option>');
+                        
+                    });
+                }
+            })
+        })
+    </script>
 {% endblock %}

@@ -103,6 +103,13 @@ body {
 }
 
 
+form.edit-bio {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
 
 .avatar-container img {
     width: 100%;
