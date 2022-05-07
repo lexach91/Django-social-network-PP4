@@ -30,14 +30,17 @@
         $(document).ready(function() {
             // need to fetch all the countries from api and populate the select box with id=id_country
             $.ajax({
-                url: 'https://restcountries.eu/rest/v2/all',
+                url: 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bcities.json',
                 type: 'GET',
                 success: function(data) {
-                    var select = $('#id_country');
-                    $.each(data, function(index, value) {
-                        select.append('<option value="' + value.alpha3Code + '">' + value.name + '</option>');
-                        
-                    });
+                    var countries = data;
+                    var select = document.getElementById('id_country');
+                    for (var i = 0; i < countries.length; i++) {
+                        var option = document.createElement('option');
+                        option.value = countries[i].name;
+                        option.innerHTML = countries[i].name;
+                        select.appendChild(option);
+                    }
                 }
             })
         })

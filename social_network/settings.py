@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'cities_light',
     'chats',
     'home',
     'profiles',
