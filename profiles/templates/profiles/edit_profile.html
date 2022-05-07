@@ -28,21 +28,35 @@
 
     <script>
         $(document).ready(function() {
-            // need to fetch all the countries from api and populate the select box with id=id_country
+            // need to fetch only country names from geonames.org
             $.ajax({
-                url: 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bcities.json',
+                url: 'https://secure.geonames.org/countryInfoJSON?username=lexach91',
                 type: 'GET',
+                dataType: 'json',
                 success: function(data) {
-                    var countries = data;
-                    var select = document.getElementById('id_country');
-                    for (var i = 0; i < countries.length; i++) {
-                        var option = document.createElement('option');
-                        option.value = countries[i].name;
-                        option.innerHTML = countries[i].name;
-                        select.appendChild(option);
+                    let select = $('#id_country');
+                    for (var i = 0; i < data.geonames.length; i++) {
+                        select.append($('<option value="' + data.geonames[i].countryCode + '">' + data.geonames[i].countryName + '</option>'));
                     }
                 }
+            
             })
-        })
+            $('#id_country').on('change', () => {
+                let country = $('#id_country').val();
+                console.log(country);
+                $.ajax({
+                    url: 'http://api.geonames.org/searchJSON?username=lexach91&country=' + country + '&maxRows=1000&style=SHORT',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        let select = $('#id_city');
+                        select.empty();
+                        for (var i = 0; i < data.geonames.length; i++) {
+                            select.append($('<option value="' + data.geonames[i].name + '">' + data.geonames[i].name + '</option>'));
+                        }
+                    }
+                })
+            })
+        });
     </script>
 {% endblock %}
