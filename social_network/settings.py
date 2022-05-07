@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'communities',
     'search',
     'posts',
-    'countries',
 ]
 
 MIDDLEWARE = [
