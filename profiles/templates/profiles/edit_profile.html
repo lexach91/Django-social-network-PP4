@@ -28,20 +28,26 @@
             <form class="edit-bio">
                 {% csrf_token %}
                 {{ profile_form }}
+                <button class="save-form" id="save-bio-btn">Save changes</button>
+            </form>
+            <form class="password-form">
+                {% csrf_token %}
+                {{ password_form }}
+                <button class="save-form" id="save-password-btn">Change password</button>
             </form>
         </div>
+        
     </div>
-
-    {{ password_form }}
-
     <script>
         $(document).ready(function() {
+            let user_country = '{{ user.profile.country }}';
+            let user_city = '{{ user.profile.city }}';
             $('#id_country').select2(
                 {
                     placeholder: "Select a country",
                     allowClear: true,
                 }
-            );
+            );            
             $('#id_city').select2(
                 {
                     placeholder: "Select a city",
@@ -60,8 +66,9 @@
                     for (var i = 0; i < data.geonames.length; i++) {
                         select.append($('<option value="' + data.geonames[i].countryCode + '">' + data.geonames[i].countryName + '</option>'));
                     }
-                    // leave everything unselected
-                    select.val(null).trigger('change');
+                    // select user's country by default
+                    $('#id_country').val(user_country).trigger('change');
+                    
                 }
             
             })
@@ -77,8 +84,8 @@
                         for (var i = 0; i < data.geonames.length; i++) {
                             select.append($('<option value="' + data.geonames[i].name + '">' + data.geonames[i].name + '</option>'));
                         }
-                        // leave everything unselected
-                        select.val(null).trigger('change');
+                        // select user's city by default
+                        $('#id_city').val(user_city);
                     }
                 })
             })
@@ -86,8 +93,113 @@
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'yy-mm-dd',
-                yearRange: '-100:+0'
+                yearRange: '-100:+0',
+
             });
+            $('#save-bio-btn').on('click', () => {
+                let form = $('.edit-bio');
+                let data = form.serialize();
+                // append 'form_type' to the data
+                data += '&form_type=profile';
+                // make all inputs disabled
+                form.find('input').prop('disabled', true);
+                // make all buttons disabled
+                form.find('button').prop('disabled', true);
+                // make all selects disabled
+                form.find('select').prop('disabled', true);
+                // make all textareas disabled
+                form.find('textarea').prop('disabled', true);
+                // add loading icon next to save button
+                $('#save-bio-btn').append('<i class="fas fa-spinner fa-spin"></i>');
+                $.ajax({
+                    url: "{% url 'edit_profile' %}",
+                    type: 'POST',
+                    data: data,
+                    success: function(data) {
+                        // remove loading icon
+                        $('#save-bio-btn i').remove();
+                        // make all inputs enabled
+                        form.find('input').prop('disabled', false);
+                        // make all buttons enabled
+                        form.find('button').prop('disabled', false);
+                        // make all selects enabled
+                        form.find('select').prop('disabled', false);
+                        // make all textareas enabled
+                        form.find('textarea').prop('disabled', false);
+                        // show success message
+                        $('#save-bio-btn').after('<span class="success-message">Saved!</span>');
+                        // remove success message after 3 seconds
+                        setTimeout(() => {
+                            $('.success-message').remove();
+                        }, 3000);
+                    },
+                    error: function(data) {
+                        // remove loading icon
+                        $('#save-bio-btn i').remove();
+                        // make all inputs enabled
+                        form.find('input').prop('disabled', false);
+                        // make all buttons enabled
+                        form.find('button').prop('disabled', false);
+                        // make all selects enabled
+                        form.find('select').prop('disabled', false);
+                        // make all textareas enabled
+                        form.find('textarea').prop('disabled', false);
+                        // show error message
+                        $('#save-bio-btn').after('<span class="error-message">Error!</span>');
+                        // remove error message after 3 seconds
+                        setTimeout(() => {
+                            $('.error-message').remove();
+                        }, 3000);
+                    }
+                })
+
+            })
+            $('#save-password-btn').on('click', () => {
+                let form = $('.password-form');
+                let data = form.serialize();
+                // append 'form_type' to the data
+                data += '&form_type=password';
+                // make all inputs disabled
+                form.find('input').prop('disabled', true);
+                // make all buttons disabled
+                form.find('button').prop('disabled', true);
+                // add loading icon next to save button
+                $('#save-password-btn').append('<i class="fas fa-spinner fa-spin"></i>');
+                $.ajax({
+                    url: "{% url 'edit_profile' %}",
+                    type: 'POST',
+                    data: data,
+                    success: function(data) {
+                        // remove loading icon
+                        $('#save-password-btn i').remove();
+                        // make all inputs enabled
+                        form.find('input').prop('disabled', false);
+                        // make all buttons enabled
+                        form.find('button').prop('disabled', false);
+                        // show success message
+                        $('#save-password-btn').after('<span class="success-message">Saved!</span>');
+                        // remove success message after 3 seconds
+                        setTimeout(() => {
+                            $('.success-message').remove();
+                        }, 3000);
+                    },
+                    error: function(data) {
+                        // remove loading icon
+                        $('#save-password-btn i').remove();
+                        // make all inputs enabled
+                        form.find('input').prop('disabled', false);
+                        // make all buttons enabled
+                        form.find('button').prop('disabled', false);
+                        // show error message
+                        $('#save-password-btn').after('<span class="error-message">Error!</span>');
+                        // remove error message after 3 seconds
+                        setTimeout(() => {
+                            $('.error-message').remove();
+                        }, 3000);
+                    }
+
+                })
+            })
         });
     </script>
 {% endblock %}
