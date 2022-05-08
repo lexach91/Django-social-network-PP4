@@ -351,7 +351,7 @@
                 // need to replace avatar image with selected file in the frontend
                 let file = e.target.files[0];
                 e.target.value = '';
-                let currentAvatarUrl = "{{ user.profile.avatar.url }}";
+                let currentAvatarUrl = $('img.avatar').attr('src');
                 console.log(currentAvatarUrl);
                 $('.avatar').attr('src', URL.createObjectURL(file));
                 $(editAvatarBtn).addClass('hidden');
