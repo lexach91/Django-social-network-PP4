@@ -169,6 +169,33 @@ form.edit-bio {
     line-height: 1.5em;
 }
 
+#id_first_name,
+#id_last_name,
+#id_country,
+#id_city,
+#id_bio {
+    width: 100%;
+    padding: .2em;
+    font-size: large;
+    line-height: 1.5em;
+    border-radius: 5px;
+    border: .5px solid black !important;
+}
+
+#id_birth_date {
+    width: 10em;
+    padding: .2em;
+    font-size: large;
+    /* line-height: 1.5em; */
+    border-radius: 5px;
+    border: .5px solid black !important;
+}
+
+#id_bio {
+    resize: none;
+    height: 10em;
+}
+
 /* ---------------- Posts -------------------- */
 .post-wall {
     width: 100%;
