@@ -58,3 +58,17 @@ class EditProfileView(View):
             'avatar_form': avatar_form,
         }
         return render(request, 'profiles/edit_profile.html', context)
+    
+    def post(self, request, *args, **kwargs):
+        if request.POST['form_type'] == 'profile':
+            profile_form = EditProfileInfoForm(request.POST, instance=request.user.profile)
+            if profile_form.is_valid():
+                profile_form.save()
+                return JsonResponse({'success': True})
+            return JsonResponse({'success': False, 'errors': profile_form.errors})
+        if request.POST['form_type'] == 'password':
+            password_form = PasswordChangeForm(request.POST)
+            if password_form.is_valid():
+                password_form.save()
+                return JsonResponse({'success': True})
+            return JsonResponse({'success': False, 'errors': password_form.errors})
