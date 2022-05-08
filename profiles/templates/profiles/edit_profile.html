@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block extracss %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+{% block extrajs %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="profile-container">
         <div class="profile-info">
@@ -28,6 +36,21 @@
 
     <script>
         $(document).ready(function() {
+            $('#id_country').select2(
+                {
+                    placeholder: "Select a country",
+                    allowClear: true,
+                    width: '100%'
+                }
+            );
+            $('#id_city').select2(
+                {
+                    placeholder: "Select a city",
+                    allowClear: true,
+                    width: '100%'
+                }
+            );
+            
             // need to fetch only country names from geonames.org
             $.ajax({
                 url: 'https://secure.geonames.org/countryInfoJSON?username=lexach91',
@@ -38,12 +61,13 @@
                     for (var i = 0; i < data.geonames.length; i++) {
                         select.append($('<option value="' + data.geonames[i].countryCode + '">' + data.geonames[i].countryName + '</option>'));
                     }
+                    // leave everything unselected
+                    select.val(null).trigger('change');
                 }
             
             })
             $('#id_country').on('change', () => {
                 let country = $('#id_country').val();
-                console.log(country);
                 $.ajax({
                     url: 'http://api.geonames.org/searchJSON?username=lexach91&country=' + country + '&maxRows=1000&style=SHORT',
                     type: 'GET',
@@ -54,10 +78,17 @@
                         for (var i = 0; i < data.geonames.length; i++) {
                             select.append($('<option value="' + data.geonames[i].name + '">' + data.geonames[i].name + '</option>'));
                         }
+                        // leave everything unselected
+                        select.val(null).trigger('change');
                     }
                 })
             })
-            $('#id_birth_date').datepicker();
+            $('#id_birth_date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm-dd',
+                yearRange: '-100:+0'
+            });
         });
     </script>
 {% endblock %}
