@@ -57,6 +57,12 @@ class Profile(models.Model):
         if self.first_name:
             return self.first_name
         return self.user.username
+    
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        # if no avatar, return default avatar from static folder (images/default_avatar.svg)
+        return '/static/images/default_avatar.svg'
 
     @property
     def age(self):
