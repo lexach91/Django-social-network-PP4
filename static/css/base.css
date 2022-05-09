@@ -552,6 +552,80 @@ form.edit-bio {
     object-position: center;
 }
 
+/* ---------------- Community details -------------------- */
+
+.community-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.community-header {
+    width: 100%;
+    height: 50em;
+}
+
+.bg-logo-container {
+    height: 15em;
+    width: 100%;
+    position: relative;
+}
+
+.community-background {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.community-background img {
+    width: 100%;
+    height: 100%;
+}
+
+.community-logo {
+    position: absolute;
+    top: 50%;
+    left: 3em;
+    transform: translateY(-50%);
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+}
+
+.community-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 50%;
+    background-color: rgba(0, 188, 212, 0.9);
+    border: 5px solid #ffffff;
+}
+
+.community-info {
+    width: 40%;
+    height: 50%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    right: 3em;
+    transform: translateY(-50%);
+    background-color: rgba(0, 188, 212, 0.9);
+    border-radius: 0.5em;
+}
+
+.community-info h2 {
+    width: 100%;
+    height: 1.5em;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #00bcd4;
+    border-radius: 0.5em 0.5em 0 0;
+}
+
 
 /* ---------------- Chat -------------------- */
 

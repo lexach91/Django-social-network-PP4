@@ -37,6 +37,18 @@ class Community(models.Model):
     def get_posts(self):
         return self.posts.all()
     
+    @property
+    def logo_url(self):
+        return self.logo.url if self.logo else '/static/images/default-logo.png'
+    
+    @property
+    def bg_image_url(self):
+        return self.bg_image.url if self.bg_image else '/static/images/default-bg.jpg'
+    
+    @property
+    def first_six_members(self):
+        return self.members.all()[:6]
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)

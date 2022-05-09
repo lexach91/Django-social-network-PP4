@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="community-container">
+    <div class="community-header">
+        <div class="bg-logo-container">
+            <div class="community-background">
+                <img src="{{ community.bg_image_url }}" alt="Community Header Background">
+            </div>
+            <div class="community-logo">
+                <img src="{{ community.logo_url }}" alt="Community Logo">
+            </div>
+            <div class="community-info">
+                <h2>{{ community.name }}</h2>
+                <p>{{ community.description }}</p>
+            </div>
+        </div>
+        <div class="community-members">
+            <h3>Members</h3>
+            <div class="members-links">
+                {% for member in community.first_six_members %}
+                    <a href="{% url 'user_profile' member.username %}" class="member-link">
+                        <img src="{{ member.profile.avatar_url }}" alt="{{ member.username }}" class="member-avatar">
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+    {% endblock %}
