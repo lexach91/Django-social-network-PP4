@@ -1,9 +1,12 @@
 {% load static %}
+<!-- show form only if request.user is a member of a community or a friend with a page owner or its his profile -->
+{% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
 <form class="post-form">
     {% csrf_token %}
     {{ post_form }}
     <button type="submit" class="post-submit">Post</button>
 </form>
+{% endif %}
 <div class="post-wall">
     {% for post in posts %}
         <div class="post" data-post-id="{{ post.id }}">
