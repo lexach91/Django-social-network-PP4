@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from .models import Community
+from posts.forms import PostForm, CommentForm
 
 
 class UsersCommunitiesView(View):
@@ -13,4 +14,11 @@ class UsersCommunitiesView(View):
 class CommunityView(View):
     def get(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
-        return render(request, 'communities/community.html', {'community': community})
+        post_form = PostForm()
+        comment_form = CommentForm()
+        context = {
+            'community': community,
+            'post_form': post_form,
+            'comment_form': comment_form,
+        }
+        return render(request, 'communities/community.html', context)
