@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="community-members">
-            <h3>Members</h3>
+            <a href="#" class="members-count">{{ community.member_count }} members</a>
             <div class="members-links">
                 {% for member in community.first_six_members %}
                     <a href="{% url 'user_profile' member.username %}" class="member-link">
