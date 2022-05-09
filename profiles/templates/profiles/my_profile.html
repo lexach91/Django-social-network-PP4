@@ -18,6 +18,9 @@
 
     </div>
     <div class="profile-bio">
+        <a class="profile-settings" href="{% url 'edit_profile' %}">
+            <i class="fas fa-cog"></i>
+        </a>
         <div class="profile-name">
             <strong>Name: </strong>{{ user.profile }}
         </div>

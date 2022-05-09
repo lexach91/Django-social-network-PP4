@@ -167,7 +167,26 @@ form.edit-bio {
     padding-left: 2em;
     /* font-size: large;
     line-height: 1.5em; */
+    position: relative;
 }
+
+.profile-settings {
+    position: absolute;
+    top: 0;
+    right: 0;    
+    z-index: 10;
+    cursor: pointer;
+    color: #dcddff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.profile-settings i {
+    font-size: 1.5em;
+}
+
 
 #id_first_name,
 #id_last_name,
