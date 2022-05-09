@@ -24,16 +24,8 @@ $(document).ready(function() {
         }
         const messageText = $('<div class="message-text"></div>');
         const messageTime = $('<div class="message-time"></div>');
-        let authorAvatar;
-        if (data.author.avatar) {
-            authorAvatar = $(
-              '<img class="message-avatar" src="' + data.author.avatar + '" />'
-            );
-        } else {
-            authorAvatar = $(
-              '<img class="message-avatar" src="/static/images/default_avatar.svg" />'
-            );
-        }
+        let authorAvatar = $('<img class="message-avatar" src="' + data.author.avatar + '" />');
+        
         messageAuthor.append(authorAvatar);
         messageAuthor.append(data.author.username);
         messageText.append(data.message.content);

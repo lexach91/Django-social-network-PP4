@@ -58,6 +58,7 @@ class Profile(models.Model):
             return self.first_name
         return self.user.username
     
+    @property
     def avatar_url(self):
         if self.avatar:
             return self.avatar.url

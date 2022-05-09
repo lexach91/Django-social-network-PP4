@@ -96,7 +96,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_avatar_url(self, username):
         user = User.objects.get(username=username)
-        return user.profile.avatar.url if user.profile.avatar else None
+        return user.profile.avatar_url
     
     @database_sync_to_async
     def get_profile(self, username):

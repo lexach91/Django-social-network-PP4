@@ -6,11 +6,8 @@
 <div class="profile-container">
     <div class="profile-info">
         <div class="avatar-container">
-            {% if user.profile.avatar %}
-                <img src="{{ user.profile.avatar.url }}" alt="avatar" class="avatar">
-            {% else %}
-                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
-            {% endif %}
+            <img src="{{ user.profile.avatar_url }}" alt="avatar" class="avatar">
+            
             <i class="fas fa-edit edit-avatar"></i>
             <i class="fas fa-check accept-avatar hidden"></i>
             <i class="fas fa-times cancel-avatar hidden"></i>
@@ -93,12 +90,7 @@
                 success: (data) => {
                     let post = data.post;
                     console.log(post.avatar);
-                    let avatarUrl;
-                    if(post.avatar) {
-                        avatarUrl = post.avatar;
-                    } else {
-                        avatarUrl = "{% static 'images/default_avatar.svg' %}";
-                    }
+                    let avatarUrl = post.avatar;
                     let author = post.author;
                     let authorUrl = post.author_url;
                     let postContent = post.content;
@@ -271,12 +263,7 @@
                 },
                 success: (data) => {
                     let comment = data.comment;
-                    let avatarUrl;
-                    if(comment.avatar) {
-                        avatarUrl = comment.avatar.url;
-                    } else {
-                        avatarUrl = "{% static 'images/default_avatar.svg' %}";
-                    }
+                    let avatarUrl = comment.avatar;                    
                     let author = comment.author;
                     let authorUrl = comment.author_url;
                     let commentContent = comment.content;

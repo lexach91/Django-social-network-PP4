@@ -9,11 +9,11 @@
         <div class="post" data-post-id="{{ post.id }}">
             <div class="post-info">
                 <div class="post-author">
-                    {% if post.author.profile.avatar %}
-                        <img src="{{ post.author.profile.avatar.url }}" alt="avatar" class="post-avatar">
-                    {% else %}
-                        <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="post-avatar">
-                    {% endif %}
+                    
+                        <img src="{{ post.author.profile.avatar_url }}" alt="avatar" class="post-avatar">
+                    
+                        
+                    
                     <div class="post-author-name">
                         <strong>
                             <a href="{% url 'user_profile' post.author.username %}">
@@ -78,11 +78,9 @@
                 <div class="comment" data-comment-id="{{ comment.id }}">
                     <div class="comment-info">
                         <div class="comment-author">
-                            {% if comment.author.profile.avatar %}
-                                <img src="{{ comment.author.profile.avatar.url }}" alt="avatar" class="comment-avatar">
-                            {% else %}
-                                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="comment-avatar">
-                            {% endif %}
+                            
+                            <img src="{{ comment.author.profile.avatar_url }}" alt="avatar" class="comment-avatar">
+                            
                             <div class="comment-author-name">
                                 <strong>
                                     <a href="{% url 'user_profile' comment.author.username %}">

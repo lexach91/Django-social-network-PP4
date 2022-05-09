@@ -19,11 +19,9 @@
             <div class="chat-message other-message">
             {% endif %}
                 <div class="message-author">
-                    {% if message.author.profile.avatar.url %}
-                        <img class="message-avatar" src="{{ message.author.profile.avatar.url }}" alt="{{ message.author }}" />
-                    {% else %}
-                        <img class="message-avatar" src="{% static 'images/default_avatar.svg' %}" alt="{{ message.author }}" />
-                    {% endif %}
+                    
+                    <img class="message-avatar" src="{{ message.author.profile.avatar_url }}" alt="{{ message.author }}" />
+                    
                     {{ message.author.profile }}
                 </div>
                 {% if message.has_media %}

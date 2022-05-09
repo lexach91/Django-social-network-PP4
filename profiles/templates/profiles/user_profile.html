@@ -6,11 +6,9 @@
 <div class="profile-container">
     <div class="profile-info">
         <div class="avatar-container">
-            {% if user_profile.avatar %}
-                <img src="{{ user_profile.avatar.url }}" alt="avatar" class="avatar">
-            {% else %}
-                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
-            {% endif %}
+            
+            <img src="{{ user_profile.avatar_url }}" alt="avatar" class="avatar">
+            
         </div>
     </div>
     <div class="profile-bio">

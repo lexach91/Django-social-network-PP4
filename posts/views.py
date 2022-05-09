@@ -21,14 +21,8 @@ class CreatePostAjaxView(View):
             post.author = request.user
             post.save()
             # need to return the post object
-            avatar = None
-            if request.user.profile.avatar:
-                avatar = request.user.profile.avatar.url
-                print(avatar)
-                print(request.user.profile)
-                print(request.user.profile.avatar)
-                print(request.user.profile.avatar.url)
-            print(avatar)
+            avatar = request.user.profile.avatar_url
+            
             post_data = {
                 'author': str(post.author.profile),
                 'author_url': f'/profiles/{post.author.username}',
@@ -105,10 +99,7 @@ class CreateCommentAjaxView(View):
             content=comment_content
         )
         comment.save()
-        if comment.author.profile.avatar:
-            avatar = comment.author.profile.avatar.url
-        else:
-            avatar = None
+        avatar = comment.author.profile.avatar_url
         comment_data = {
             'author': str(comment.author.profile),
             'author_url': f'/profiles/{comment.author.username}',
