@@ -22,6 +22,7 @@ class MyProfileView(View):
             'posts': posts,
             'edit_profile_form': edit_profile_form,
             'edit_avatar_form': edit_avatar_form,
+            'user_profile': request.user.profile,
         }
         return render(request, 'profiles/my_profile.html', context)
     
