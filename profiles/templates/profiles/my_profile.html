@@ -397,6 +397,14 @@
                 });
             })
         });
+        $('.post-image').click((e) => {
+            // add class full-height to post-image
+            console.log("post image clicked");
+            let postImage = $(e.target);
+            postImage.toggleClass('full-height');
+            // make post become bigger with the image
+            postImage.parent().toggleClass('full-height');
+        })
     });
 </script>
 

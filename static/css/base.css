@@ -356,6 +356,13 @@ form.edit-bio {
     object-position: center;
 }
 
+.post-image.full-height {
+    max-height: 100%;
+}
+
+.post-media.full-height {
+    max-height: 100%;
+}
 
 /* ---------------- Comments -------------------- */
 .comments-container {
