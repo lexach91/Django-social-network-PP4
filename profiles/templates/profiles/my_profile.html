@@ -65,19 +65,7 @@
             const form = $(e.target);
             $('.post-form').find('input[name="post_type"]').val(1);
             $('.post-form').find('input[name="profile"]').val('{{ user.profile.id }}');
-            // need to get the image url and put it in the form
-            // $('.post-form').find('input[name="image"]').val($('.post-form').find('input[name="image"]').val());
-            // let author = $('.post-form').find('input[name="profile"]').val();
-            // let post_type = $('.post-form').find('input[name="post_type"]').val();
-            // let image = $('.post-form').find('input[name="image"]').val();
-            // let content = $('.post-form').find('textarea[name="content"]').val();
-            // let data = {
-            //     'author': author,
-            //     'post_type': post_type,
-            //     'image': image,
-            //     'content': content,
-            //     'csrfmiddlewaretoken': '{{ csrf_token }}'
-            // }
+            
             let data = new FormData(form[0]);
 
             $.ajax({
