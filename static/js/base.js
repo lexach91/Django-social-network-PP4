@@ -49,6 +49,13 @@ $(document).ready(function() {
         
         let data = new FormData(form[0]);
 
+        // make all inputs disabled
+        $('.post-form input').attr('disabled', true);
+        $('.post-form textarea').attr('disabled', true);
+        $('.post-form button').attr('disabled', true);
+        // add loading icon
+        $('.post-form button').append('<i class="fas fa-spinner fa-spin"></i>');
+
         $.ajax({
             url: createPostUrl,
             type: 'POST',
@@ -124,6 +131,20 @@ $(document).ready(function() {
                 $(`.comment-button[data-post-id='${post.id}']`).on('click', commentHandler);
                 $(`.comment-form[data-post-id='${post.id}']`).on('submit', createComment);
                 $(`.post[data-post-id='${post.id}'] img.post-image`).on('click', toggleImage);
+                // enable all inputs
+                $('.post-form input').attr('disabled', false);
+                $('.post-form textarea').attr('disabled', false);
+                $('.post-form button').attr('disabled', false);
+                // remove loading icon
+                $('.post-form button i').remove();
+                // if form has div.preview, replace it with <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
+                if($('.post-form').find('div.preview').length) {
+                    $('.post-form').find('div.preview').replaceWith(`
+                        <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
+                    `);
+                    $('#id_image').on('change', imagePreview);
+                }
+
             }
         });
     };
