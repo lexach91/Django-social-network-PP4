@@ -35,10 +35,15 @@ class Profile(models.Model):
         blank=True,
         related_name='friends'
     )
-    pending_friends = models.ManyToManyField(
+    pending_friends_in = models.ManyToManyField(
         'self',
         blank=True,
-        related_name='pending_friends'
+        related_name='pending_friends_in'
+    )
+    pending_friends_out = models.ManyToManyField(
+        'self',
+        blank=True,
+        related_name='pending_friends_out'
     )
     country = models.CharField(
         max_length=50,

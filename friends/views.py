@@ -22,6 +22,10 @@ class SendFriendRequest(View):
                 to_profile=to_profile
             )
             friend_request.save()
+            from_profile.pending_friends_out.add(to_profile)
+            from_profile.save()
+            to_profile.pending_friends_in.add(from_profile)
+            to_profile.save()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})
 
@@ -36,6 +40,8 @@ class AcceptFriendRequest(View):
             accepted_profile = friend_request.from_profile
             accepting_profile.friends.add(accepted_profile)
             accepted_profile.friends.add(accepting_profile)
+            accepting_profile.pending_friends_in.remove(accepted_profile)
+            accepted_profile.pending_friends_out.remove(accepting_profile)
             accepting_profile.save()
             accepted_profile.save()
             friend_request.save()
@@ -49,6 +55,10 @@ class DeclineFriendRequest(View):
             request_id = request.POST.get('id')
             friend_request = get_object_or_404(FriendRequest, id=request_id)
             friend_request.declined = True
+            friend_request.from_profile.pending_friends_out.remove(friend_request.to_profile)
+            friend_request.to_profile.pending_friends_in.remove(friend_request.from_profile)
+            friend_request.from_profile.save()
+            friend_request.to_profile.save()
             friend_request.save()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})

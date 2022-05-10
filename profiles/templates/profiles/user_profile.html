@@ -34,6 +34,24 @@
                 No bio
             {% endif %}
         </div>
+        <div class="friend-buttons">
+            {% if user_profile in request.user.profile.friends.all %}
+                <button class="chat-button">Chat</button>
+                <button class="unfriend-button">Unfriend</button>
+            {% else %}
+                {% if user_profile in request.user.profile.pending_friends_in.all %}
+                    <button class="accept-friend-button">Accept</button>
+                    <button class="decline-friend-button">Decline</button>
+                {% else %} 
+                    {% if user_profile in request.user.profile.pending_friends_out.all %}
+                        <button class="send-friend-button" disabled>Request pending</button>
+                        <button class="cancel-friend-button">Cancel</button>
+                    {% else %}
+                        <button class="send-friend-button">Add to friends</button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
 
 </div>
