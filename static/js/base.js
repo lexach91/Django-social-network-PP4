@@ -7,7 +7,11 @@ $(document).ready(function() {
     // make file input in post form look like a paperclip
     $('.post-form input[type="file"]').hide();
     
-    $('.post-form label[for=id_image]').html('<i class="fas fa-paperclip"></i>');
+    $('.post-form label[for="id_image"]').html('<i class="fas fa-paperclip"></i>');
+    // add title to this label
+    $('.post-form label[for="id_image"]').attr('title', 'Add an image');
+    // add tooltip to this label
+    $('.post-form label[for="id_image"]').tooltip();
     
     const protocol = window.location.protocol;
     const host = window.location.host;
