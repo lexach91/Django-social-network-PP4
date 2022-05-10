@@ -28,5 +28,8 @@
         </div>
     </div>
     {% include 'profiles/post_wall.html' %}
+
+    <input type="hidden" value="{{ community.id }}" id="community_id">
+    <input type="hidden" value="2" id="post_type">
 </div>
     {% endblock %}
