@@ -35,6 +35,11 @@ class Profile(models.Model):
         blank=True,
         related_name='friends'
     )
+    pending_friends = models.ManyToManyField(
+        'self',
+        blank=True,
+        related_name='pending_friends'
+    )
     country = models.CharField(
         max_length=50,
         blank=True,
