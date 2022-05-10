@@ -75,7 +75,7 @@
             $('#id_country').on('change', () => {
                 let country = $('#id_country').val();
                 $.ajax({
-                    url: 'http://api.geonames.org/searchJSON?username=lexach91&country=' + country + '&maxRows=1000&style=SHORT',
+                    url: 'https://secure.geonames.org/searchJSON?username=lexach91&country=' + country + '&maxRows=1000&style=SHORT',
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
