@@ -33,8 +33,10 @@ $(document).ready(function() {
         const form = $(e.target);
         let postType = $('input#post_type').val();
         let profileId = $('input#profile_id').val();
+        let communityId = $('input#community_id').val();
         $('.post-form').find('input[name="post_type"]').val(postType);
         $('.post-form').find('input[name="profile"]').val(profileId);
+        $('.post-form').find('input[name="community"]').val(communityId);
         
         let data = new FormData(form[0]);
 
