@@ -291,7 +291,65 @@ $(document).ready(function() {
         postImage.toggleClass('full-height');
         // make post become bigger with the image
         postImage.parent().toggleClass('full-height');
-    }
+    };
+
+    const imagePreview = (e) => {
+        // temporarily disable the event handler
+        e.preventDefault();
+        $('#id_image').off('change');
+        // take the image from the file input and show it in the preview
+        let file = e.target.files[0];
+        let imgUrl = URL.createObjectURL(file);
+        // create a new image element
+        // let img = document.createElement('img');
+        // img.src = imgUrl;
+        // img.style.width = '100px';
+        // img.style.height = '100px';
+        // img.style.objectFit = 'cover';
+        // img.style.objectPosition = 'center';
+        // img.style.border = '1px solid #ccc';
+        // img.style.position = 'relative';
+        let previewDiv = document.createElement('div');
+        previewDiv.classList.add('preview');
+        previewDiv.style.width = '100px';
+        previewDiv.style.height = '100px';
+        previewDiv.style.border = '1px solid #ccc';
+        previewDiv.style.position = 'relative';
+        previewDiv.style.borderRadius = '0 0.7rem 0 0';
+        previewDiv.style.alignSelf = 'start';
+        // previewDiv.style.overflow = 'hidden';
+        let img = document.createElement('img');
+        img.src = imgUrl;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.style.objectPosition = 'center';
+        previewDiv.appendChild(img);
+        // create close button
+        let closeButton = $('<i class="fas fa-times-circle"></i>');
+        closeButton.css({
+            position: 'absolute',
+            top: '-8px',
+            right: '-8px',
+            cursor: 'pointer',
+            color: '#ccc',
+        });
+        previewDiv.appendChild(closeButton[0]);
+        // replace the fas-paperclip with the new image
+        let labelBackup = $('label[for=id_image]');
+        $('label[for=id_image]').replaceWith(previewDiv);
+        // $(e.target).parent().find('i').replaceWith(previewDiv);
+        // add event handler to the close button
+        closeButton.on('click', () => {
+            // remove the preview image
+            $(e.target).parent().find('div.preview').replaceWith(labelBackup);
+            // clear the file input
+            $('#id_image').val('');            
+            $('#id_image').on('change', imagePreview);            
+        });
+    };
+
+    $('#id_image').on('change', imagePreview);
 
 
     $(editAvatarBtn).on('click', () => {
