@@ -286,6 +286,7 @@ form.edit-bio {
 
 .post-form label[for=id_image] {
     align-self: start;
+    cursor: pointer;
 }
 
 .post {
