@@ -4,6 +4,11 @@ $(document).ready(function() {
 // posts, comments, profile functions
     $('.comments-container').hide();
 
+    // make file input in post form look like a paperclip
+    $('.post-form input[type="file"]').hide();
+    
+    $('.post-form label[for=id_image]').html('<i class="fas fa-paperclip"></i>');
+    
     const protocol = window.location.protocol;
     const host = window.location.host;
     const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
