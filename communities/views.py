@@ -16,9 +16,11 @@ class CommunityView(View):
         community = Community.objects.get(slug=slug)
         post_form = PostForm()
         comment_form = CommentForm()
+        posts = community.posts.all()
         context = {
             'community': community,
             'post_form': post_form,
             'comment_form': comment_form,
+            'posts': posts
         }
         return render(request, 'communities/community.html', context)
