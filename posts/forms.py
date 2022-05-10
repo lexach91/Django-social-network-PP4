@@ -5,11 +5,10 @@ from .models import Post, Comment
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['content', 'image', 'video', 'post_type', 'community', 'profile']
+        fields = ['content', 'image', 'post_type', 'community', 'profile']
         widgets = {
             'content': forms.Textarea(attrs={'rows': 3}),
-            'image': forms.ClearableFileInput(attrs={'multiple': False}),
-            'video': forms.ClearableFileInput(attrs={'multiple': False}),
+            'image': forms.ClearableFileInput(attrs={'multiple': False, 'accept': 'image/*'}),
             'post_type': forms.HiddenInput(),
             'community': forms.HiddenInput(),
             'profile': forms.HiddenInput(),
