@@ -284,6 +284,10 @@ form.edit-bio {
     margin-bottom: 1em;
 }
 
+.post-form label[for=id_image] {
+    align-self: start;
+}
+
 .post {
     padding-bottom: 0;
 }
