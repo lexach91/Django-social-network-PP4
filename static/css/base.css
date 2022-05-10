@@ -528,7 +528,7 @@ form.edit-bio {
     padding: 2em;
 }
 
-.community {
+.community-card {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -539,7 +539,7 @@ form.edit-bio {
     border: 1px solid black;
 }
 
-.community-logo {
+.community-card-logo {
     width: 14em;
     height: 10em;
     margin-right: .5em;
