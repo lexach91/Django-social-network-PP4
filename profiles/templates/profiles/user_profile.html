@@ -36,7 +36,9 @@
         </div>
         <div class="friend-buttons">
             {% if user_profile in request.user.profile.friends.all %}
-                <button class="chat-button">Chat</button>
+                <a class="chat-button" href="{% url 'chat_detail' username=user_profile.user.username %}">
+                    Chat
+                </a>
                 <button class="unfriend-button">Unfriend</button>
             {% else %}
                 {% if user_profile in request.user.profile.pending_friends_in.all %}
@@ -60,5 +62,5 @@
 
 <input type="hidden" value="{{ user_profile.id }}" id="profile_id">
 <input type="hidden" value="1" id="post_type">
-    
+
 {% endblock %}
