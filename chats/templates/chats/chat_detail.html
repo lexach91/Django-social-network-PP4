@@ -36,10 +36,10 @@
                     </div>
                 {% endif %}
                 <div class="message-text">
-                    {{ message.content }}
+                    {{ message.content|safe|linebreaksbr }}
                 </div>
                 <div class="message-time">
-                    {{ message.created_at }}
+                    {{ message.created_at|timesince }} ago
                 </div>
             </div>
         {% endfor %}
