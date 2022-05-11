@@ -21,8 +21,7 @@ class ChatView(View):
             if second_user.profile in request.user.profile.friends.all():
                 chat = Chat.objects.create()
                 chat.members.add(request.user, second_user)
-                chat.save()                
-                return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name})
+                chat.save()
             else:
                 # return 404
                 return render(request, '404.html')
