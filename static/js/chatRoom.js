@@ -28,6 +28,12 @@ $(document).ready(function() {
         
         messageAuthor.append(authorAvatar);
         messageAuthor.append(data.author.username);
+        // need to make data.message.content to pick up line breaks and links
+        // let messageContent = data.message.content;
+        // messageContent = messageContent.replace(/\n/g, '<br>');
+        // if(data.message.content.includes('http')){
+        //     messageContent = messageContent.replace(/(http|https):\/\/(\S+)/g, '<a href="$1://$2" target="_blank">$1://$2</a>');
+        // }
         messageText.append(data.message.content);
         messageTime.append(data.message.timestamp);
         chatMessage.append(messageAuthor);
@@ -51,11 +57,17 @@ $(document).ready(function() {
 
     $('.chat-send-button').click(function() {
         const message = $('.chat-input').val();
+        // pick up line breaks and links
+        let messageContent = message;
+        messageContent = messageContent.replace(/\n/g, '<br>');
+        if(message.includes('http')){
+            messageContent = messageContent.replace(/(http|https):\/\/(\S+)/g, '<a href="$1://$2" target="_blank">$1://$2</a>');
+        }
         // console.log(username);
         if (message.length > 0) {
             socket.send(
               JSON.stringify({
-                message: message,
+                message: messageContent,
                 username: username,
                 chatId: chatId
               })
