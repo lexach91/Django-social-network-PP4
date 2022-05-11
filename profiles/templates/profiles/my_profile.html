@@ -43,7 +43,9 @@
     </div>
 </div>
 
-{% include 'profiles/post_wall.html' %}
+<div class="profile-wall">
+    {% include 'profiles/post_wall.html' %}
+</div>
 
 <input type="hidden" value="{{ user.profile.id }}" id="profile_id">
 <input type="hidden" value="1" id="post_type">
