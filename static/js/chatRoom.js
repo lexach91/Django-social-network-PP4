@@ -53,12 +53,12 @@ $(document).ready(function() {
         // setTimeout(function() {
         //     socket.connect();
         // }, 1000);
-    }
+    };
 
-    
-
-    $('.chat-send-button').click(function() {
+    const sendMessage = () => {
         const message = $('.chat-input').val();
+        
+        console.log(message);
         // pick up line breaks and links
         let messageContent = message;
         messageContent = messageContent.replace(/\n/g, '<br>');
@@ -76,7 +76,27 @@ $(document).ready(function() {
             $('.emojionearea-editor').html('');
             $('.chat-input').val('');
         }
+    };
+
+    
+
+    $('.chat-send-button').click(sendMessage);
+    // put a focus on the emojionearea-editor
+    // $(".chat-input").data("emojioneArea").editor.focus();
+    // send a message when the enter+ctrl key is pressed
+    $(document).keydown(function(event) {
+        console.log(event.keyCode);
+        if (event.keyCode === 13 && event.ctrlKey) {
+            let message = $('.emojionearea-editor').html();
+            // if there are div elements in the message, replace them with br tags
+            message = message.replace(/<div>/g, '<br>');
+            // and remove the closing div tag
+            message = message.replace(/<\/div>/g, '');
+            $('.chat-input').val(message);
+            sendMessage();
+            console.log('send message');
+        }
     }
     );
 
-})
+}); // end of document ready
