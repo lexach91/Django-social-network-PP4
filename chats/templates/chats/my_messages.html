@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<ul>
-    {% for chat in chats %}
-        <li>
+    <div class="messages-all">
+        {% for chat in chats %}
             {% for member in chat.members.all %}
                 {% if member != request.user %}
                     <a href="{% url 'chat_detail' username=member.username %}">
-                Chat with {{ member.username }}
+                        <div class="messages-single">
+                            <div class="message-avatar-container">
+                                <img src="{{ member.profile.avatar_url }}" alt="avatar" class="message-avatar">
+                            </div>
+                            <div class="message-info">
+                                <div class="message-name">
+                                    {{ member.username }}
+                                </div>
+                                <div class="message-last-message">
+                                    {{ chat.get_last_message }}
+                                </div>
+                            </div>
+                            <div class="last-message-info">
+                                <div class="last-message-time">
+                                    {{ chat.get_last_message.created_at|timesince }}
+                                </div>
+                                <div class="message-count">
+                                    {% if chat.unread_messages_count > 0 %}
+                                        {{ chat.unread_messages_count }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </a>
                 {% endif %}
             {% endfor %}
-                {{ chat.get_last_message }}
-                {{ chat.unread_messages_count }}
-        </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </div>
 {% endblock %}
