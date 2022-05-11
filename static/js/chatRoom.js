@@ -1,3 +1,4 @@
+/* jshint esversion: 6, jquery: true */
 $(document).ready(function() {
     const roomName = JSON.parse(document.getElementById('room_name').textContent);
     const socketProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -28,14 +29,15 @@ $(document).ready(function() {
         
         messageAuthor.append(authorAvatar);
         messageAuthor.append(data.author.username);
-        // need to make data.message.content to pick up line breaks and links
-        // let messageContent = data.message.content;
-        // messageContent = messageContent.replace(/\n/g, '<br>');
-        // if(data.message.content.includes('http')){
-        //     messageContent = messageContent.replace(/(http|https):\/\/(\S+)/g, '<a href="$1://$2" target="_blank">$1://$2</a>');
-        // }
+        
         messageText.append(data.message.content);
-        messageTime.append(data.message.timestamp);
+        
+        let time = moment.utc(data.message.timestamp, 'MMMM D, YYYY, h:mm a').fromNow();
+        
+        // let time = moment(data.message.timestamp).fromNow();
+        messageTime.append(time);
+        
+        // messageTime.append(data.message.timestamp);
         chatMessage.append(messageAuthor);
         chatMessage.append(messageText);
         chatMessage.append(messageTime);
@@ -60,9 +62,8 @@ $(document).ready(function() {
         // pick up line breaks and links
         let messageContent = message;
         messageContent = messageContent.replace(/\n/g, '<br>');
-        if(message.includes('http')){
-            messageContent = messageContent.replace(/(http|https):\/\/(\S+)/g, '<a href="$1://$2" target="_blank">$1://$2</a>');
-        }
+        // use linkifyjs to convert links to html
+        messageContent = linkifyHtml(messageContent);
         // console.log(username);
         if (message.length > 0) {
             socket.send(
