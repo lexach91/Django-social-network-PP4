@@ -50,7 +50,7 @@
                 </div>
                 {% endif %}
                 <div class="post-text">
-                    {{ post.content }}
+                    {{ post.content|safe|linebreaksbr }}
                 </div>
             </div>
             <div class="likes-dislikes">
