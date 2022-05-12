@@ -27,7 +27,7 @@ class CommunityView(View):
         return render(request, 'communities/community.html', context)
     
 
-class EnterCommunityView(View):
+class JoinCommunityView(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             community_id = request.POST.get('community_id')
