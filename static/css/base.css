@@ -72,7 +72,7 @@ body {
     flex-direction: column;
     /* justify-content: center; */
     /* align-items: center; */
-    background-color: white;
+    /* background-color: white; */
     min-height: 100vh;
 }
 
@@ -703,22 +703,26 @@ body {
 /* ---------------- My messages -------------------- */
 
 .messages-all {
-    width: 100%;
-    margin: 0 auto;
-    padding-top: 1em;
-    background-color: #00BCD4;
-    list-style: none;
-  }
-  .messages-single {
-    background-color: orange;
-    width: 98%;
-    margin: 0 auto;
-    background-color: #F3F3FC;
-    min-height: 5rem;
-    margin-bottom: 0.4em;
-    border-radius: 0.2em;
-    padding: 1em;
-  }
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 1em;
+  color: white;
+  list-style: none;
+}
+.messages-single {
+  width: 98%;
+  margin: 0 auto;
+  background-color: #2B2B2B;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  min-height: 5rem;
+  margin-bottom: 0.7em;
+  border-radius: 0.5em;
+  padding: 1em;
+  color: white;
+}
+.messages-single:hover {
+  background-color: #444;
+}
 
 /* ---------------- Chat -------------------- */
 .chat-container {
