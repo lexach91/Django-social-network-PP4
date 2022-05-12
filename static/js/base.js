@@ -1,4 +1,4 @@
-/* jshint esversion: 8, jquery: true */
+/* jshint esversion: 8, jquery: true, scripturl: true */
 console.log('base.js');
 $(document).ready(function() {
     
@@ -596,9 +596,58 @@ $(document).ready(function() {
         });
     };
 
+    const unfriend = (e) => {
+        e.preventDefault();
+        let profileId = $(e.target).data('profile-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // make .chat-button link disabled
+        let chatHrefBackup = $('.chat-button').attr('href');
+        $('.chat-button').attr('href', "javascript:void(0);");
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        // make all .post-form and .comment-form inputs, buttons, and textareas disabled
+        $('.post-form').find('input, button, textarea').attr('disabled', true);
+        $('.comment-form').find('input, button, textarea').attr('disabled', true);
+        $.ajax({
+            url: removeFriendUrl,
+            type: 'POST',
+            data: {
+                'profile_id': profileId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // remove unfriend button
+                $(e.target).remove();
+                // replace .chat-button link with .send-friend-button
+                let sendFriendButton = $('<button class="send-friend-button" data-profile-id="' + profileId + '">Add to friends</button>');
+                $('.chat-button').replaceWith(sendFriendButton);
+                // add event handler to the send friend button
+                $(sendFriendButton).on('click', sendFriendRequest);
+                // remove all .post-form and .comment-form inputs, buttons, and textareas
+                $('.post-form').remove();
+                $('.comment-form').remove();
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+                // enable .chat-button link
+                $('.chat-button').attr('href', chatHrefBackup);
+                // enable all .post-form and .comment-form inputs, buttons, and textareas
+                $('.post-form').find('input, button, textarea').attr('disabled', false);
+                $('.comment-form').find('input, button, textarea').attr('disabled', false);
+            }
+        });
+    };
+
     $('.send-friend-button[disabled=false]').on('click', sendFriendRequest);
     $('.cancel-friend-button').on('click', cancelFriendRequest);
     $('.accept-friend-button').on('click', acceptFriendRequest);
     $('.decline-friend-button').on('click', declineFriendRequest);
+    $('.unfriend-button').on('click', unfriend);
 
 }); // end of document ready
