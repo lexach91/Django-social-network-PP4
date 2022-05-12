@@ -283,153 +283,165 @@ body {
 
 /* ---------------- Posts -------------------- */
 .profile-wall {
-    width: 100%;
-    padding: 0 1em;
-  }
-  .post-wall {
-    width: 100%;
-    /* max-width: 70rem; */
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .post,
-  .post-form {
-    width: 100%;
-    border: 1px solid #000000cc;
-    display: flex;
-    flex-direction: column;
-    border-radius: 0.4em;
-    padding: 1em;
-    margin-bottom: 1em;
-  }
-  .post-form-title {
-    font-size: 2rem;
-  }
-  .profile-wall .post-form {
-    width: 100%;
-    border: 1px solid black;
-  }
-  .post-form {
-    align-items: center;
-    background-color: #F3F3FC;
-    position: relative;
-  }
-  .post-form textarea[name="content"] {
-    width: 100%;
-    height: 9vh;
-    border: 1px solid #8F8F8F;
-    border-radius: 0.2em;
-    padding: 1em;
-    margin-bottom: 1em;
-    resize: vertical;
-  }
-  .post-form label[for="id_content"] {
-    display: none;
-  }
-  .post-form label[for=id_image] {
-    align-self: start;
-    cursor: pointer;
-    font-size: 1.5rem;
-    padding-left: 0.5em;
-  }
-  .post-form label[for=id_image]:hover {
-    color: #5801CA;
-  }
-  .post-form .save-form {
-    position: absolute;
-    right: 1em;
-    bottom: 0;
-    width: 12em;
-    height: 2em;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-color: #000000cc;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 0.5em;
-    margin: 0.5em 0;
-    cursor: pointer;
-  }
-  .post-form .save-form:hover {
-    background-color: #5801CA;
-  }
-  .post {
-    padding-bottom: 0;
-    background-color: #EDEDF8;
-  }
-  .post:not(:last-child) {
-    margin-bottom: 1em;
-  }
-  .post-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-bottom: 0.7em;
-  }
-  .post-author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .post-author-name a {
-    text-decoration: none;
-    color: #5200B1;
-  }
-  .post-author-name a:hover {
-    color: #9296F0;
-  }
-  .post-avatar {
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    margin-right: .5em;
-  }
-  .likes-dislikes {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: 1em;
-    justify-self: flex-end;
-    align-self: flex-end;
-    padding-bottom: .5em;
-  }
-  .likes-dislikes>div:not(:last-child) {
-    margin-right: .5em;
-  }
-  .likes,
-  .dislikes,
-  .comments {
-    cursor: pointer;
-  }
-  .post-media {
-    width: 100%;
-    height: auto;
-    max-height: 30em;
-    margin-bottom: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .post-image {
-    width: 100%;
-    height: auto;
-    max-height: 30em;
-    object-fit: cover;
-    object-position: center;
-  }
-  .post-image.full-height {
-    max-height: 100%;
-  }
-  .post-media.full-height {
-    max-height: 100%;
-  }
+  width: 100%;
+  padding: 0 1em;
+}
+.post-wall {
+  width: 100%;
+  /* max-width: 70rem; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post,
+.post-form {
+  width: 100%;
+  border: 1px solid #000000cc;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.4em;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.post-form-title {
+  font-size: 2rem;
+}
+.profile-wall .post-form {
+  width: 100%;
+  position: relative;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #F3F3FC;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.5em;
+}
+.post-form textarea[name="content"] {
+  width: 100%;
+  height: 9vh;
+  border: 1px solid #8F8F8F;
+  border-radius: 0.2em;
+  padding: 1em;
+  margin-bottom: 1em;
+  resize: vertical;
+}
+.post-form label[for="id_content"] {
+  display: none;
+}
+.post-form label[for=id_image] {
+  align-self: start;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding-left: 0.5em;
+}
+.post-form label[for=id_image]:hover {
+  color: #5801CA;
+}
+.post-form .save-form {
+  position: absolute;
+  right: 1em;
+  bottom: 0;
+  width: 12em;
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #000000cc;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  cursor: pointer;
+}
+.post-form .save-form:hover {
+  background-color: #5801CA;
+}
+.post {
+  padding-bottom: 0;
+  border: 1px solid black;
+  background-color: #F3F3FC;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.5em;
+}
+.post:not(:last-child) {
+  margin-bottom: 1em;
+}
+.post-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 0.7em;
+}
+.post-author {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.post-author-name a {
+  text-decoration: none;
+  color: #5200B1;
+}
+.post-author-name a:hover {
+  color: #9296F0;
+}
+.post-avatar {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-right: .5em;
+}
+.post-text {
+  padding-left: 0.5em;
+}
+.likes-dislikes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 1em;
+  justify-self: flex-end;
+  align-self: flex-end;
+  padding-bottom: 1.5em;
+  margin-top: 0.5em;
+  margin-right: 0.2em;
+}
+.likes-dislikes>div:not(:last-child) {
+  margin-right: .5em;
+}
+.likes,
+.dislikes,
+.comments {
+  cursor: pointer;
+}
+.likes .fas,
+.dislikes .fas {
+  color: #5200B1;
+}
+.post-media {
+  width: 100%;
+  height: auto;
+  max-height: 30em;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post-image {
+  width: 100%;
+  height: auto;
+  max-height: 30em;
+  object-fit: cover;
+  object-position: center;
+}
+.post-image.full-height {
+  max-height: 100%;
+}
+.post-media.full-height {
+  max-height: 100%;
+}
 
 /* ---------------- Comments -------------------- */
 .comments-container {
