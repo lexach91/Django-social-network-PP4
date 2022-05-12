@@ -9,7 +9,7 @@ class SendFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             from_profile = request.user.profile
-            profile_id = request.POST.get('id')
+            profile_id = request.POST.get('profile_id')
             to_profile = get_object_or_404(Profile, id=profile_id)
             # need to check if the request is already sent
             if FriendRequest.objects.filter(
@@ -29,28 +29,45 @@ class SendFriendRequest(View):
 class AcceptFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            request_id = request.POST.get('id')
-            friend_request = get_object_or_404(FriendRequest, id=request_id)
-            friend_request.accepted = True
-            accepting_profile = friend_request.to_profile
-            accepted_profile = friend_request.from_profile
-            accepting_profile.friends.add(accepted_profile)
-            accepted_profile.friends.add(accepting_profile)
-            accepting_profile.save()
-            accepted_profile.save()
-            friend_request.save()
-            return JsonResponse({'status': 'ok'})
+            accepting_profile = request.user.profile
+            profile_id = request.POST.get('profile_id')
+            accepted_profile = get_object_or_404(Profile, id=profile_id)
+            friend_request = get_object_or_404(
+                FriendRequest,
+                from_profile=accepted_profile,
+                to_profile=accepting_profile
+            )
+            if friend_request:
+                friend_request.accepted = True
+                friend_request.declined = False
+                accepting_profile.friends.add(accepted_profile)
+                accepted_profile.friends.add(accepting_profile)
+                friend_request.save()
+                accepting_profile.save()
+                accepted_profile.save()
+                return JsonResponse({'status': 'ok'})
+            return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
+
     
     
 class DeclineFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            request_id = request.POST.get('id')
-            friend_request = get_object_or_404(FriendRequest, id=request_id)
-            friend_request.declined = True
-            friend_request.save()
-            return JsonResponse({'status': 'ok'})
+            declining_profile = request.user.profile
+            profile_id = request.POST.get('profile_id')
+            declined_profile = get_object_or_404(Profile, id=profile_id)
+            friend_request = get_object_or_404(
+                FriendRequest,
+                from_profile=declined_profile,
+                to_profile=declining_profile
+            )
+            if friend_request:
+                friend_request.accepted = False
+                friend_request.declined = True
+                friend_request.save()
+                return JsonResponse({'status': 'ok'})
+            return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
     
 class RemoveFriend(View):
