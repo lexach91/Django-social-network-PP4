@@ -99,11 +99,18 @@ body {
   justify-content: center;
   position: relative;
 }
+.profile-container-edit {
+  padding: 2em;
+}
 .avatar-container.edit-page {
   width: 15em;
   height: auto;
   border-radius: 0;
   flex-direction: column;
+  border-radius: 0.4em;
+  margin-left: 1em;
+  margin-top: 1em;
+  background-color: #E5E5FA;
 }
 .avatar-container.edit-page .avatar-buttons {
   width: 100%;
@@ -113,6 +120,8 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 1em;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
 }
 .avatar-container.edit-page .avatar-buttons button {
   width: 100%;
@@ -120,12 +129,51 @@ body {
   border-radius: 5px;
   border: none;
   margin: .5em;
+  background-color: #2B2B2B;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.avatar-container.edit-page .avatar-buttons button:hover {
+  background-color: #5801CA;
 }
 form.edit-bio {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
+  /* background-color: orange; */
+  margin-bottom: 7vh;
+}
+form.password-form {
+  margin-bottom: 2vh;
+}
+form.edit-bio button.profile-bio-edit-btn,
+form.password-form button.password-form-btn {
+  margin-top: 2vh;
+  background-color: #5801CA;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+form.edit-bio button:hover,
+form.password-form button:hover {
+  background-color: black;
+}
+form.edit-bio label[for="id_first_name"],
+form.edit-bio label[for="id_last_name"],
+form.edit-bio label[for="id_country"],
+form.edit-bio label[for="id_city"],
+form.edit-bio label[for="id_bio"],
+form.edit-bio label[for="id_birth_date"],
+form.password-form label[for="id_old_password"],
+form.password-form label[for="id_new_password1"],
+form.password-form label[for="id_new_password2"] {
+  font-size: 1.2em;
+  margin-bottom: .3em;
+  margin-top: 1em;
+  margin-left: 0.1em;
+  font-weight: 400;
 }
 .avatar-container img {
   width: 100%;
@@ -181,6 +229,17 @@ form.edit-bio {
   align-items: left;
   padding-left: 2em;
   position: relative;
+}
+.profile-bio-edit {
+  padding-left: 2em;
+  margin-top: 1em;
+}
+.profile-bio-edit-title,
+.password-form-title {
+  font-weight: 700;
+  font-size: 1.5em;
+  color: #9296F0;
+  margin-bottom: 1vh;
 }
 .profile-name span,
 .profile-age span,
@@ -737,14 +796,69 @@ form.edit-bio {
   margin: 0 auto;
   background-color: #2B2B2B;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  min-height: 5rem;
+  min-height: 10rem;
   margin-bottom: 0.7em;
   border-radius: 0.5em;
-  padding: 1em;
+  padding: 1em 2em;
   color: white;
+  display: grid;
+  grid-template-columns: minmax(5rem, 1fr) 6fr 1fr;
+  gap: 2rem;
 }
 .messages-single:hover {
   background-color: #444;
+}
+.message-avatar-container {
+  align-self: center;
+  justify-self: center;
+  width: 5rem;
+  height: 5rem;
+}
+.message-avatar-container img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+.message-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.last-message-info {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.message-info .message-name {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #E7D5FF;
+}
+.last-message-info .last-message-time {
+  font-size: 1em;
+  font-weight: 400;
+  font-style: italic;
+  margin-left: auto;
+}
+.message-count {
+  position: absolute;
+  background-color: #E7D5FF;
+  width: 2rem;
+  height: 2rem;
+  font-weight: 700;
+  font-size: 1.2em;
+  border-radius: 50%;
+  color: #2B2B2B;
+  bottom: 1rem;
+  right: 0;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ---------------- Chat -------------------- */

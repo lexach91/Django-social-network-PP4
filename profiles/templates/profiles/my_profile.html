@@ -19,13 +19,13 @@
             <i class="fas fa-cog"></i>
         </a>
         <div class="profile-name">
-            <strong>Name: </strong>{{ user.profile }}
+            <span>Name: </span>{{ user.profile }}
         </div>
         <div class="profile-age">
-            <strong>Age: </strong>{{ user.profile.age }} years old
+            <span>Age: </span>{{ user.profile.age }} years old
         </div>
         <div class="profile-location">
-            <strong>Location:</strong>
+            <span>Location:</span>
             {% if user.profile.location %}
                 Lives in {{ user.profile.location }}
             {% else %}
@@ -33,7 +33,7 @@
             {% endif %}
         </div>
         <div class="profile-bio-text">
-            <strong>Bio:</strong>            
+            <span>Bio:</span>            
             {% if user.profile.bio %}
                 {{ user.profile.bio }}
             {% else %}

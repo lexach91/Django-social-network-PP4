@@ -9,34 +9,34 @@
 {% endblock %}
 
 {% block content %}
-    <div class="profile-container">
+    <div class="profile-container profile-container-edit">
         <div class="profile-info">
-            <div class="avatar-container edit-page">
-                {% if user.profile.avatar %}
-                    <img src="{{ user.profile.avatar.url }}" alt="avatar" class="avatar">
-                {% else %}
-                    <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
-                {% endif %}
-                <div class="avatar-buttons">
-                    <button class="edit-avatar-btn" id="edit-avatar-btn">Edit</button>
-                    <button class="reset-avatar-btn" id="reset-avatar-btn">Remove avatar</button>
-                </div>
+        <div class="avatar-container edit-page">
+            {% if user.profile.avatar %}
+            <img src="{{ user.profile.avatar.url }}" alt="avatar" class="avatar">
+            {% else %}
+            <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="avatar">
+            {% endif %}
+            <div class="avatar-buttons">
+            <button class="edit-avatar-btn" id="edit-avatar-btn">Edit</button>
+            <button class="reset-avatar-btn" id="reset-avatar-btn">Remove avatar</button>
             </div>
-
         </div>
-        <div class="profile-bio">
+        </div>
+        <div class="profile-bio profile-bio-edit">
             <form class="edit-bio">
+            <h2 class="profile-bio-edit-title">Edit personal data</h2>
                 {% csrf_token %}
                 {{ profile_form }}
-                <button class="save-form" id="save-bio-btn">Save changes</button>
+                <button class="save-form profile-bio-edit-btn" id="save-bio-btn">Save changes</button>
             </form>
             <form class="password-form">
+            <h2 class="password-form-title">Edit password</h2>
                 {% csrf_token %}
                 {{ password_form }}
-                <button class="save-form" id="save-password-btn">Change password</button>
+                <button class="save-form password-form-btn" id="save-password-btn">Change password</button>
             </form>
         </div>
-        
     </div>
     <script>
         $(document).ready(function() {
