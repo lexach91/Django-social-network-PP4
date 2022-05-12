@@ -749,95 +749,98 @@ form.edit-bio {
 
 /* ---------------- Chat -------------------- */
 .chat-container {
-    width: 100%;
-    background-color: white;
-  }
-  .chat-messages {
-    width: 98%;
-    margin: 0 auto;
-    height: 80vh;
-    overflow-y: scroll;
-    background-color: #F3F3FC;
-    border-radius: 0.2em;
-  }
-  .chat-input-container {
-    width: 100%;
-    height: 20vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1em;
-  }
-  .chat-input {
-    width: 100%;
-    height: 10vh;
-    border: 1px solid black;
-    padding: 1em;
-    resize: none;
-    border-radius: .3em;
-  }
-  .chat-send-button {
-    width: 5em;
-    height: 2em;
-    /* border-radius: 50%; */
-    border: 1px solid black;
-    background-color: #000000cc;
-    color: white;
-    font-size: 1.2em;
-    font-weight: 900;
-    margin-left: auto;
-    margin-top: .5em;
-    cursor: pointer;
-    border-radius: 0.4em;
-  }
-  .chat-send-button:hover {
-    background-color: #5801CA;
-  }
-  .chat-message {
-    max-width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: .5em;
-    margin: .5em;
-    border: 1px solid black;
-  }
-  .message-author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-bottom: 0.7em;
-    font-weight: bold;
-  }
-  .message-avatar {
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    margin-right: .5em;
-  }
-  .my-message {
-    background-color: white;
-    border-radius: 0.3em;
-    margin-left: auto;
-    font-size: 1rem;
-  }
-  .other-message {
-    background-color: white;
-    border-radius: 0.3em;
-    margin-right: auto;
-    font-size: 1rem;
-  }
-  .message-text {
-    padding-left: 0.5em;
-    padding-bottom: 0.3em;
-  }
-  .message-time {
-    /* position on the right side */
-    margin-left: auto;
-    color: #444;
-    font-size: 0.8em;
-    font-style: italic;
-    margin-right: 0.5em;
-  }
+  width: 100%;
+  /* background-color: white; */
+  background-color: #2B2B2B;
+  background-color: #E5E5FA;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.chat-messages {
+  width: 98%;
+  margin: 0 auto;
+  height: 80vh;
+  overflow-y: scroll;
+  background-color: #F3F3FC;
+  border-radius: 0.2em;
+}
+.chat-input-container {
+  width: 100%;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1em;
+}
+.chat-input {
+  width: 100%;
+  height: 10vh;
+  border: 1px solid black;
+  padding: 1em;
+  resize: none;
+  border-radius: .3em;
+}
+.chat-send-button {
+  width: 5em;
+  height: 2em;
+  /* border-radius: 50%; */
+  border: 1px solid black;
+  background-color: #000000cc;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 900;
+  margin-left: auto;
+  margin-top: .5em;
+  cursor: pointer;
+  border-radius: 0.4em;
+}
+.chat-send-button:hover {
+  background-color: #5801CA;
+}
+.chat-message {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: .5em;
+  margin: .5em;
+  border: 1px solid black;
+}
+.message-author {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 0.7em;
+  font-weight: bold;
+}
+.message-avatar {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-right: .5em;
+}
+.my-message {
+  background-color: white;
+  border-radius: 0.3em;
+  margin-left: auto;
+  font-size: 1rem;
+}
+.other-message {
+  background-color: white;
+  border-radius: 0.3em;
+  margin-right: auto;
+  font-size: 1rem;
+}
+.message-text {
+  padding-left: 0.5em;
+  padding-bottom: 0.3em;
+}
+.message-time {
+  /* position on the right side */
+  margin-left: auto;
+  color: #444;
+  font-size: 0.8em;
+  font-style: italic;
+  margin-right: 0.5em;
+}
