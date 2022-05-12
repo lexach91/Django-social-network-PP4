@@ -280,13 +280,14 @@ form.edit-bio {
 }
 
 /* ---------------- Posts -------------------- */
-.profile-wall {
+.profile-wall,
+.comment-form {
   width: 100%;
   padding: 0 1em;
 }
-.post-wall {
+.post-wall,
+.comment-form {
   width: 100%;
-  /* max-width: 70rem; */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -294,7 +295,8 @@ form.edit-bio {
   align-items: center;
 }
 .post,
-.post-form {
+.post-form,
+.comment-form {
   width: 100%;
   border: 1px solid #000000cc;
   display: flex;
@@ -303,10 +305,14 @@ form.edit-bio {
   padding: 1em;
   margin-bottom: 1em;
 }
+.comment-form {
+  padding-bottom: 2.7em;
+}
 .post-form-title {
   font-size: 2rem;
 }
-.profile-wall .post-form {
+.profile-wall .post-form,
+.comment-form {
   width: 100%;
   position: relative;
   align-items: center;
@@ -315,7 +321,8 @@ form.edit-bio {
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.5em;
 }
-.post-form textarea[name="content"] {
+.post-form textarea[name="content"],
+.comment-form textarea[name="content"] {
   width: 100%;
   height: 9vh;
   border: 1px solid #8F8F8F;
@@ -324,7 +331,8 @@ form.edit-bio {
   margin-bottom: 1em;
   resize: vertical;
 }
-.post-form label[for="id_content"] {
+.post-form label[for="id_content"],
+.comment-form label[for="id_content"] {
   display: none;
 }
 .post-form label[for=id_image] {
@@ -336,7 +344,8 @@ form.edit-bio {
 .post-form label[for=id_image]:hover {
   color: #5801CA;
 }
-.post-form .save-form {
+.post-form .save-form,
+.comment-form .comment-submit {
   position: absolute;
   right: 1em;
   bottom: 0;
@@ -353,7 +362,8 @@ form.edit-bio {
   margin: 0.5em 0;
   cursor: pointer;
 }
-.post-form .save-form:hover {
+.post-form .save-form:hover,
+.comment-form .comment-submit:hover {
   background-color: #5801CA;
 }
 .post {
@@ -462,7 +472,7 @@ form.edit-bio {
     margin-bottom: 1em;
     padding-bottom: 0;
   }
-  
+
   .comment-info {
     display: flex;
     flex-direction: row;
