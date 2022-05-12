@@ -74,7 +74,7 @@ class RemoveFriend(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             remover = request.user.profile
-            friend = get_object_or_404(Profile, id=request.POST.get('id'))
+            friend = get_object_or_404(Profile, id=request.POST.get('profile_id'))
             remover.friends.remove(friend)
             friend.friends.remove(remover)
             remover.save()

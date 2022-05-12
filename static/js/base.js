@@ -516,10 +516,89 @@ $(document).ready(function() {
                 // enable e.target
                 $(e.target).attr('disabled', false);
             }
-        })
+        });
+    };
+
+    const acceptFriendRequest = (e) => {
+        e.preventDefault();
+        let profileId = $(e.target).data('profile-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // make decline button disabled
+        $('.decline-friend-button[data-profile-id="' + profileId + '"]').attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: acceptFriendRequestUrl,
+            type: 'POST',
+            data: {
+                'profile_id': profileId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // replace accept and decline buttons with .chat-button link and .unfriend-button
+                let username = $('input[id="profile_username"]').val();
+                let chatUrl = protocol + '//' + host + '/chat-with-' + username + '/';
+                let chatButton = $('<a class="chat-button" href="' + chatUrl + '">Chat</a>');
+                let unfriendButton = $('<button class="unfriend-button" data-profile-id="' + profileId + '">Unfriend</button>');
+                $(e.target).replaceWith(chatButton);
+                $('.decline-friend-button[data-profile-id="' + profileId + '"]').replaceWith(unfriendButton);
+                // add event handler to the unfriend button
+                // $(unfriendButton).on('click', unfriend);
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+                // enable decline button
+                $('.decline-friend-button[data-profile-id="' + profileId + '"]').attr('disabled', false);
+            }
+        });
+    };
+
+    const declineFriendRequest = (e) => {
+        e.preventDefault();
+        let profileId = $(e.target).data('profile-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // make accept button disabled
+        $('.accept-friend-button[data-profile-id="' + profileId + '"]').attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: declineFriendRequestUrl,
+            type: 'POST',
+            data: {
+                'profile_id': profileId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // replace accept and decline buttons with .send-friend-button
+                let sendFriendButton = $('<button class="send-friend-button" data-profile-id="' + profileId + '">Add to friends</button>');
+                $(e.target).replaceWith(sendFriendButton);
+                $('.accept-friend-button[data-profile-id="' + profileId + '"]').remove();
+                // add event handler to the send friend button
+                $(sendFriendButton).on('click', sendFriendRequest);
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+                // enable accept button
+                $('.accept-friend-button[data-profile-id="' + profileId + '"]').attr('disabled', false);
+            }
+        });
     };
 
     $('.send-friend-button[disabled=false]').on('click', sendFriendRequest);
     $('.cancel-friend-button').on('click', cancelFriendRequest);
+    $('.accept-friend-button').on('click', acceptFriendRequest);
+    $('.decline-friend-button').on('click', declineFriendRequest);
 
 }); // end of document ready

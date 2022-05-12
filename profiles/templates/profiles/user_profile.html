@@ -64,6 +64,7 @@
 
 <input type="hidden" value="{{ user_profile.id }}" id="profile_id">
 <input type="hidden" value="1" id="post_type">
+<input type="hidden" value="{{ user_profile.user.username }}" id="profile_username">
 {% csrf_token %}
 
 {% endblock %}
