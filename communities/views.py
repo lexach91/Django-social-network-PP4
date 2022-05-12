@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import JsonResponse
 from .models import Community
 from posts.forms import PostForm, CommentForm
 
@@ -24,3 +25,24 @@ class CommunityView(View):
             'posts': posts
         }
         return render(request, 'communities/community.html', context)
+    
+
+class EnterCommunityView(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            community_id = request.POST.get('community_id')
+            community = Community.objects.get(id=community_id)
+            community.members.add(request.user)
+            community.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+    
+class LeaveCommunityView(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            community_id = request.POST.get('community_id')
+            community = Community.objects.get(id=community_id)
+            community.members.remove(request.user)
+            community.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
