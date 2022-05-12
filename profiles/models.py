@@ -35,16 +35,6 @@ class Profile(models.Model):
         blank=True,
         related_name='friends'
     )
-    pending_friends_in = models.ManyToManyField(
-        'self',
-        blank=True,
-        related_name='pending_friends_in'
-    )
-    pending_friends_out = models.ManyToManyField(
-        'self',
-        blank=True,
-        related_name='pending_friends_out'
-    )
     country = models.CharField(
         max_length=50,
         blank=True,
@@ -93,5 +83,17 @@ class Profile(models.Model):
         return None
 
     @property
-    def pending_friend_requests(self):
-        return self.friend_request_to_profile.filter(accepted=False, declined=False)
+    def pending_friends_in(self):
+        profiles_list = []
+        for friend_request in self.friend_request_to_profile.all():
+            if not friend_request.accepted and not friend_request.declined:
+                profiles_list.append(friend_request.from_profile)
+        return profiles_list
+    
+    @property
+    def pending_friends_out(self):
+        profiles_list = []
+        for friend_request in self.friend_request_from_profile.all():
+            if not friend_request.accepted and not friend_request.declined:
+                profiles_list.append(friend_request.to_profile)
+        return profiles_list
