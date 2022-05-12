@@ -41,11 +41,11 @@
                 </a>
                 <button class="unfriend-button">Unfriend</button>
             {% else %}
-                {% if user_profile in request.user.profile.pending_friends_in.all %}
+                {% if user_profile in request.user.profile.pending_friends_in %}
                     <button class="accept-friend-button">Accept</button>
                     <button class="decline-friend-button">Decline</button>
                 {% else %} 
-                    {% if user_profile in request.user.profile.pending_friends_out.all %}
+                    {% if user_profile in request.user.profile.pending_friends_out %}
                         <button class="send-friend-button" disabled>Request pending</button>
                         <button class="cancel-friend-button">Cancel</button>
                     {% else %}
