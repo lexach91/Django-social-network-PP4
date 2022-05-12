@@ -14,6 +14,13 @@
                 <h2>{{ community.name }}</h2>
                 <p>{{ community.description }}</p>
             </div>
+            <div class="community-actions">
+                {% if request.user in community.members.all %}
+                    <button class="leave-community" data-community-id="{{ community.id }}">Leave community</button>
+                {% else %}
+                    <button class="join-community" data-community-id="{{ community.id }}">Join community</button>
+                {% endif %}
+            </div>
         </div>
         <div class="community-members">
             <a href="#" class="members-count">{{ community.member_count }} members</a>
