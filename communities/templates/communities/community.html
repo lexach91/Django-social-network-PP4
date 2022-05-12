@@ -16,9 +16,9 @@
             </div>
             <div class="community-actions">
                 {% if request.user in community.members.all %}
-                    <button class="leave-community" data-community-id="{{ community.id }}">Leave community</button>
+                    <button class="leave-community-button" data-community-id="{{ community.id }}">Leave community</button>
                 {% else %}
-                    <button class="join-community" data-community-id="{{ community.id }}">Join community</button>
+                    <button class="join-community-button" data-community-id="{{ community.id }}">Join community</button>
                 {% endif %}
             </div>
         </div>

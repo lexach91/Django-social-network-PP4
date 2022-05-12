@@ -451,7 +451,7 @@ $(document).ready(function() {
     $('.comment-button').on('click', commentHandler);
     $('.comment-form').on('submit', createComment);
 
-    // -------- friend requests functions --------
+    // -------- friend requests functions -------- 
 
     const sendFriendRequestUrl = protocol + '//' + host + '/friends/send-friend-request/';
     const acceptFriendRequestUrl = protocol + '//' + host + '/friends/accept-friend-request/';
@@ -677,5 +677,95 @@ $(document).ready(function() {
     $('.accept-friend-button').on('click', acceptFriendRequest);
     $('.decline-friend-button').on('click', declineFriendRequest);
     $('.unfriend-button').on('click', unfriend);
+
+    // -------- Community functions -------- 
+    const joinCommunityUrl = protocol + '//' + host + window.location.pathname + 'join/';
+    const leaveCommunityUrl = protocol + '//' + host + window.location.pathname + 'leave/';
+
+    const joinCommunity = (e) => {
+        e.preventDefault();
+        let communityId = $(e.target).data('community-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: joinCommunityUrl,
+            type: 'POST',
+            data: {
+                'community_id': communityId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // replace join community button with leave community button
+                let leaveCommunityButton = $('<button class="leave-community-button" data-community-id="' + communityId + '">Leave community</button>');
+                $(e.target).replaceWith(leaveCommunityButton);
+                // add event handler to the leave community button
+                $(leaveCommunityButton).on('click', leaveCommunity);
+                // add post and comment forms to the community page
+                // prepend post form to .profile-wall
+                $('.profile-wall').prepend(postFormHtml);
+                // add event handlers to the post form
+                $('.post-form').on('submit', createPost);
+                $('#id_image').on('change', imagePreview);
+                // for each post in the wall add a comment form html
+                $('.post').each(function () {
+                    let postId = $(this).data('post-id');
+                    let commentForm = `<form class="comment-form" data-post-id="${postId}">` +
+                        commentFormHtml +
+                        `</form>`;
+                    // append the comment form to the .comments-container that follows the post
+                    $('.comments-container[data-for-post="' + postId + '"]').append(commentForm);
+                });
+                $('.comment-form').on('submit', createComment);
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+            }
+        });
+    };
+
+    const leaveCommunity = (e) => {
+        e.preventDefault();
+        let communityId = $(e.target).data('community-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: leaveCommunityUrl,
+            type: 'POST',
+            data: {
+                'community_id': communityId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // replace leave community button with join community button
+                let joinCommunityButton = $('<button class="join-community-button" data-community-id="' + communityId + '">Join community</button>');
+                $(e.target).replaceWith(joinCommunityButton);
+                // add event handler to the join community button
+                $(joinCommunityButton).on('click', joinCommunity);
+                // remove all .post-form and .comment-form inputs, buttons, and textareas
+                $('.post-form').remove();
+                $('.comment-form').remove();
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+            }
+        });
+    };
+
+    $('.join-community-button').on('click', joinCommunity);
+    $('.leave-community-button').on('click', leaveCommunity);
 
 }); // end of document ready
