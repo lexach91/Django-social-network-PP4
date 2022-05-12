@@ -39,17 +39,17 @@
                 <a class="chat-button" href="{% url 'chat_detail' username=user_profile.user.username %}">
                     Chat
                 </a>
-                <button class="unfriend-button">Unfriend</button>
+                <button class="unfriend-button" data-profile-id="{{ user_profile.id }}">Unfriend</button>
             {% else %}
                 {% if user_profile in request.user.profile.pending_friends_in %}
-                    <button class="accept-friend-button">Accept</button>
-                    <button class="decline-friend-button">Decline</button>
+                    <button class="accept-friend-button" data-profile-id="{{ user_profile.id }}">Accept</button>
+                    <button class="decline-friend-button" data-profile-id="{{ user_profile.id }}">Decline</button>
                 {% else %} 
                     {% if user_profile in request.user.profile.pending_friends_out %}
                         <button class="send-friend-button" disabled>Request pending</button>
-                        <button class="cancel-friend-button">Cancel</button>
+                        <button class="cancel-friend-button" data-profile-id="{{ user_profile.id }}">Cancel</button>
                     {% else %}
-                        <button class="send-friend-button">Add to friends</button>
+                        <button class="send-friend-button" data-profile-id="{{ user_profile.id }}">Add to friends</button>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -64,5 +64,6 @@
 
 <input type="hidden" value="{{ user_profile.id }}" id="profile_id">
 <input type="hidden" value="1" id="post_type">
+{% csrf_token %}
 
 {% endblock %}
