@@ -121,11 +121,13 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
             <form class="comment-form" data-post-id="{{ post.id }}">
                 {% csrf_token %}
                 {{ comment_form }}
                 <button type="submit" class="comment-submit">Comment</button>
             </form>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

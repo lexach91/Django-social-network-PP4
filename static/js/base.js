@@ -19,6 +19,19 @@ $(document).ready(function() {
         <button type="submit" class="comment-submit">Comment</button>
     `;
 
+    const postFormHtml = `
+    <form class="post-form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+        <label for="id_content">Content:</label><textarea name="content" cols="40" rows="3" maxlength="500" required="" id="id_content"></textarea>
+        <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
+        <input type="file" name="image" accept="image/*" id="id_image" style="display: none;">
+        <input type="hidden" name="post_type" id="id_post_type">
+        <input type="hidden" name="community" id="id_community">
+        <input type="hidden" name="profile" id="id_profile">
+        <button type="submit" class="post-submit save-form">Post</button>
+    </form>
+    `;
+
     const createPostUrl = protocol + '//' + host + '/posts/create-post/';
     const likePostUrl = protocol + '//' + host + '/posts/like-post/';
     const dislikePostUrl = protocol + '//' + host + '/posts/dislike-post/';
@@ -545,7 +558,22 @@ $(document).ready(function() {
                 $(e.target).replaceWith(chatButton);
                 $('.decline-friend-button[data-profile-id="' + profileId + '"]').replaceWith(unfriendButton);
                 // add event handler to the unfriend button
-                // $(unfriendButton).on('click', unfriend);
+                $(unfriendButton).on('click', unfriend);
+                // prepend post form to .profile-wall
+                $('.profile-wall').prepend(postFormHtml);
+                // add event handlers to the post form
+                $('.post-form').on('submit', createPost);
+                $('#id_image').on('change', imagePreview);
+                // for each post in the wall add a comment form html
+                $('.post').each(function () {
+                    let postId = $(this).data('post-id');
+                    let commentForm = `<form class="comment-form" data-post-id="${postId}">` +
+                        commentFormHtml +
+                        `</form>`;
+                    // append the comment form to the .comments-container that follows the post
+                    $('.comments-container[data-for-post="' + postId + '"]').append(commentForm);
+                });
+                $('.comment-form').on('submit', createComment);
             },
             error: (data) => {
                 console.log(data);
