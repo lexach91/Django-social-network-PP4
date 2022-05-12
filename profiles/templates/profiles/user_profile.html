@@ -46,7 +46,7 @@
                     <button class="decline-friend-button" data-profile-id="{{ user_profile.id }}">Decline</button>
                 {% else %} 
                     {% if user_profile in request.user.profile.pending_friends_out %}
-                        <button class="send-friend-button" disabled>Request pending</button>
+                        <button class="send-friend-button" data-profile-id="{{ user_profile.id }}" disabled>Request pending</button>
                         <button class="cancel-friend-button" data-profile-id="{{ user_profile.id }}">Cancel</button>
                     {% else %}
                         <button class="send-friend-button" data-profile-id="{{ user_profile.id }}">Add to friends</button>

@@ -88,6 +88,7 @@ class CancelFriendRequest(View):
             profile1 = request.user.profile
             profile2 = get_object_or_404(Profile, id=request.POST.get('profile_id'))
             friend_request = get_object_or_404(
+                FriendRequest,
                 from_profile=profile1,
                 to_profile=profile2
             )

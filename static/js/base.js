@@ -444,6 +444,7 @@ $(document).ready(function() {
     const acceptFriendRequestUrl = protocol + '//' + host + '/friends/accept-friend-request/';
     const declineFriendRequestUrl = protocol + '//' + host + '/friends/decline-friend-request/';
     const removeFriendUrl = protocol + '//' + host + '/friends/remove-friend/';
+    const cancelFriendRequestUrl = protocol + '//' + host + '/friends/cancel-friend-request/';
 
     const sendFriendRequest = (e) => {
         e.preventDefault();
@@ -471,7 +472,7 @@ $(document).ready(function() {
                 let cancelFriendButton = $('<button class="cancel-friend-button" data-profile-id="' + profileId + '">Cancel</button>');
                 $(e.target).after(cancelFriendButton);
                 // add event handler to the cancel button
-                // $(cancelFriendButton).on('click', cancelFriendRequest);
+                $(cancelFriendButton).on('click', cancelFriendRequest);
             },
             error: (data) => {
                 console.log(data);
@@ -483,6 +484,42 @@ $(document).ready(function() {
         });
     };
 
-    $('.send-friend-button').on('click', sendFriendRequest);
+    const cancelFriendRequest = (e) => {
+        e.preventDefault();
+        let profileId = $(e.target).data('profile-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: cancelFriendRequestUrl,
+            type: 'POST',
+            data: {
+                'profile_id': profileId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // remove cancel button
+                $(e.target).remove();
+                // change .send-friend-button next to the button to 'Add to friends'
+                $('.send-friend-button[data-profile-id="' + profileId + '"]').text('Add to friends');
+                // make it enabled again
+                $('.send-friend-button[data-profile-id="' + profileId + '"]').attr('disabled', false);
+                // add event handler to the button
+                $('.send-friend-button[data-profile-id="' + profileId + '"]').on('click', sendFriendRequest);
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+            }
+        })
+    };
+
+    $('.send-friend-button[disabled=false]').on('click', sendFriendRequest);
+    $('.cancel-friend-button').on('click', cancelFriendRequest);
 
 }); // end of document ready
