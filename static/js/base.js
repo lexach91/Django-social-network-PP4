@@ -1,16 +1,12 @@
 /* jshint esversion: 8, jquery: true */
 console.log('base.js');
 $(document).ready(function() {
-// posts, comments, profile functions
-    $('.comments-container').hide();
-
-    // make file input in post form look like a paperclip
-    $('.post-form input[type="file"]').hide();
     
+    // -------- posts, comments, profile functions --------
+    $('.comments-container').hide();
+    $('.post-form input[type="file"]').hide();    
     $('.post-form label[for="id_image"]').html('<i class="fas fa-paperclip"></i>');
-    // add title to this label
     $('.post-form label[for="id_image"]').attr('title', 'Add an image');
-    // add tooltip to this label
     $('.post-form label[for="id_image"]').tooltip();
     
     const protocol = window.location.protocol;
@@ -376,7 +372,6 @@ $(document).ready(function() {
 
     $('#id_image').on('change', imagePreview);
 
-
     $(editAvatarBtn).on('click', () => {
         // need to open select file dialog
         let fileInput = document.createElement('input');
@@ -436,18 +431,58 @@ $(document).ready(function() {
         });
     });
 
-
     $('.post-image').on('click', toggleImage);
-
-
-
-
-    
-
     $('.post-form').on('submit', createPost);
     $('.like-button').on('click', likeHandler);
     $('.dislike-button').on('click', dislikeHandler);
     $('.comment-button').on('click', commentHandler);
     $('.comment-form').on('submit', createComment);
+
+    // -------- friend requests functions --------
+
+    const sendFriendRequestUrl = protocol + '//' + host + '/friends/send-friend-request/';
+    const acceptFriendRequestUrl = protocol + '//' + host + '/friends/accept-friend-request/';
+    const declineFriendRequestUrl = protocol + '//' + host + '/friends/decline-friend-request/';
+    const removeFriendUrl = protocol + '//' + host + '/friends/remove-friend/';
+
+    const sendFriendRequest = (e) => {
+        e.preventDefault();
+        let profileId = $(e.target).data('profile-id');
+        // make e.target disabled
+        $(e.target).attr('disabled', true);
+        // show loading icon
+        $(e.target).append('<i class="fas fa-spinner fa-spin"></i>');
+        $.ajax({
+            url: sendFriendRequestUrl,
+            type: 'POST',
+            data: {
+                'profile_id': profileId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+            success: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // change button text to 'Request pending'
+                $(e.target).text('Request pending');
+                // remove event handler from the button
+                $(e.target).off('click');
+                // add .cancel-friend-button next to the button
+                let cancelFriendButton = $('<button class="cancel-friend-button" data-profile-id="' + profileId + '">Cancel</button>');
+                $(e.target).after(cancelFriendButton);
+                // add event handler to the cancel button
+                // $(cancelFriendButton).on('click', cancelFriendRequest);
+            },
+            error: (data) => {
+                console.log(data);
+                // remove loading icon
+                $(e.target).find('i').remove();
+                // enable e.target
+                $(e.target).attr('disabled', false);
+            }
+        });
+    };
+
+    $('.send-friend-button').on('click', sendFriendRequest);
 
 }); // end of document ready
