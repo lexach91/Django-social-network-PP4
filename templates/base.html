@@ -37,35 +37,33 @@
             {% block navbar %}
             <nav id="nav-bar">
                 <ul class="navigation">
-                    <li class="navigation-item">
-                        <a href="{% url 'my_profile' %}"><i class="fas fa-user"></i>My profile</a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="#"><i class="fas fa-newspaper"></i>My feed</a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>My friends
-                        {% if user.profile.pending_friend_requests %}
-                            <span class="badge"> ({{ user.profile.pending_friend_requests.count }})</span>
-                        {% endif %}
-                        </a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>My communities</a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="{% url 'my_messages' %}"><i class="fas fa-comments"></i>My messages</a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="{% url 'search' %}"><i class="fas fa-search"></i>Search</a>
-                    </li>
-                    <li class="navigation-item">
-                        <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out"></i>Logout</a>
-                    </li>
-
+                  <li class="navigation-item">
+                    <a href="{% url 'my_profile' %}"><i class="fas fa-user"></i>Profile</a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="#"><i class="fas fa-newspaper"></i>Feed</a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>Friends
+                      {% if user.profile.pending_friend_requests %}
+                      <span class="badge"> ({{ user.profile.pending_friend_requests.count }})</span>
+                      {% endif %}
+                    </a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>Communities</a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'my_messages' %}"><i class="fas fa-comments"></i>Messages</a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'search' %}"><i class="fas fa-search"></i>Search</a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out"></i>Logout</a>
+                  </li>
                 </ul>
-
-            </nav>
+              </nav>
             {% endblock %}
         {% else %}
             <a href="{% url 'account_signup' %}">SignUp</a>
