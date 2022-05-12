@@ -65,220 +65,218 @@ body {
 
 /* ---------------- Main Content -------------------- */
 .main-content {
-    width: 100%;
-    max-width: 75rem;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* background-color: white; */
-    min-height: 100vh;
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* background-color: white; */
+  min-height: 100vh;
 }
-
 /* ---------------- Profile page -------------------- */
-
 .profile-container {
-    /* min-height: 100vh; */
-    width: 100%;
-    /* max-width: 50rem; */
-    display: flex;
-    padding: 2vh 0 5vh 0;
-    /* background-color: orange; */
-    padding-left: 1em;
-  }
-  .avatar-container {
-    width: 15em;
-    height: 15em;
-    background-color: #F5F5F5;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .avatar-container.edit-page {
-    width: 15em;
-    height: auto;
-    border-radius: 0;
-    flex-direction: column;
-  }
-  .avatar-container.edit-page .avatar-buttons {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    padding: 1em;
-  }
-  .avatar-container.edit-page .avatar-buttons button {
-    width: 100%;
-    height: 2em;
-    border-radius: 5px;
-    border: none;
-    margin: .5em;
-  }
-  form.edit-bio {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-  }
-  .avatar-container img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-  }
-  .avatar-container.edit-page img {
-    width: 15em;
-    height: 15em;
-  }
-  .edit-avatar {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    padding: .5em;
-    z-index: 10;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #000000cc;
-  }
-  .edit-avatar:hover {
-    color: #5801CA;
-  }
-  .accept-avatar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 2em;
-    height: 2em;
-    padding: .5em;
-    z-index: 10;
-    cursor: pointer;
-  }
-  .cancel-avatar {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 2em;
-    height: 2em;
-    padding: .5em;
-    z-index: 10;
-    cursor: pointer;
-  }
-  .profile-bio {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    padding-left: 2em;
-    position: relative;
-  }
-  .profile-bio div {
-    font-size: 1.5rem;
-  }
-  .profile-settings {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    cursor: pointer;
-    /* color: #DCDDFF; */
-    padding: 0.5em 1em;
-    border-radius: 0.4em;
-    color: #000000cc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  .profile-settings i {
-    font-size: 2.5em;
-  }
-  .profile-settings i:hover {
-    color: #5801CA;
-  }
-
-
+  /* min-height: 100vh; */
+  width: 98%;
+  margin: 0.7em auto;
+  display: flex;
+  padding: 2vh 0 5vh 0;
+  background-color: #535353;
+  /* background-color: #F3F3FC; */
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.7em;
+  padding-left: 1em;
+  color: white;
+}
+.avatar-container {
+  width: 15em;
+  height: 15em;
+  background-color: #F5F5F5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.avatar-container.edit-page {
+  width: 15em;
+  height: auto;
+  border-radius: 0;
+  flex-direction: column;
+}
+.avatar-container.edit-page .avatar-buttons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  padding: 1em;
+}
+.avatar-container.edit-page .avatar-buttons button {
+  width: 100%;
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  margin: .5em;
+}
+form.edit-bio {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.avatar-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+.avatar-container.edit-page img {
+  width: 15em;
+  height: 15em;
+}
+.edit-avatar {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: .5em;
+  z-index: 10;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: white;
+}
+.edit-avatar:hover {
+  color: #C69AFF;
+}
+.accept-avatar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2em;
+  height: 2em;
+  padding: .5em;
+  z-index: 10;
+  cursor: pointer;
+}
+.cancel-avatar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 2em;
+  height: 2em;
+  padding: .5em;
+  z-index: 10;
+  cursor: pointer;
+}
+.profile-bio {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding-left: 2em;
+  position: relative;
+}
+.profile-name span,
+.profile-age span,
+.profile-location span,
+.profile-bio-text span {
+  color: #EBDBFF;
+  font-weight: 700;
+  margin-right: 0.2em;
+}
+.profile-bio div {
+  font-size: 1.5rem;
+}
+.profile-settings {
+  position: absolute;
+  top: -1rem;
+  right: 0;
+  z-index: 10;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  border-radius: 0.4em;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.profile-settings i {
+  font-size: 2.5em;
+}
+.profile-settings i:hover {
+  color: #C69AFF;
+}
 #id_first_name,
 #id_last_name,
 #id_country,
 #id_city,
 #id_bio {
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    padding-left: 8px;
-    color: #444;
-    font-size: large;
-    line-height: 1.5em;
-    border-radius: 4px;
-    border: 1px solid #aaa !important;
+  width: 100%;
+  height: 28px;
+  line-height: 28px;
+  padding-left: 8px;
+  color: #444;
+  font-size: large;
+  line-height: 1.5em;
+  border-radius: 4px;
+  border: 1px solid #aaa !important;
 }
-
 #id_birth_date {
-    width: 10em;
-    padding: .2em;
-    font-size: large;
-    /* line-height: 1.5em; */
-    border-radius: 5px;
-    border: 1px solid #aaa !important;
+  width: 10em;
+  padding: .2em;
+  font-size: large;
+  /* line-height: 1.5em; */
+  border-radius: 5px;
+  border: 1px solid #aaa !important;
 }
-
 #id_bio {
-    resize: none;
-    height: 10em;
+  resize: none;
+  height: 10em;
 }
-
 /* styles for inputs, selects, and textareas with property 'disabled' */
 [disabled] {
-    background-color: #eee;
+  background-color: #eee;
 }
-
-
 .save-form {
-    width: 12em;
-    height: 2em;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-color: #00bcd4;
-    padding: .5em;
-    margin: .5em 0;
+  width: 12em;
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #00BCD4;
+  padding: .5em;
+  margin: .5em 0;
 }
-
 .password-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    /* padding: 1em; */
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* padding: 1em; */
+  position: relative;
 }
-
 .password-form .helptext {
-    position: absolute;
-    left: 20em;
+  position: absolute;
+  left: 20em;
 }
-
 .password-form input[type=password] {
-    width: 15em;
-    padding: .2em;
-    font-size: large;
-    border-radius: 5px;
-    border: .5px solid black !important;
-    height: 2em;
-    margin-bottom: .5em;
+  width: 15em;
+  padding: .2em;
+  font-size: large;
+  border-radius: 5px;
+  border: .5px solid black !important;
+  height: 2em;
+  margin-bottom: .5em;
 }
-
 .password-form br {
-    display: none;
+  display: none;
 }
 
 /* ---------------- Posts -------------------- */
