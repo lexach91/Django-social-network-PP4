@@ -6,6 +6,7 @@ from .views import (
     LeaveCommunityView,
     CreateCommunityView,
     EditCommunityView,
+    DeleteCommunityView,
 )
 
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path('<slug>/join/', JoinCommunityView.as_view(), name='join_community'),
     path('<slug>/leave/', LeaveCommunityView.as_view(), name='leave_community'),
     path('<slug>/edit/', EditCommunityView.as_view(), name='edit_community'),
+    path('<slug>/delete/', DeleteCommunityView.as_view(), name='delete_community'),
 ]
     
