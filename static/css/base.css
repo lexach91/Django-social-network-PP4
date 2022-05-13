@@ -818,36 +818,6 @@ form.password-form label[for="id_new_password2"] {
   background-color: #543281;
 }
 
-/* ---------------- Communities list -------------------- */
-
-.communities-container {
-  width: 100%;
-  padding: 2em;
-}
-
-.community-card {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 1em;
-  margin: .5em;
-  border: 1px solid black;
-}
-
-.community-card-logo {
-  width: 14em;
-  height: 10em;
-  margin-right: .5em;
-}
-
-.community-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
 
 /* ---------------- Community details -------------------- */
 
@@ -956,21 +926,25 @@ form.password-form label[for="id_new_password2"] {
   object-position: center;
 }
 
+/* ---------------- Communities list -------------------- */
+.communities-container {
+  width: 100%;
+  padding-top: 1em;
+}
 /* ---------------- My messages -------------------- */
-.messages-all {
+.messages-all,
+.community-container {
   width: 100%;
   margin: 0 auto;
   padding-top: 1em;
   color: white;
   list-style: none;
-
-
 }
-
-.messages-single {
+.messages-single,
+.community-card {
   width: 98%;
   margin: 0 auto;
-  background-color: #2b2b2b;
+  background-color: #2B2B2B;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   min-height: 10rem;
   margin-bottom: 0.7em;
@@ -981,63 +955,83 @@ form.password-form label[for="id_new_password2"] {
   grid-template-columns: minmax(5rem, 1fr) 6fr 1fr;
   gap: 2rem;
 }
-
-
-.messages-single:hover {
+.messages-single:hover,
+.community-card:hover {
   background-color: #444;
 }
-
-.message-avatar-container {
+.message-avatar-container,
+.community-card-logo {
   align-self: center;
   justify-self: center;
+  width: 5rem;
+  height: 5rem;
 }
-
-.message-avatar-container img {
+.community-card-logo {
+  background-color: white;
+  border-radius: 50%;
+}
+/* .community-logo-default {
+  padding: 1em;
+} */
+.message-avatar-container img,
+.community-card-logo img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
 }
-
-.message-info {
+.message-info,
+.message-name, .community-card-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-around !important;
 }
 
-.last-message-info {
+.community-card-info {
+  height: 100%;
+}
+
+.last-message-info,
+.community-card-members-count {
   display: flex;
   flex-direction: column;
   position: relative;
 }
-
-.message-info .message-name {
+.message-info .message-name,
+.community-card-info .community-card-name {
   font-size: 1.2em;
   font-weight: 700;
-  color: #e7d5ff;
+  color: #E7D5FF;
 }
-
-.last-message-info .last-message-time {
+.last-message-info,
+.community-card-members-count {
   font-size: 1em;
   font-weight: 400;
   font-style: italic;
   margin-left: auto;
+  justify-self: end;
+  text-align: end;
 }
-
+.community-card-members-count {
+  margin-bottom: auto;
+}
 .message-count {
   position: absolute;
-  background-color: #e7d5ff;
+  background-color: #E7D5FF;
   width: 2rem;
   height: 2rem;
   font-weight: 700;
   font-size: 1.2em;
   border-radius: 50%;
-  color: #2b2b2b;
+  color: #2B2B2B;
   bottom: 1rem;
   right: 0;
   /* top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); */
+  font-style: normal;
   display: flex;
   justify-content: center;
   align-items: center;
