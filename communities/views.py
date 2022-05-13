@@ -59,9 +59,25 @@ class CreateCommunityView(View):
         if form.is_valid():
             community = form.save(commit=False)
             community.creator = request.user
+            community.logo = form.cleaned_data['logo']
+            community.bg_image = form.cleaned_data['bg_image']
             community.save()
             community.members.add(request.user)
             community.save()
-            # redirect to community page
             return HttpResponseRedirect(f'/communities/{community.slug}/')
             
+class EditCommunityView(View):
+    def get(self, request, slug, *args, **kwargs):
+        community = Community.objects.get(slug=slug)
+        form = CommunityForm(instance=community)
+        return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+    
+    def post(self, request, slug, *args, **kwargs):
+        community = Community.objects.get(slug=slug)
+        form = CommunityForm(request.POST, request.FILES, instance=community)
+        print(request.POST)
+        print(request.FILES)
+        # print(form.cleaned_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(f'/communities/{community.slug}/')
