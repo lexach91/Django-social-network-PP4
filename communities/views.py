@@ -55,12 +55,10 @@ class CreateCommunityView(View):
         return render(request, 'communities/create_community.html', {'form': form})
     
     def post(self, request, *args, **kwargs):
-        form = CommunityForm(request.POST)
+        form = CommunityForm(request.POST, request.FILES)
         if form.is_valid():
             community = form.save(commit=False)
             community.creator = request.user
-            community.logo = form.cleaned_data['logo']
-            community.bg_image = form.cleaned_data['bg_image']
             community.save()
             community.members.add(request.user)
             community.save()
@@ -75,9 +73,6 @@ class EditCommunityView(View):
     def post(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
         form = CommunityForm(request.POST, request.FILES, instance=community)
-        print(request.POST)
-        print(request.FILES)
-        # print(form.cleaned_data)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(f'/communities/{community.slug}/')
