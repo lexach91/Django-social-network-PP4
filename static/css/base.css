@@ -325,7 +325,7 @@ form.password-form label[for="id_new_password2"] {
 #id_country,
 #id_city,
 #id_bio {
-  min-width: 100% !important;
+  width: 100% !important;
   height: 28px;
   line-height: 28px;
   padding-left: 8px;
@@ -334,6 +334,18 @@ form.password-form label[for="id_new_password2"] {
   line-height: 1.5em;
   border-radius: 4px;
   border: 1px solid #aaa !important;
+}
+#id_first_name,
+#id_last_name,
+#id_bio {
+  width: 100%;
+}
+#id_country,
+#id_city {
+  width: 100% !important;
+}
+.select2-container {
+  width: 100% !important;
 }
 
 #id_birth_date {
