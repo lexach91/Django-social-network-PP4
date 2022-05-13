@@ -67,12 +67,28 @@ class CreateCommunityView(View):
 class EditCommunityView(View):
     def get(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
-        form = CommunityForm(instance=community)
-        return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+        if request.user == community.creator:
+            form = CommunityForm(instance=community)
+            return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+        return HttpResponseRedirect(f'/communities/{community.slug}/')
     
     def post(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
-        form = CommunityForm(request.POST, request.FILES, instance=community)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(f'/communities/{community.slug}/')
+        if request.user == community.creator:
+            form = CommunityForm(request.POST, request.FILES, instance=community)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(f'/communities/{community.slug}/')
+            return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+        return HttpResponseRedirect(f'/communities/{community.slug}/')
+    
+class DeleteCommunityView(View):
+    def post(self, request, slug, *args, **kwargs):
+        community = Community.objects.get(slug=slug)
+        if request.user == community.creator:
+            community.delete()
+            return HttpResponseRedirect('/communities/')
+        return HttpResponseRedirect(f'/communities/{community.slug}/')
+        
+        
+
