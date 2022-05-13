@@ -2,45 +2,32 @@
 {% load static %}
 
     
-    {% block content %}
-    <h1>My communities</h1>
-    {% if communities %}
-    <div class="communities-container">
-        {% for community in communities %}
-            <div class="community-card">
-                <div class="community-card-logo">
-                    {% if community.logo %}
-                        <img src="{{ community.logo.url }}" alt="logo" class="community-logo-img">
-                    {% else %}
-                        <img src="{% static 'images/default-logo.png' %}" alt="logo" class="community-logo-img">
-                    {% endif %}
-                </div>
-                <div class="community-card-info">
-                    <div class="community-card-name">
-                        <a href="{% url 'community' community.slug %}">
-                            {{ community }}
-                        </a>
-                    </div>
-                    <div class="community-card-description">
-                        {{ community.description }}
-                    </div>
-                    <div class="members-count">
-                        {{ community.member_count }} members
-                    </div>
-                    <div class="community-card-buttons">
-                        <a href="{% url 'community' community.slug %}">
-                            View community
-                        </a>
-                        <a href="#">
-                            Leave community
-                        </a>
-                    </div>
-                </div>
+{% block content %}
+<!-- <h1>My communities</h1> -->
+{% if communities %}
+<div class="communities-container">
+    {% for community in communities %}
+      <a href="{% url 'community' community.slug %}">
+        <div class="community-card">
+            <div class="community-card-logo">
+                <img src="{{ community.logo_url }}" alt="{{ community.name }}" class="community-logo-img">
             </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <p>You are not a member of any community.</p>
-    {% endif %}
-
-    {% endblock %}
+            <div class="community-card-info">
+              <div class="community-card-name">
+                {{ community }}
+              </div>
+              <div class="community-card-description">
+                {{ community.description }}
+              </div>
+            </div>
+            <div class="community-card-members-count">
+              {{ community.member_count }} members
+            </div>
+        </div>
+      </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>You are not a member of any community.</p>
+{% endif %}
+{% endblock %}

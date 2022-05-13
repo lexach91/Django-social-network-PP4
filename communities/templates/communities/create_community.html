@@ -5,10 +5,18 @@
     <div class="community-header">
         <div class="bg-logo-container">
             <div class="community-background">
-                <img src="{% static 'images/default-bg.jpg' %}" alt="Community Header Background">
+                {% if community %}
+                    <img src="{{ community.bg_image_url }}" alt="{{ community.name }}">
+                {% else %}
+                    <img src="{% static 'images/default-bg.jpg' %}" alt="Community Header Background">
+                {% endif %}
             </div>
             <div class="community-logo">
-                <img src="{% static 'images/default-logo.png' %}" alt="Community Logo">
+                {% if community %}
+                    <img src="{{ community.logo_url }}" alt="{{ community.name }}">
+                {% else %}
+                    <img src="{% static 'images/default-logo.png' %}" alt="Community Logo">
+                {% endif %}
             </div>
             <div class="community-info">
                 <h2>Name</h2>
@@ -17,7 +25,7 @@
         </div>
     </div>
     <div class="community-form">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
             <button type="submit">Save community</button>
@@ -27,6 +35,12 @@
 
 <script>
     $(document).ready(function() {
+        if($('#id_name').val()) {
+            $('.community-info h2').text($('#id_name').val());
+        }
+        if($('#id_description').val()) {
+            $('.community-info p').text($('#id_description').val());
+        }
         $('#id_name').on('keyup', (e) => {
             $('.community-info h2').text($('#id_name').val());
         });
