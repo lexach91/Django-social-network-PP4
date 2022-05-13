@@ -641,6 +641,56 @@ form.password-form label[for="id_new_password2"] {
     background-color: red;
 }
 
+.friend-buttons {
+  margin-top: 0.5em;
+}
+.friend-buttons button,
+.friend-buttons .chat-button {
+  border: none;
+  border-radius: 0.4em;
+  letter-spacing: 0.012rem;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  text-shadow: 2px 2px black;
+  color: white;
+  cursor: pointer;
+  margin-right: .3em;
+}
+
+.friend-buttons .chat-button {
+  text-decoration: none;
+}
+
+.send-friend-button,
+.accept-friend-button,
+.friend-buttons .chat-button {
+  background-color: #5801CA;
+}
+.send-friend-button:hover,
+.accept-friend-button:hover,
+.friend-buttons .chat-button:hover {
+  background-color: rgba(39, 39, 39, 0.986);
+}
+.decline-friend-button,
+.cancel-friend-button,
+.unfriend-button {
+  background-color: black;
+  color: white;
+}
+.decline-friend-button:hover,
+.cancel-friend-button:hover,
+.unfriend-button:hover {
+  background-color: #8120ff;
+}
+.friend-pending-request {
+  background-color: #543281;
+  cursor: default;
+}
+
+.friend-pending-request:hover {
+  background-color: #543281;
+}
 
 
 /* ---------------- Communities list -------------------- */
