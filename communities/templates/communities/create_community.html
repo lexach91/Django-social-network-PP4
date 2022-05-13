@@ -35,12 +35,15 @@
         {% if community.creator == request.user %}
             <div class="community-creator-options">
                 <button class="delete-community-button">
-                    Delete community <i class="fas fa-trash-alt"></i>
+                Delete community <i class="fas fa-trash-alt"></i>
                 </button>
                 <div class="community-creator-options-dropdown hidden">
-                    <p>Are you sure you want to permanently delete community {{ community.name }}?</p>
+                <p>Are you sure you want to permanently delete community</p>
+                <div class="community-creator-options-dropdown-name">{{ community.name }}?</div>
+                <div class="community-final-deletion">
                     <a class="delete-confirm" href="{% url 'delete_community' community.slug %}">Yes, delete</a>
                     <a class="delete-cancel" href="javascript:void(0);">No, cancel</a>
+                </div>
                 </div>
             </div>
         {% endif %}
