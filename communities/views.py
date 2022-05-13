@@ -46,3 +46,8 @@ class LeaveCommunityView(View):
             community.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
+
+
+class CreateCommunityView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'communities/create_community.html')
