@@ -3,11 +3,10 @@
 
     
 {% block content %}
-<!-- <h1>My communities</h1> -->
 {% if communities %}
 <div class="communities-container">
     {% for community in communities %}
-      <a href="{% url 'community' community.slug %}">
+      <a href="{% url 'community' community.slug %}" class="community-card-container">
         <div class="community-card">
             <div class="community-card-logo">
                 <img src="{{ community.logo_url }}" alt="{{ community.name }}" class="community-logo-img">
