@@ -2,77 +2,144 @@
 
 {% block content %}
 
-    <form action="{% url 'search' %}" method="post">
-        {% csrf_token %}
+    <div class="search-block">
         <input type="text" name="search_query" placeholder="Search...">
         <label for="people">People</label>
-        <input id="people" type="radio" name="search_type" value="people">
+        <input id="people" type="radio" name="search_type" value="people" checked>
         <label for="communities">Communities</label>
         <input id="communities" type="radio" name="search_type" value="communities">
-        <input type="submit">
-    </form>
-
-    {% if search_results_people %}
-        <h2>Search results:</h2>
-        <ul>
-            {% for person in search_results_people %}
-                <li>
-                    <a href="{% url 'user_profile' person.user.username %}">
-                        {{ person }} 
-
-                    </a>
-                    {% if person in user.profile.friends.all %}
-                        <button class="removeFriend" data-id="{{ person.id }}">Unfriend</button>
-                    {% else %}
-                        <button class="addFriend" data-id="{{ person.id }}">Add friend</button>
-
-                    {% endif %}
-                </li>
+        <button type="reset">Reset</button>
+    </div>
+    <div class="explore-profiles-container">
+        <h2>You may know these people</h2>
+        <div class="explore-profiles">
+            {% for profile in profiles %}
+                <a href="{% url 'user_profile' profile.user.username %}" class="explore-profile-link">
+                    <div class="explore-profile-container">
+                        <div class="explore-profile-avatar">
+                            <img src="{{ profile.avatar_url }}" alt="{{ profile }}">
+                        </div>
+                        <div class="explore-profile-info">
+                            <div class="explore-profile-name">{{ profile.user.username }}</div>
+                            {% if profile.location %}
+                                <div class="explore-profile-location">From {{ profile.location }}</div>
+                            {% endif %}
+                            {% if profile.age %}
+                                <div class="explore-profile-age">{{ profile.age }} years old</div>
+                            {% endif %}
+                            <div class="explore-profile-friends">Has {{ profile.friends.count }} friend{{ profile.friends.count|pluralize:"s"}}</div>
+                        </div>
+                    </div>
+                </a>
             {% endfor %}
-        </ul>
-    {% endif %}
+        </div>
+        <button class="load-more-profiles">Load more...</button>
+    </div>
+    <div class="explore-communities-container hidden">
+        <h2>You may want to join these communities</h2>
+        <div class="explore-communities">
+            {% for community in communities %}
+                <a href="{% url 'community' community.slug %}" class="explore-community-link">
+                    <div class="explore-community-container">
+                        <div class="explore-community-logo">
+                            <img src="{{ community.logo_url }}" alt="{{ community }}">
+                        </div>
+                        <div class="explore-community-info">
+                            <div class="explore-community-name">{{ community.name }}</div>
+                            <div class="explore-community-description">{{ community.description }}</div>
+                            <div class="explore-community-members">{{ community.member_count }} member{{ community.member_count|pluralize:"s"}}</div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <button class="load-more-communities">Load more...</button>
+    </div>
+    <div class="search-results"></div>
+
+    
 
     <script>
-        const addFriendUrl = "{% url 'send-friend-request' %}";
-        const removeFriendUrl = "{% url 'remove-friend' %}";
-        
-
-        $('.addFriend').click(function() {
-            const id = $(this).data('id');
-            $.ajax({
-                url: addFriendUrl,
-                method: 'POST',
-                data: {
-                    'id': id,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(data) {
-                    console.log(data);
-                    // need to replace the button with the message that the request has been sent
-                    $('.addFriend[data-id=' + id + ']').replaceWith('<span>Friend request sent</span>');
+        $(document).ready(function() {
+            const searchPeopleUrl = "{% url 'search_people_ajax' %}";
+            const searchCommunitiesUrl = "{% url 'search_communities_ajax' %}";
+            $('input[name="search_query"]').on('keyup', function() {
+                const searchQuery = $(this).val();
+                const searchType = $('input[name="search_type"]:checked').val();
+                console.log(searchType);
+                console.log(searchQuery);
+                if (searchQuery.length > 0) {
+                    // hide explore profiles and communities
+                    $('.explore-profiles-container').addClass('hidden');
+                    $('.explore-communities-container').addClass('hidden');
+                    $.ajax({
+                        url: searchType === 'people' ? searchPeopleUrl : searchCommunitiesUrl,
+                        type: 'POST',
+                        data: {
+                            search_query: searchQuery,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(data) {
+                            if (searchType === 'people') {
+                                console.log(data);
+                                $('.search-results').html('');
+                                for(let profile of data.profiles) {
+                                    let resultCard = `
+                                        <a href='/profiles/${profile.username}'>
+                                            <div class="search-card">
+                                                <div class="search-card-image">
+                                                    <img src="${profile.avatar}" alt="${profile.name}">
+                                                </div>
+                                                <div class="search-card-info">
+                                                    ${profile.name}
+                                                </div>
+                                            </div>
+                                        </a>`
+                                    $('.search-results').append(resultCard);
+                                }
+                            } else {
+                                console.log(data);
+                                $('.search-results').html('');
+                                for(let community of data.communities) {
+                                    let resultCard = `
+                                        <a href='/communities/${community.slug}'>
+                                            <div class="search-card">
+                                                <div class="search-card-image">
+                                                    <img src="${community.logo}" alt="${community.name}">
+                                                </div>
+                                                <div class="search-card-info">
+                                                    ${community.name}
+                                                </div>
+                                            </div>
+                                        </a>`
+                                    $('.search-results').append(resultCard);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // show explore profiles or communities depending on search type
+                    if (searchType === 'people') {
+                        $('.explore-profiles-container').removeClass('hidden');
+                        $('.explore-communities-container').addClass('hidden');
+                    } else {
+                        $('.explore-communities-container').removeClass('hidden');
+                        $('.explore-profiles-container').addClass('hidden');
+                    }
+                }
+            });
+            // if profiles radio button is checked, show people explore-profiles-container, else show explore-communities-container
+            $('input[name="search_type"]').on('change', function() {
+                const searchType = $(this).val();
+                if (searchType === 'people') {
+                    $('.explore-communities-container').addClass('hidden');
+                    $('.explore-profiles-container').removeClass('hidden');
+                } else {
+                    $('.explore-profiles-container').addClass('hidden');
+                    $('.explore-communities-container').removeClass('hidden');
                 }
             });
         });
-
-        $('.removeFriend').click(function() {
-            const id = $(this).data('id');
-            $.ajax({
-                url: removeFriendUrl,
-                method: 'POST',
-                data: {
-                    'id': id,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(data) {
-                    console.log(data);
-                    // need to replace the button with the add friend button
-                    $('.removeFriend[data-id=' + id + ']').replaceWith('<button class="addFriend" data-id="' + id + '">Add friend</button>'); 
-                }
-            });
-        });
-
-        
-        
     </script>
 
 {% endblock %}
