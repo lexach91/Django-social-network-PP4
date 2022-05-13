@@ -13,13 +13,13 @@
     </div>
     <div class="profile-bio">
         <div class="profile-name">
-            <strong>Name: </strong>{{ user_profile }}
+            <span>Name: </span>{{ user_profile }}
         </div>
         <div class="profile-age">
-            <strong>Age: </strong>{{ user_profile.age }} years old
+            <span>Age: </span>{{ user_profile.age }} years old
         </div>
         <div class="profile-location">
-            <strong>Location:</strong>
+            <span>Location:</span>
             {% if user_profile.location %}
                 Lives in {{ user_profile.location }}
             {% else %}
@@ -27,7 +27,7 @@
             {% endif %}
         </div>
         <div class="profile-bio-text">
-            <strong>Bio:</strong>            
+            <span>Bio:</span>            
             {% if user_profile.bio %}
                 {{ user_profile.bio }}
             {% else %}

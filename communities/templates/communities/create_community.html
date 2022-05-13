@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="community-container">
+    <div class="community-header">
+        <div class="bg-logo-container">
+            <div class="community-background">
+                <img src="{% static 'images/default-bg.jpg' %}" alt="Community Header Background">
+                <i class="fa fa-pencil edit-community-bg" title="Choose a background for your community" aria-hidden="true"></i>
+            </div>
+            <div class="community-logo">
+                <img src="{% static 'images/default-logo.png' %}" alt="Community Logo">
+                <i class="fa fa-pencil edit-community-logo" title="Choose a logo for your community" aria-hidden="true"></i>
+            </div>
+            <div class="community-info">
+                <h2 editable>Type a title here...</h2>
+                <p editable>Add description here...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
