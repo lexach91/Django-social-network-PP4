@@ -6,17 +6,39 @@
         <div class="bg-logo-container">
             <div class="community-background">
                 <img src="{% static 'images/default-bg.jpg' %}" alt="Community Header Background">
-                <i class="fa fa-pencil edit-community-bg" title="Choose a background for your community" aria-hidden="true"></i>
             </div>
             <div class="community-logo">
                 <img src="{% static 'images/default-logo.png' %}" alt="Community Logo">
-                <i class="fa fa-pencil edit-community-logo" title="Choose a logo for your community" aria-hidden="true"></i>
             </div>
             <div class="community-info">
-                <h2 editable>Type a title here...</h2>
-                <p editable>Add description here...</p>
+                <h2>Name</h2>
+                <p>Description</p>
             </div>
         </div>
     </div>
+    <div class="community-form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Save community</button>
+        </form>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#id_name').on('keyup', (e) => {
+            $('.community-info h2').text($('#id_name').val());
+        });
+        $('#id_description').on('keyup', (e) => {
+            $('.community-info p').text($('#id_description').val());
+        });
+        $('#id_logo').on('change', (e) => {
+            $('.community-logo img').attr('src', URL.createObjectURL(e.target.files[0]));
+        });
+        $('#id_bg_image').on('change', (e) => {
+            $('.community-background img').attr('src', URL.createObjectURL(e.target.files[0]));
+        });
+    })
+</script>
 {% endblock %}

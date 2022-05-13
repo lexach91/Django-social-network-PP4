@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from .models import Community
 from posts.forms import PostForm, CommentForm
+from .forms import CommunityForm
 
 
 class UsersCommunitiesView(View):
@@ -50,4 +51,5 @@ class LeaveCommunityView(View):
 
 class CreateCommunityView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'communities/create_community.html')
+        form = CommunityForm()
+        return render(request, 'communities/create_community.html', {'form': form})
