@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from .models import Community
 from posts.forms import PostForm, CommentForm
 from .forms import CommunityForm
@@ -53,3 +53,15 @@ class CreateCommunityView(View):
     def get(self, request, *args, **kwargs):
         form = CommunityForm()
         return render(request, 'communities/create_community.html', {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = CommunityForm(request.POST)
+        if form.is_valid():
+            community = form.save(commit=False)
+            community.creator = request.user
+            community.save()
+            community.members.add(request.user)
+            community.save()
+            # redirect to community page
+            return HttpResponseRedirect(f'/communities/{community.slug}/')
+            
