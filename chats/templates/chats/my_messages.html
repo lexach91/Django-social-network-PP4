@@ -5,7 +5,7 @@
         {% for chat in chats %}
             {% for member in chat.members.all %}
                 {% if member != request.user %}
-                    <a href="{% url 'chat_detail' username=member.username %}">
+                    <a href="{% url 'chat_detail' username=member.username %}" class="messages-single-container">
                         <div class="messages-single">
                             <div class="message-avatar-container">
                                 <img src="{{ member.profile.avatar_url }}" alt="avatar" class="message-avatar">
