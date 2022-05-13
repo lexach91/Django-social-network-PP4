@@ -82,7 +82,7 @@ body {
 
 .profile-container {
   width: 98%;
-  margin: 0.7em auto;
+  margin: 1.1em auto;
   display: flex;
   padding: 2vh 0 5vh 0;
   background-color: #535353;
@@ -933,7 +933,7 @@ form.password-form label[for="id_new_password2"] {
 }
 /* ---------------- My messages -------------------- */
 .messages-all,
-.community-container {
+.communities-container {
   width: 100%;
   margin: 0 auto;
   padding-top: 1em;

@@ -16,9 +16,19 @@
             </div>
             <div class="community-actions">
                 {% if request.user in community.members.all %}
-                    <button class="leave-community-button" data-community-id="{{ community.id }}">Leave community</button>
+                    {% if community.creator == request.user %}
+                        <a href="{% url 'edit_community' community.slug %}">
+                            Edit community <i class="fas fa-cog"></i>
+                        </a>
+                    {% else %}
+                        <button class="leave-community-button" data-community-id="{{ community.id }}">
+                            Leave community <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    {% endif %}
                 {% else %}
-                    <button class="join-community-button" data-community-id="{{ community.id }}">Join community</button>
+                    <button class="join-community-button" data-community-id="{{ community.id }}">
+                        Join community <i class="fas fa-sign-in-alt"></i>
+                    </button>
                 {% endif %}
             </div>
         </div>
