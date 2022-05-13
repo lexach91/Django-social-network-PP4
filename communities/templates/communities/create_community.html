@@ -31,6 +31,20 @@
             <button type="submit">Save community</button>
         </form>
     </div>
+    {% if community %}
+        {% if community.creator == request.user %}
+            <div class="community-creator-options">
+                <button class="delete-community-button">
+                    Delete community <i class="fas fa-trash-alt"></i>
+                </button>
+                <div class="community-creator-options-dropdown hidden">
+                    <p>Are you sure you want to permanently delete community {{ community.name }}?</p>
+                    <a class="delete-confirm" href="{% url 'delete_community' community.slug %}">Yes, delete</a>
+                    <a class="delete-cancel" href="javascript:void(0);">No, cancel</a>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
 </div>
 
 <script>
@@ -52,6 +66,12 @@
         });
         $('#id_bg_image').on('change', (e) => {
             $('.community-background img').attr('src', URL.createObjectURL(e.target.files[0]));
+        });
+        $('.delete-community-button').on('click', (e) => {
+            $('.community-creator-options-dropdown').toggleClass('hidden');
+        });
+        $('.delete-cancel').on('click', (e) => {
+            $('.community-creator-options-dropdown').addClass('hidden');
         });
     })
 </script>
