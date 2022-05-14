@@ -20,28 +20,7 @@ class SearchView(View):
         )
             
         return render(request, 'search/search.html', {'profiles': profiles, 'communities': communities})
-    # def post(self, request, *args, **kwargs):
-    #     search_type = request.POST.get('search_type')
-    #     search_query = request.POST.get('search_query')
-    #     if search_type == 'people':
-    #         if search_query:
-    #             profiles = Profile.objects.filter(
-    #                 Q(user__username__icontains=search_query) |
-    #                 Q(first_name__icontains=search_query) |
-    #                 Q(last_name__icontains=search_query) |
-    #                 Q(first_name__icontains=search_query.split()[0], last_name__icontains=search_query.split()[-1]) |
-    #                 Q(first_name__icontains=search_query.split()[-1], last_name__icontains=search_query.split()[0])
-    #             )
-    #             return render(request, 'search/search.html', {'search_results_people': profiles})
-    #         profiles = Profile.objects.all()
-    #         return render(request, 'search/search.html', {'search_results_people': profiles})
-    #     if search_type == 'communities':
-    #         if search_query:
-    #             communities = Community.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
-    #             return render(request, 'search/search.html', {'search_results_communities': communities})
-    #         communities = Community.objects.all()
-    #         return render(request, 'search/search.html', {'search_results_communities': communities})
-    #     return HttpResponseRedirect(reverse('search:search'))
+
     
     
 class SearchPeopleAjax(View):
@@ -67,5 +46,3 @@ class SearchCommunitiesAjax(View):
             communities = Community.objects.all()
         communities_json = [{'name': community.name, 'logo': community.logo_url, 'slug': community.slug } for community in communities]
         return JsonResponse({'communities': communities_json})
-        
-        
