@@ -27,8 +27,8 @@
                                 </div>
                             </div>
                             <div class="last-message-info">
-                                <div class="last-message-time">
-                                    {{ chat.get_last_message.created_at|timesince }}
+                                <div class="last-message-time" title='{{ chat.get_last_message.created_at|date:"F j, Y, g:i a" }}'>
+                                    {{ chat.get_last_message.sent_at }}
                                 </div>
                                 {% if chat.unread_messages_count > 0 and chat.get_last_message.author != request.user %}
                                     <div class="message-count">

@@ -10,8 +10,7 @@
         <div class="friends-container">
             <div id="friends" class="profiles-list">
                 {% for friend in friends %}
-                    <a href="{% url 'user_profile' friend.user.username %}">
-                        <div class="profile-list-card">
+                    <a href="{% url 'user_profile' friend.user.username %}" class="profile-list-card">
                             <div class="profile-list-avatar">
                                 <img src="{{ friend.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
                             </div>
@@ -20,15 +19,13 @@
                                     {{ friend }}
                                 </strong>
                             </div>
-                        </div>
                     </a>
                 {% endfor %}
             </div>
 
             <div id="friend-requests" class="profiles-list">
                 {% for friend_request in pending_requests %}
-                    <a href="{% url 'user_profile' friend_request.from_profile.user.username %}">
-                        <div class="profile-list-card">
+                    <a href="{% url 'user_profile' friend_request.from_profile.user.username %}" class="profile-list-card">
                             <div class="profile-list-avatar">
                                 <img src="{{ friend_request.from_profile.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
                             </div>
@@ -37,8 +34,6 @@
                                         {{ friend_request.from_profile }}
                                 </strong>
                             </div>
-                                
-                        </div>
                     </a>
                 {% endfor %}
             </div>
