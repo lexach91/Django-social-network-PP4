@@ -74,7 +74,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'profiles.middleware.ActiveUserMiddleware',
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+USER_ONLINE_TIMEOUT = 300
+
+USER_LAST_SEEN_TIMEOUT = 300
 
 ROOT_URLCONF = 'social_network.urls'
 
