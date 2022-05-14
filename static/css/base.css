@@ -1356,3 +1356,147 @@ form.create-community-form button[type="submit"],
   font-style: italic;
   margin-right: 0.5em;
 }
+
+/* ---------------- Allauth Forms -------------------- */
+.allauth {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.allauth-container {
+  background-color: #535353;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.7em;
+  color: white;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 2px 2px black;
+  margin: 1em;
+  max-width: 50rem;
+}
+.allauth-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+.allauth-note {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+.allauth-link {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: #DDB9FF;
+  text-decoration: none;
+}
+.allauth-link:hover {
+  color: #5801CA;
+}
+.allauth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.allauth-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+.allauth-button {
+  padding: 0.3em 1em;
+  background-color: #5801CA;
+  border: 1px solid #35007A;
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px black;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  border-radius: 0.4em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.allauth-button:hover {
+  background-color: #2A0061;
+}
+.allauth-single-button {
+  margin-bottom: 1em;
+}
+.allauth form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.allauth form p {
+  display: block;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.allauth form label[for="id_login"],
+.allauth form label[for="id_password"],
+.allauth form label[for="id_email"],
+.allauth form label[for="id_email2"],
+.allauth form label[for="id_username"],
+.allauth form label[for="id_password1"],
+.allauth form label[for="id_password2"] {
+  display: none;
+}
+.allauth form input#id_login,
+.allauth form input#id_password,
+.allauth form input#id_email,
+.allauth form input#id_email2,
+.allauth form input#id_username,
+.allauth form input#id_password1,
+.allauth form input#id_password2 {
+  width: 90% !important;
+  min-width: 20rem;
+  border: 1px solid black;
+  padding: 0.8em 0.5em 0.8em 0.8em;
+  border-radius: 0.3em;
+  margin: 0.7em 1em 0.7em 1em;
+  font-size: 1.2rem !important;
+}
+.allauth form input#id_login:focus,
+.allauth form input#id_password:focus,
+.allauth form input#id_email:focus,
+.allauth form input#id_email2:focus,
+.allauth form input#id_username:focus,
+.allauth form input#id_password1:focus,
+.allauth form input#id_password2:focus {
+  outline: none;
+}
+.allauth form input#id_login::placeholder,
+.allauth form input#id_password::placeholder,
+.allauth form input#id_email::placeholder,
+.allauth form input#id_email2::placeholder,
+.allauth form input#id_username::placeholder,
+.allauth form input#id_password1::placeholder,
+.allauth form input#id_password2::placeholder {
+  color: rgb(131, 131, 131);
+  padding: 0.8em 0.5em 0.8em 0.8em !important;
+}
+.allauth form input#id_login:not(:placeholder-shown) {
+  color: black;
+}
+.allauth form input#id_remember {
+  margin-left: 1em;
+}
