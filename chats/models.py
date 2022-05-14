@@ -43,7 +43,7 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.content
+        return str(self.content).replace('<br>', ' ')
 
     class Meta:
         ordering = ['created_at']
