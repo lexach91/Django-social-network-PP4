@@ -63,8 +63,9 @@
         $(document).ready(function() {
             const searchPeopleUrl = "{% url 'search_people_ajax' %}";
             const searchCommunitiesUrl = "{% url 'search_communities_ajax' %}";
-            $('input[name="search_query"]').on('keyup', function() {
-                const searchQuery = $(this).val();
+
+            const search = () => {
+                const searchQuery = $('input[name="search_query"]').val();
                 const searchType = $('input[name="search_type"]:checked').val();
                 console.log(searchType);
                 console.log(searchQuery);
@@ -127,16 +128,23 @@
                         $('.explore-profiles-container').addClass('hidden');
                     }
                 }
-            });
+            };
+
+            $('input[name="search_query"]').on('keyup', search);
             // if profiles radio button is checked, show people explore-profiles-container, else show explore-communities-container
             $('input[name="search_type"]').on('change', function() {
                 const searchType = $(this).val();
-                if (searchType === 'people') {
-                    $('.explore-communities-container').addClass('hidden');
-                    $('.explore-profiles-container').removeClass('hidden');
+                const searchQuery = $('input[name="search_query"]').val();
+                if(!searchQuery) {
+                    if (searchType === 'people') {
+                        $('.explore-communities-container').addClass('hidden');
+                        $('.explore-profiles-container').removeClass('hidden');
+                    } else {
+                        $('.explore-profiles-container').addClass('hidden');
+                        $('.explore-communities-container').removeClass('hidden');
+                    }
                 } else {
-                    $('.explore-profiles-container').addClass('hidden');
-                    $('.explore-communities-container').removeClass('hidden');
+                    search();
                 }
             });
         });
