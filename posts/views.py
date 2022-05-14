@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from .models import Post, Comment
 from .forms import PostForm
+from feed.models import PostEvent
 
 
 # Create your views here.
@@ -22,6 +23,12 @@ class CreatePostAjaxView(View):
             post.save()
             # need to return the post object
             avatar = request.user.profile.avatar_url
+            
+            post_event = PostEvent.objects.create(
+                initiator = request.user,
+                post = post,
+            )
+            post_event.save()
             
             post_data = {
                 'author': str(post.author.profile),
