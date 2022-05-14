@@ -53,3 +53,48 @@ class Message(models.Model):
         super().save(*args, **kwargs)
         self.chat.last_message_at = self.created_at
         self.chat.save()
+        
+    def sent_at(self):
+        # need to return a string like '1 minute ago', '1 hour ago', 'Yesterday', '2 days ago', 'last week', '2 weeks ago', 'a month ago', '2 months ago', '3 months ago', 'a year ago', '2 years ago', '3 years ago'
+        # https://stackoverflow.com/questions/1551382/user-friendly-time-format-in-python
+        from datetime import datetime, timedelta
+        now = datetime.now()
+        diff = now - self.created_at.replace(tzinfo=None)
+        seconds = diff.seconds
+        days = diff.days
+        months = days // 30
+        years = days // 365
+        minutes = seconds // 60
+        hours = minutes // 60
+        if years > 0:
+            if years > 1:
+                return '{} years ago'.format(years)
+            else:
+                return 'a year ago'
+        elif months > 0:
+            if months > 1:
+                return '{} months ago'.format(months)
+            else:
+                return 'a month ago'
+        elif days > 0:
+            if days > 1:
+                return '{} days ago'.format(days)
+            else:
+                return 'Yesterday'
+        elif hours > 0:
+            if hours > 1:
+                return '{} hours ago'.format(hours)
+            else:
+                return 'an hour ago'
+        elif minutes > 0:
+            if minutes > 1:
+                return '{} minutes ago'.format(minutes)
+            else:
+                return 'a minute ago'
+        elif seconds > 0:
+            if seconds > 1:
+                return '{} seconds ago'.format(seconds)
+            else:
+                return 'a few seconds ago'
+        else:
+            return 'just now'

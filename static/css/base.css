@@ -667,70 +667,74 @@ form.password-form label[for="id_new_password2"] {
 
 
 /* ---------------- Profiles/Friends/Requests list -------------------- */
-
-
-
+.friends-container-main {
+  margin-top: 1em;
+}
 .friends-container {
   width: 100%;
   padding: 2em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
-
 .profiles-list {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
+  margin: 0 auto;
 }
-
 .profile-list-card {
   width: 14em;
   padding: 1em;
   margin: .5em;
-  /* height: 80%; */
-  /* background-color: red; */
+  background-color: #2B2B2B;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  min-height: 10rem;
+  margin-bottom: 0.7em;
+  border-radius: 0.5em;
+  padding: 1em 2em;
+  color: white;
   border: 1px solid #000000cc;
-  border-radius: 0.4em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  /* -webkit-box-shadow: 0px 4px 10px 2px #0000006e; */
-  /* box-shadow: 0px 4px 10px 2px #0000006e; */
-
+  text-decoration: none;
+  text-shadow: 2px 2px #000000;
 }
-
+.profile-list-card:hover {
+  color: #DEC5FF;
+  background-color: #444;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
 .profile-list-avatar {
   width: 11em;
   height: 11em;
   border-radius: 50%;
+  border-radius: 1px solid #2B2B2B;
   /* margin: 0 auto; */
 }
-
 .profile-list-avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-
 .profile-list-name {
-  /* font-size: 1.2em; */
-  /* margin-top: .5em; */
-  height: 2em;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1em;
+  height: 5rem;
 }
-
-.friend-buttons {
-  height: 2em;
-  display: flex;
-  align-items: center;
-}
-
 .hidden {
   display: none;
 }
-
 .switchers {
   display: flex;
   flex-direction: row;
@@ -740,32 +744,34 @@ form.password-form label[for="id_new_password2"] {
   height: 2em;
   margin: 0 auto;
 }
-
 .switch-button {
+  cursor: pointer;
   height: 100%;
   width: 50%;
   border: none;
   outline: none;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #F3F3FC;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
-
 .switch-button.left {
   border-radius: 15px 0 0 15px;
 }
-
 .switch-button.right {
   border-radius: 0 15px 15px 0;
 }
-
 .switch-button.active {
-  background-color: red;
+  background-color: rgb(29, 0, 61);
+  color: white;
 }
-
 .friend-buttons {
   margin-top: 0.5em;
 }
-
 .friend-buttons button,
-.friend-buttons .chat-button {
+.friend-buttons .chat-button,
+.community-actions .leave-community-button,
+.community-actions .join-community-button {
   border-radius: 0.4em;
   letter-spacing: 0.012rem;
   font-weight: 700;
@@ -777,43 +783,39 @@ form.password-form label[for="id_new_password2"] {
   margin-right: .3em;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-
 .friend-buttons .chat-button {
   text-decoration: none;
 }
-
 .send-friend-button,
 .accept-friend-button,
-.friend-buttons .chat-button {
+.friend-buttons .chat-button,
+.community-actions .join-community-button {
   background-color: #5801CA;
-  border: 1px solid #2a0061;
+  border: 1px solid #2A0061;
 }
-
 .send-friend-button:hover,
 .accept-friend-button:hover,
-.friend-buttons .chat-button:hover {
-  background-color: #8120ff;
+.friend-buttons .chat-button:hover,
+.community-actions .join-community-button:hover {
+  background-color: #8120FF;
 }
-
 .decline-friend-button,
 .cancel-friend-button,
-.unfriend-button {
+.unfriend-button,
+.community-actions .leave-community-button {
   background-color: black;
   border: 1px solid black;
 }
-
 .decline-friend-button:hover,
 .cancel-friend-button:hover,
-.unfriend-button:hover {
-
+.unfriend-button:hover,
+.community-actions .leave-community-button:hover {
   background-color: rgba(39, 39, 39, 0.986);
 }
-
 .send-friend-button[disabled] {
   background-color: #543281;
   cursor: not-allowed !important;
 }
-
 .friend-pending-request:hover {
   background-color: #543281;
 }
