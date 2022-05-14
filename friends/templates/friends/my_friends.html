@@ -10,62 +10,36 @@
         <div class="friends-container">
             <div id="friends" class="profiles-list">
                 {% for friend in friends %}
-                    <div class="profile-list-card">
-                        <div class="profile-list-avatar">
-                            {% if friend.profile.avatar %}
-                                <img src="{{ friend.avatar.url }}" alt="avatar" class="friend-avatar">
-                            {% else %}
-                                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="friend-avatar">
-                            {% endif %}
-                        </div>
-                        <div class="profile-list-name">
-                            <strong>
-                                <a href="{% url 'user_profile' friend.user.username %}">
+                    <a href="{% url 'user_profile' friend.user.username %}">
+                        <div class="profile-list-card">
+                            <div class="profile-list-avatar">
+                                <img src="{{ friend.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
+                            </div>
+                            <div class="profile-list-name">
+                                <strong>
                                     {{ friend }}
-                                </a>
-                            </strong>
+                                </strong>
+                            </div>
                         </div>
-                        <div class="friend-buttons">
-                            <a href="{% url 'user_profile' friend.user.username %}">
-                                View profile
-                            </a>
-                            <a class="removeFriend" data-friend-id="{{ friend.id }}" href="javascript:void(0);">
-                                Unfriend
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
 
             <div id="friend-requests" class="profiles-list">
                 {% for friend_request in pending_requests %}
-                    <div class="profile-list-card">
-                        <div class="profile-list-avatar">
-                            {% if friend_request.from_profile.avatar %}
-                                <img src="{{ friend_request.from_profile.avatar.url }}" alt="avatar" class="friend-avatar">
-                            {% else %}
-                                <img src="{% static 'images/default_avatar.svg' %}" alt="avatar" class="friend-avatar">
-                            {% endif %}
+                    <a href="{% url 'user_profile' friend_request.from_profile.user.username %}">
+                        <div class="profile-list-card">
+                            <div class="profile-list-avatar">
+                                <img src="{{ friend_request.from_profile.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
+                            </div>
+                            <div class="profile-list-name">
+                                <strong>
+                                        {{ friend_request.from_profile }}
+                                </strong>
+                            </div>
+                                
                         </div>
-                        <div class="profile-list-name">
-                            <strong>
-                                <a href="{% url 'user_profile' friend_request.from_profile.user.username %}">
-                                    {{ friend_request.from_profile }}
-                                </a>
-                            </strong>
-                        </div>
-                        <div class="friend-buttons">
-                            <a href="{% url 'user_profile' friend_request.from_profile.user.username %}">
-                                View profile
-                            </a>
-                            <a class="acceptFriend" data-request-id="{{ friend_request.id }}" href="javascript:void(0);">
-                                Accept
-                            </a>
-                            <a class="declineFriend" data-request-id="{{ friend_request.id }}" href="javascript:void(0);">
-                                Decline
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
