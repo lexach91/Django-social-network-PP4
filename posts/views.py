@@ -3,7 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from .models import Post, Comment
 from .forms import PostForm
-from feed.models import PostEvent
+from feed.models import PostEvent, CommentEvent, LikeDislikeEvent
 
 
 # Create your views here.
@@ -52,11 +52,32 @@ class LikePostAjaxView(View):
         post = Post.objects.get(id=post_id)
         if request.user in post.likes.all():
             post.likes.remove(request.user)
+            # find the like event and delete it
+            like_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                post = post,
+                like = True,
+            ).first()
+            if like_event:
+                like_event.delete()
         elif request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
-            # post.likes.add(request.user)
+            # find the dislike event and delete it
+            dislike_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                post = post,
+                like = False,
+            ).first()
+            if dislike_event:
+                dislike_event.delete()
         else:
             post.likes.add(request.user)
+            like_event = LikeDislikeEvent.objects.create(
+                initiator = request.user,
+                post = post,
+                like = True,
+            )
+            like_event.save()
         post.save()
         likes_count = post.get_likes()
         dislikes_count = post.get_dislikes()
@@ -76,11 +97,32 @@ class DislikePostAjaxView(View):
         post = Post.objects.get(id=post_id)
         if request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
+            # find the dislike event and delete it
+            dislike_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                post = post,
+                like = False,
+            ).first()
+            if dislike_event:
+                dislike_event.delete()
         elif request.user in post.likes.all():
             post.likes.remove(request.user)
-            # post.dislikes.add(request.user)
+            # find the like event and delete it
+            like_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                post = post,
+                like = True,
+            ).first()
+            if like_event:
+                like_event.delete()
         else:
             post.dislikes.add(request.user)
+            dislike_event = LikeDislikeEvent.objects.create(
+                initiator = request.user,
+                post = post,
+                like = False,
+            )
+            dislike_event.save()
         post.save()
         likes_count = post.get_likes()
         dislikes_count = post.get_dislikes()
@@ -106,6 +148,11 @@ class CreateCommentAjaxView(View):
             content=comment_content
         )
         comment.save()
+        comment_event = CommentEvent.objects.create(
+            initiator = request.user,
+            post = post,
+        )
+        comment_event.save()
         avatar = comment.author.profile.avatar_url
         comment_data = {
             'author': str(comment.author.profile),
@@ -124,11 +171,30 @@ class LikeCommentAjaxView(View):
         comment = Comment.objects.get(id=comment_id)
         if request.user in comment.likes.all():
             comment.likes.remove(request.user)
+            like_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                comment = comment,
+                like = True,
+            ).first()
+            if like_event:
+                like_event.delete()
         elif request.user in comment.dislikes.all():
             comment.dislikes.remove(request.user)
-            # comment.likes.add(request.user)
+            dislike_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                comment = comment,
+                like = False,
+            ).first()
+            if dislike_event:
+                dislike_event.delete()
         else:
             comment.likes.add(request.user)
+            like_event = LikeDislikeEvent.objects.create(
+                initiator = request.user,
+                comment = comment,
+                like = True,
+            )
+            like_event.save()
         comment.save()
         likes_count = comment.get_likes()
         dislikes_count = comment.get_dislikes()
@@ -148,11 +214,30 @@ class DislikeCommentAjaxView(View):
         comment = Comment.objects.get(id=comment_id)
         if request.user in comment.dislikes.all():
             comment.dislikes.remove(request.user)
+            dislike_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                comment = comment,
+                like = False,
+            ).first()
+            if dislike_event:
+                dislike_event.delete()
         elif request.user in comment.likes.all():
             comment.likes.remove(request.user)
-            # comment.dislikes.add(request.user)
+            like_event = LikeDislikeEvent.objects.filter(
+                initiator = request.user,
+                comment = comment,
+                like = True,
+            ).first()
+            if like_event:
+                like_event.delete()
         else:
             comment.dislikes.add(request.user)
+            dislike_event = LikeDislikeEvent.objects.create(
+                initiator = request.user,
+                comment = comment,
+                like = False,
+            )
+            dislike_event.save()
         comment.save()
         likes_count = comment.get_likes()
         dislikes_count = comment.get_dislikes()
