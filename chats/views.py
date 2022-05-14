@@ -26,6 +26,7 @@ class ChatView(View):
                 # return 404
                 return render(request, '404.html')
         if chat.messages.filter(is_read=False).exists():
-            chat.messages.update(is_read=True)
+            # mark all unread messages written by second_user as read
+            chat.messages.filter(author=second_user, is_read=False).update(is_read=True)
         room_name = chat.id
         return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name})
