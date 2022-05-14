@@ -17,9 +17,9 @@
                                 <div class="message-last-message">
                                     {% if chat.get_last_message %}
                                         {% if chat.get_last_message.author == request.user %}
-                                            Me: {{ chat.get_last_message }}
+                                            Me: {{ chat.get_last_message|truncatechars:50 }}
                                         {% else %}
-                                            {{ chat.get_last_message }}
+                                            {{ chat.get_last_message|truncatechars:50 }}
                                         {% endif %}
                                     {% else %}
                                         Chat is empty
