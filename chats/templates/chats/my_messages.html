@@ -15,14 +15,22 @@
                                     {{ member.username }}
                                 </div>
                                 <div class="message-last-message">
-                                    {{ chat.get_last_message }}
+                                    {% if chat.get_last_message %}
+                                        {% if chat.get_last_message.author == request.user %}
+                                            Me: {{ chat.get_last_message }}
+                                        {% else %}
+                                            {{ chat.get_last_message }}
+                                        {% endif %}
+                                    {% else %}
+                                        Chat is empty
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="last-message-info">
                                 <div class="last-message-time">
                                     {{ chat.get_last_message.created_at|timesince }}
                                 </div>
-                                {% if chat.unread_messages_count > 0 %}
+                                {% if chat.unread_messages_count > 0 and chat.get_last_message.author != request.user %}
                                     <div class="message-count">
                                         {{ chat.unread_messages_count }}
                                     </div>
