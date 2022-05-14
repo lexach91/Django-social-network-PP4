@@ -28,4 +28,5 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('posts/', include('posts.urls')),
     path('my_messages/', include('chats.urls')),
+    path('feed/', include('feed.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
