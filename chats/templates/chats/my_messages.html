@@ -22,11 +22,11 @@
                                 <div class="last-message-time">
                                     {{ chat.get_last_message.created_at|timesince }}
                                 </div>
-                                <div class="message-count">
-                                    {% if chat.unread_messages_count > 0 %}
+                                {% if chat.unread_messages_count > 0 %}
+                                    <div class="message-count">
                                         {{ chat.unread_messages_count }}
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </a>
