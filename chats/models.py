@@ -47,3 +47,9 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['created_at']
+        
+    # on save update chat's last_message_at
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.chat.last_message_at = self.created_at
+        self.chat.save()
