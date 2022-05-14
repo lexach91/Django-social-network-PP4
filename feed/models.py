@@ -15,6 +15,7 @@ class PostEvent(models.Model):
         on_delete=models.CASCADE,
         related_name='post_events',
     )
+    timestamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         if self.post.profile:
