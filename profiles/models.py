@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from datetime import date
+from django.core.cache import cache
+import datetime
+from social_network import settings
 
 # Create your models here.
 class Profile(models.Model):
@@ -50,6 +53,7 @@ class Profile(models.Model):
         blank=True,
         null=True
     )
+        
 
     def __str__(self):
         if self.first_name and self.last_name:
@@ -97,3 +101,17 @@ class Profile(models.Model):
             if not friend_request.accepted and not friend_request.declined:
                 profiles_list.append(friend_request.to_profile)
         return profiles_list
+
+    def last_seen(self):
+        return cache.get('seen_%s' % self.user.username)
+    
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + datetime.timedelta(
+                        seconds=settings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False 
