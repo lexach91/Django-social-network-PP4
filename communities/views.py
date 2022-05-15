@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from .models import Community
 from posts.forms import PostForm, CommentForm
 from .forms import CommunityForm
+from feed.models import CommunityCreateEvent, CommunityJoinEvent, CommunityLeaveEvent, CommunityDeleteEvent
 
 
 class UsersCommunitiesView(View):
@@ -35,6 +36,11 @@ class JoinCommunityView(View):
             community = Community.objects.get(id=community_id)
             community.members.add(request.user)
             community.save()
+            community_join_event = CommunityJoinEvent.objects.create(
+                initiator=request.user,
+                community=community,
+            )
+            community_join_event.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
     
@@ -45,6 +51,11 @@ class LeaveCommunityView(View):
             community = Community.objects.get(id=community_id)
             community.members.remove(request.user)
             community.save()
+            community_leave_event = CommunityLeaveEvent.objects.create(
+                initiator=request.user,
+                community=community,
+            )
+            community_leave_event.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
 
@@ -62,6 +73,11 @@ class CreateCommunityView(View):
             community.save()
             community.members.add(request.user)
             community.save()
+            community_create_event = CommunityCreateEvent.objects.create(
+                initiator=request.user,
+                community=community,
+            )
+            community_create_event.save()
             return HttpResponseRedirect(f'/communities/{community.slug}/')
             
 class EditCommunityView(View):
@@ -86,6 +102,11 @@ class DeleteCommunityView(View):
     def post(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
+            community_delete_event = CommunityDeleteEvent.objects.create(
+                initiator=request.user,
+                community=community,
+            )
+            community_delete_event.save()
             community.delete()
             return HttpResponseRedirect('/communities/')
         return HttpResponseRedirect(f'/communities/{community.slug}/')
