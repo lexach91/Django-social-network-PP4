@@ -44,5 +44,11 @@ class SearchCommunitiesAjax(View):
         communities = Community.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
         if not search_query:
             communities = Community.objects.all()
-        communities_json = [{'name': community.name, 'logo': community.logo_url, 'slug': community.slug } for community in communities]
+        communities_json = [{
+            'name': community.name,
+            'logo': community.logo_url,
+            'slug': community.slug,
+            'description': community.description,
+            'member_count': community.member_count,
+        } for community in communities]
         return JsonResponse({'communities': communities_json})
