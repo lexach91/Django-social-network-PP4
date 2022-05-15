@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                             <div class="last-message-info">
-                                <div class="last-message-time" title='{{ chat.get_last_message.created_at|date:"F j, Y, g:i a" }}'>
+                                <div class="last-message-time" title='{{ chat.get_last_message.created_at|date:"F j, Y, g:i a" }}' data-id='{{ chat.get_last_message.id }}'>
                                     {{ chat.get_last_message.sent_at }}
                                 </div>
                                 {% if chat.unread_messages_count > 0 and chat.get_last_message.author != request.user %}
@@ -42,4 +42,32 @@
             {% endfor %}
         {% endfor %}
     </div>
+
+    <script>
+        $(document).ready(function() {
+            const updateMessagesTime = () => {
+                let url = '{% url "get_message_time" %}';
+                let messagesTimestamps = $('.last-message-time');
+                messagesTimestamps.each(function() {
+                    let messageId = $(this).data('id');
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            message_id: messageId,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(data) {
+                            $('.last-message-time[data-id=' + messageId + ']').text(data.sent_at);
+                        },
+                        error: function(data) {
+                            console.log(data);
+                        }
+                    });
+                });
+
+            }
+            setInterval(updateMessagesTime, 60000);
+        });
+    </script>
 {% endblock %}

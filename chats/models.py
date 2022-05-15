@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from datetime import datetime
+
 
 
 # Create your models here.
@@ -53,11 +55,9 @@ class Message(models.Model):
         super().save(*args, **kwargs)
         self.chat.last_message_at = self.created_at
         self.chat.save()
-        
+    
+    @property
     def sent_at(self):
-        # need to return a string like '1 minute ago', '1 hour ago', 'Yesterday', '2 days ago', 'last week', '2 weeks ago', 'a month ago', '2 months ago', '3 months ago', 'a year ago', '2 years ago', '3 years ago'
-        # https://stackoverflow.com/questions/1551382/user-friendly-time-format-in-python
-        from datetime import datetime, timedelta
         now = datetime.now()
         diff = now - self.created_at.replace(tzinfo=None)
         seconds = diff.seconds
