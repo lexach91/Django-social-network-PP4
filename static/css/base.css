@@ -722,6 +722,7 @@ form.password-form label[for="id_new_password2"] {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 .profile-list-name {
   font-size: 1.2rem;
