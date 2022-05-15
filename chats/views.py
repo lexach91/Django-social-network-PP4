@@ -30,7 +30,7 @@ class ChatView(View):
             # mark all unread messages written by second_user as read
             chat.messages.filter(author=second_user, is_read=False).update(is_read=True)
         room_name = chat.id
-        return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name})
+        return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name, 'second_user': second_user})
     
     
 class GetMessageTimeView(View):
