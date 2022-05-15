@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import JsonResponse
 from .models import Chat, Message
 from django.contrib.auth.models import User
 # get_object_or_404 import
@@ -30,3 +31,11 @@ class ChatView(View):
             chat.messages.filter(author=second_user, is_read=False).update(is_read=True)
         room_name = chat.id
         return render(request, 'chats/chat_detail.html', {'chat': chat, 'room_name': room_name})
+    
+    
+class GetMessageTimeView(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            message = get_object_or_404(Message, id=request.POST['message_id'])
+            sent_at = message.sent_at
+            return JsonResponse({'sent_at': sent_at})
