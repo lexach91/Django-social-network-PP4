@@ -29,53 +29,82 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # @database_sync_to_async
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        username = text_data_json['username']
-        chat_id = text_data_json['chatId']
-        print(message)
-        print(username)
-        print(chat_id)
-        
-        message = await self.save_message(message, username, chat_id)
-        print(message)
-        avatar_url = await self.get_avatar_url(username)
-        profile = await self.get_profile(username)
-        
+        type = text_data_json['type']
+        if type == 'chat_message':
+            message = text_data_json['message']
+            username = text_data_json['username']
+            chat_id = text_data_json['chatId']
+            print(message)
+            print(username)
+            print(chat_id)
+            
+            message = await self.save_message(message, username, chat_id)
+            print(message)
+            avatar_url = await self.get_avatar_url(username)
+            profile = await self.get_profile(username)
+            
 
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': {
-                    'content': message.content,
-                    # timestamp should be in format like 'April 19, 2022, 7:54 a.m.'
-                    'timestamp': message.created_at.strftime('%B %d, %Y, %I:%M %p'),
-                    },
-                'author': {
-                    'username': str(profile),
-                    'avatar': avatar_url,
-                    },
-                'chatId': chat_id,
-                'sendBy': username,
-            }
-        )
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': {
+                        'content': message.content,
+                        # timestamp should be in format like 'April 19, 2022, 7:54 a.m.'
+                        'timestamp': message.created_at.strftime('%B %d, %Y, %I:%M %p'),
+                        },
+                    'author': {
+                        'username': str(profile),
+                        'avatar': avatar_url,
+                        },
+                    'chatId': chat_id,
+                    'sendBy': username,
+                }
+            )
+        elif type == 'typing':
+            print('typing')
+            username = text_data_json['username']
+            chat_id = text_data_json['chatId']
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'typing',
+                    'username': username,
+                    'chatId': chat_id,
+                }
+            )
 
     # Receive message from room group
     async def chat_message(self, event):
-        message = event['message']
-        author = event['author']
-        send_by = event['sendBy']
-        # chat_id = event['chatId']
-        print(message)
-        print(author)
-        # print(chat_id)
-        # Send message to WebSocket
-        await self.send(text_data=json.dumps({
-            'message': message,
-            'author': author,
-            'sendBy': send_by,
-            # 'chatId': chat_id,
-        }))
+        type = event['type']
+        if type == 'chat_message':
+            message = event['message']
+            author = event['author']
+            send_by = event['sendBy']
+            # chat_id = event['chatId']
+            print(message)
+            print(author)
+            # print(chat_id)
+            # Send message to WebSocket
+            await self.send(text_data=json.dumps({
+                'type': 'chat_message',
+                'message': message,
+                'author': author,
+                'sendBy': send_by,
+                # 'chatId': chat_id,
+            }))
+        
+    async def typing(self, event):
+        type = event['type']
+        if type == 'typing':
+            print('typing')
+            username = event['username']
+            chat_id = event['chatId']
+            await self.send(text_data=json.dumps({
+                'type': 'typing',
+                'username': username,
+                'chatId': chat_id,
+            }))
         
     # function to save message to database
     @database_sync_to_async
