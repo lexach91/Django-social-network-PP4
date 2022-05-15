@@ -12,7 +12,11 @@
                             </div>
                             <div class="message-info">
                                 <div class="message-name">
-                                    {{ member.username }}
+                                    <p>{{ member.profile }}
+                                    {% if member.profile.online %}
+                                        <span class="online-circle"></span>
+                                    {% endif %}
+                                    </p>
                                 </div>
                                 <div class="message-last-message">
                                     {% if chat.get_last_message %}
