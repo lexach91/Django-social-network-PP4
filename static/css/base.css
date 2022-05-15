@@ -153,9 +153,7 @@ form.edit-bio {
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  /* background-color: orange; */
   margin-bottom: 7vh;
-
 }
 
 form.password-form {
@@ -268,7 +266,8 @@ form.password-form label[for="id_new_password2"] {
 }
 
 .profile-bio-edit-title,
-.password-form-title {
+.password-form-title,
+.community-form-title {
   font-weight: 700;
   font-size: 1.5em;
   color: #9296F0;
@@ -335,15 +334,18 @@ form.password-form label[for="id_new_password2"] {
   border-radius: 4px;
   border: 1px solid #aaa !important;
 }
+
 #id_first_name,
 #id_last_name,
 #id_bio {
   width: 100%;
 }
+
 #id_country,
 #id_city {
   width: 100% !important;
 }
+
 .select2-container {
   width: 100% !important;
 }
@@ -629,11 +631,10 @@ form.password-form label[for="id_new_password2"] {
   align-items: flex-start;
   padding-left: 2em;
 }
-
 .comment {
   width: 100%;
   border: 1px solid black;
-  background-color: #e5e5fa;
+  background-color: #E5E5FA;
   box-shadow: rgba(106, 4, 240, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.5em;
   display: flex;
@@ -642,35 +643,30 @@ form.password-form label[for="id_new_password2"] {
   margin-bottom: 1em;
   padding-bottom: 0;
 }
-
-
 .comment-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 0.7em;
 }
-
 .comment-author {
   display: flex;
   flex-direction: row;
   align-items: center;
-
 }
-
 .comment-avatar {
   width: 2em;
   height: 2em;
   border-radius: 50%;
   margin-right: .5em;
 }
-
-
 /* ---------------- Profiles/Friends/Requests list -------------------- */
-.friends-container-main {
+.friends-container-main,
+.explore-container-main {
   margin-top: 1em;
 }
-.friends-container {
+.friends-container,
+.explore-profiles-container {
   width: 100%;
   padding: 2em 0;
   display: flex;
@@ -679,7 +675,14 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   width: 100%;
 }
-.profiles-list {
+.explore-profiles-container,
+.explore-communities-container {
+  padding-top: 0 !important;
+}
+
+
+.profiles-list,
+.explore-profiles {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -687,6 +690,7 @@ form.password-form label[for="id_new_password2"] {
   justify-content: center;
   margin: 0 auto;
 }
+
 .profile-list-card {
   width: 14em;
   padding: 1em;
@@ -706,24 +710,29 @@ form.password-form label[for="id_new_password2"] {
   text-decoration: none;
   text-shadow: 2px 2px #000000;
 }
+
 .profile-list-card:hover {
-  color: #DEC5FF;
+  color: #dec5ff;
   background-color: #444;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
 .profile-list-avatar {
   width: 11em;
   height: 11em;
   border-radius: 50%;
-  border-radius: 1px solid #2B2B2B;
+  border-radius: 1px solid #2b2b2b;
+
   /* margin: 0 auto; */
 }
+
 .profile-list-avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
+
 .profile-list-name {
   font-size: 1.2rem;
   display: flex;
@@ -733,9 +742,12 @@ form.password-form label[for="id_new_password2"] {
   padding: 1em;
   height: 5rem;
 }
+
+
 .hidden {
   display: none;
 }
+
 .switchers {
   display: flex;
   flex-direction: row;
@@ -745,6 +757,7 @@ form.password-form label[for="id_new_password2"] {
   height: 2em;
   margin: 0 auto;
 }
+
 .switch-button {
   cursor: pointer;
   height: 100%;
@@ -753,22 +766,28 @@ form.password-form label[for="id_new_password2"] {
   outline: none;
   font-size: 1rem;
   font-weight: 700;
-  background-color: #F3F3FC;
+  background-color: #f3f3fc;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
 }
+
 .switch-button.left {
   border-radius: 15px 0 0 15px;
 }
+
 .switch-button.right {
   border-radius: 0 15px 15px 0;
 }
+
 .switch-button.active {
   background-color: rgb(29, 0, 61);
   color: white;
 }
+
 .friend-buttons {
   margin-top: 0.5em;
 }
+
 .friend-buttons button,
 .friend-buttons .chat-button,
 .community-actions .leave-community-button,
@@ -784,22 +803,26 @@ form.password-form label[for="id_new_password2"] {
   margin-right: .3em;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
+
 .friend-buttons .chat-button {
   text-decoration: none;
 }
+
 .send-friend-button,
 .accept-friend-button,
 .friend-buttons .chat-button,
 .community-actions .join-community-button {
   background-color: #5801CA;
-  border: 1px solid #2A0061;
+  border: 1px solid #2a0061;
 }
+
 .send-friend-button:hover,
 .accept-friend-button:hover,
 .friend-buttons .chat-button:hover,
 .community-actions .join-community-button:hover {
-  background-color: #8120FF;
+  background-color: #8120ff;
 }
+
 .decline-friend-button,
 .cancel-friend-button,
 .unfriend-button,
@@ -807,29 +830,210 @@ form.password-form label[for="id_new_password2"] {
   background-color: black;
   border: 1px solid black;
 }
+
 .decline-friend-button:hover,
 .cancel-friend-button:hover,
 .unfriend-button:hover,
 .community-actions .leave-community-button:hover {
+
   background-color: rgba(39, 39, 39, 0.986);
 }
+
 .send-friend-button[disabled] {
   background-color: #543281;
   cursor: not-allowed !important;
 }
+
 .friend-pending-request:hover {
   background-color: #543281;
 }
 
+/* ---------------- Explore -------------------- */
+.search-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98%;
+  margin: 0 auto;
+}
+.search-input-container {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.7em;
+  background-color: #292828;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.4em;
+  color: white;
+  position: relative;
+}
+.search-input-container i {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  color: #4E4E4E;
+  cursor: default;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1.2rem !important;
+}
+.search-input-container i.fa-spinner {
+  top: 35%;
+}
+.search-input {
+  width: 100%;
+  padding: 0.5em 0.7em;
+  font-size: 1.2rem;
+  color: #000000;
+}
+.search-input:focus {
+  outline: none;
+}
+.search-input::placeholder {
+  color: #4E4E4E;
+}
+.search-input:not(:placeholder-shown)+.search-icon {
+  color: #0C0C0C;
+}
+.search-options {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-checkbox {
+  display: none;
+}
+.search-switchers {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 20em;
+  height: 2em;
+}
+.label-button {
+  cursor: pointer;
+  height: 100%;
+  width: 50%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #F3F3FC;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.label-button.left {
+  border-radius: 15px 0 0 15px;
+}
+.label-button.right {
+  border-radius: 0 15px 15px 0;
+}
+.label-button.active {
+  background-color: rgb(29, 0, 61);
+  color: white;
+}
+.search-reset {
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: .5em;
+  margin: .5em 0 0 0;
+  padding: 0 1em;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px black;
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 7%) 0px 1px 2px, rgb(0 0 0 / 7%) 0px 2px 4px, rgb(0 0 0 / 7%) 0px 4px 8px, rgb(0 0 0 / 7%) 0px 8px 16px, rgb(0 0 0 / 7%) 0px 16px 32px, rgb(0 0 0 / 7%) 0px 32px 64px;
+}
+.search-reset {
+  background-color: #310072;
+  border: 1px solid #2A0061;
+  box-shadow: rgba(106, 4, 240, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.search-reset:hover {
+  background-color: black;
+  background-color: #8120FF;
+}
+.explore-title,
+.explore-search-title {
+  width: 98% !important;
+  margin: 1em auto;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.7em;
+  width: 100%;
+  border: 1px solid black;
+  background-color: #E5E5FA;
+  box-shadow: rgba(106, 4, 240, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  color: black;
+}
+.explore-profile-link {
+  width: 17rem !important;
+}
+.explore-profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between !important;
+  min-height: 10rem;
+}
+.explore-profile-location,
+.explore-profile-age,
+.explore-profile-friends {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5em;
+  color: white !important;
+}
+.explore-profile-name,
+.explore-profile-friends {
+  font-weight: 700;
+}
+.load-more-communities {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  margin: 0 auto;
+}
+.load-more-communities-button,
+.load-more-profiles-button {
+  box-shadow: rgba(0, 0, 0, 0.699) 0px 1px 20px, rgb(0 0 0 / 7%) 0px 2px 4px, rgb(0 0 0 / 7%) 0px 4px 8px, rgb(0 0 0 / 7%) 0px 8px 16px, rgb(0 0 0 / 7%) 0px 16px 32px, rgb(0 0 0 / 7%) 0px 32px 64px;
+}
 
 /* ---------------- Community details -------------------- */
-.community-container {
+
+.community-container,
+.friends-container-main,
+.explore-container-main,
+.explore-communities-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .community-header {
   width: 98%;
   margin: 1.1em auto;
@@ -841,15 +1045,18 @@ form.password-form label[for="id_new_password2"] {
   border-radius: 0.7em;
   color: white;
 }
+
 .bg-logo-container {
   height: 15em;
   width: 100%;
   position: relative;
 }
+
 .community-background {
   width: 100%;
   height: 100%;
 }
+
 .community-background img {
   width: 100%;
   height: 100%;
@@ -857,6 +1064,7 @@ form.password-form label[for="id_new_password2"] {
   object-position: center;
   border-radius: 0.4em;
 }
+
 .community-logo {
   position: absolute;
   top: 50%;
@@ -866,6 +1074,7 @@ form.password-form label[for="id_new_password2"] {
   height: 10em;
   border-radius: 50%;
 }
+
 .community-logo img {
   width: 100%;
   height: 100%;
@@ -873,9 +1082,10 @@ form.password-form label[for="id_new_password2"] {
   object-position: center;
   border-radius: 50%;
   background-image: url('../images/background_main.svg');
-  /* border: 5px solid #FFFFFF; */
+  /* border: 5px solid #ffffff; */
   border: 5px solid #535353;
 }
+
 .community-info {
   min-width: 40%;
   max-width: 50%;
@@ -895,6 +1105,7 @@ form.password-form label[for="id_new_password2"] {
   padding: 1em;
   text-shadow: 2px 2px black;
 }
+
 .community-info h2 {
   width: 100%;
   height: 1.5em;
@@ -903,11 +1114,13 @@ form.password-form label[for="id_new_password2"] {
   background-color: #535353;
   border-radius: 0.5em 0.5em 0 0;
 }
+
 .community-actions {
   width: 100%;
   padding: 0.5em;
   position: relative;
 }
+
 .community-actions .leave-community-button,
 .community-actions .join-community-button,
 .community-actions .edit-community-button {
@@ -915,31 +1128,41 @@ form.password-form label[for="id_new_password2"] {
   top: 1rem;
   right: 0;
 }
+
 .community-actions .edit-community-button {
   cursor: pointer;
-  padding: 0.5em 1em;
+  padding: 0 0.3em;
   border-radius: 0.4em;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  font-size: 2rem;
 }
+
+.community-actions .edit-community-button:hover {
+  color: #c69aff;
+}
+
 .community-actions .leave-community-button i,
 .community-actions .join-community-button i {
   margin-left: 0.2em;
 }
+
 .community-members {
   width: 100%;
   font-size: 1rem;
   padding: 2em 0.5em;
 }
+
 .members-count {
   width: 100%;
   padding: 1em;
   text-shadow: 2px 2px black;
   font-size: 1.2rem;
 }
+
 .members-links {
   width: 100%;
   height: 5em;
@@ -948,12 +1171,14 @@ form.password-form label[for="id_new_password2"] {
   justify-content: flex-start;
   align-items: center;
 }
+
 .member-link {
   width: 3em;
   height: 3em;
   border-radius: 50%;
   margin: 0 .5em;
 }
+
 .member-avatar {
   width: 100%;
   height: 100%;
@@ -961,15 +1186,18 @@ form.password-form label[for="id_new_password2"] {
   object-fit: cover;
   object-position: center;
 }
+
 .view-all {
   margin-left: 1em;
-  color: #FBF8FF;
+  color: #fbf8ff;
   text-shadow: 2px 2px black;
   text-decoration: none;
 }
+
 .view-all:hover {
-  color: #E5D1FF;
+  color: #e5d1ff;
 }
+
 /* ---------------- Community Create -------------------- */
 .community-form {
   width: 100%;
@@ -979,6 +1207,7 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   padding: 0 0.7em;
 }
+
 form.create-community-form {
   width: 100%;
   display: flex;
@@ -991,6 +1220,7 @@ form.create-community-form {
   border-radius: 0.7em;
   color: white;
 }
+
 form.create-community-form label[for="id_name"],
 form.create-community-form label[for="id_description"] {
   font-size: 1.2rem;
@@ -1001,6 +1231,7 @@ form.create-community-form label[for="id_description"] {
   text-shadow: 2px 2px black;
   color: white;
 }
+
 form.create-community-form label[for="id_bg_image"],
 form.create-community-form label[for="id_logo"] {
   color: transparent;
@@ -1012,6 +1243,7 @@ form.create-community-form label[for="id_logo"] {
   font-weight: 400;
   width: 100%;
 }
+
 form.create-community-form label[for="id_bg_image"]::before,
 form.create-community-form label[for="id_logo"]::before {
   position: absolute;
@@ -1024,12 +1256,15 @@ form.create-community-form label[for="id_logo"]::before {
   text-shadow: 2px 2px black;
   color: white;
 }
+
 form.create-community-form label[for="id_logo"]::before {
   content: "Community logo";
 }
+
 form.create-community-form label[for="id_bg_image"]::before {
   content: "Community Background Image";
 }
+
 #id_name,
 #id_description {
   width: 100% !important;
@@ -1042,12 +1277,16 @@ form.create-community-form label[for="id_bg_image"]::before {
   border-radius: 4px;
   border: 1px solid #aaa !important;
 }
+
 #id_description {
   resize: none;
   height: 10em;
 }
+
 form.create-community-form button[type="submit"],
-.delete-community-button {
+.delete-community-button,
+.load-more-communities-button,
+.load-more-profiles-button {
   width: 12em;
   height: 2em;
   border-radius: 5px;
@@ -1064,14 +1303,22 @@ form.create-community-form button[type="submit"],
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-.create-community-button {
-  background-color: #5801CA;
-  border: 1px solid #2A0061;
+
+.create-community-button,
+.load-more-communities-button,
+.load-more-profiles-button {
+  background-color: #5801ca;
+  border: 1px solid #2a0061;
+
 }
-.create-community-button:hover {
+
+.create-community-button:hover,
+.load-more-communities-button:hover,
+.load-more-profiles-button:hover {
   background-color: black;
-  background-color: #8120FF;
+  background-color: #8120ff;
 }
+
 .community-creator-options {
   width: 100%;
   margin: 0 auto;
@@ -1080,31 +1327,40 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   text-align: center;
   padding: 2em;
+
 }
+
+
 .delete-community-button {
   width: 100%;
   margin: 0 auto;
   max-width: 15em;
-  background-color: #2B2B2B;
+  background-color: #2b2b2b;
 }
+
 .delete-community-button:hover {
   background-color: rgb(30, 0, 65);
 }
+
 .delete-community-button i {
   margin-left: 0.2em;
 }
+
 .community-creator-options-dropdown {
   width: 100%;
   margin: 1.5em auto;
   font-size: 1.2rem;
 }
+
 .community-creator-options-dropdown-name {
   font-weight: 700;
   font-size: 1.5rem;
 }
+
 .community-final-deletion {
   margin-top: 1.5em;
 }
+
 .community-final-deletion a {
   padding: 0.3em 1em;
   color: white;
@@ -1119,42 +1375,92 @@ form.create-community-form button[type="submit"],
   letter-spacing: 0.1rem;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
+
 .community-final-deletion .delete-confirm {
-  background-color: #DB0000;
-}
-.community-final-deletion .delete-confirm:hover {
-  background-color: #FF5D5D;
-}
-.community-final-deletion .delete-cancel {
-  background-color: #5200B1;
-}
-.community-final-deletion .delete-cancel:hover {
-  background-color: #AA5FFF;
+  background-color: #db0000;
 }
 
+.community-final-deletion .delete-confirm:hover {
+  background-color: #ff5d5d;
+}
+
+.community-final-deletion .delete-cancel {
+  background-color: #5200b1;
+}
+
+.community-final-deletion .delete-cancel:hover {
+  background-color: #aa5fff;
+}
+
+
 /* ---------------- Communities list -------------------- */
-.communities-container {
+.communities-container,
+.explore-communities {
   width: 100%;
   padding-top: 1em;
 }
+
+.add-community {
+  width: 98%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1em;
+}
+.add-community-button {
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  margin: 0.5em 0 0 0;
+  padding: 0 1em;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px black;
+  cursor: pointer;
+  background-color: #310072;
+  border: 1px solid #2A0061;
+  box-shadow: rgb(106 4 240 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 0%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(183 0 255 / 13%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.add-community-button:hover {
+  background-color: black;
+  background-color: #8120FF;
+}
+.add-community-button-name {
+  margin-right: 0.5em;
+}
+
 .community-card-container,
-.messages-single-container {
+.messages-single-container,
+.explore-community-link {
   margin: 0;
   padding: 0;
   list-style: none;
   text-decoration: none;
 }
+
 /* ---------------- My messages -------------------- */
 .messages-all,
-.communities-container {
+.communities-container,
+.explore-communities-container,
+.search-results-communities {
   width: 100%;
   margin: 0 auto;
   padding-top: 1em;
   color: white;
   list-style: none;
 }
+
+
 .messages-single,
-.community-card {
+.community-card,
+.explore-community-link {
   width: 98%;
   margin: 0 auto;
   background-color: #2B2B2B;
@@ -1165,29 +1471,38 @@ form.create-community-form button[type="submit"],
   padding: 1em 2em;
   color: white;
   display: grid;
-  grid-template-columns: minmax(5rem, 1fr) 6fr 1fr;
+  grid-template-columns: minmax(5rem, 1fr) 5.5fr minmax(5rem, 1.5fr);
   gap: 2rem;
+  text-decoration: none;
 }
+
 .messages-single:hover,
-.community-card:hover {
+.community-card:hover,
+.explore-community-link:hover {
   background-color: #444;
 }
+
 .message-avatar-container,
-.community-card-logo {
+.community-card-logo,
+.explore-community-logo {
   align-self: center;
   justify-self: center;
   width: 5rem;
   height: 5rem;
 }
-.community-card-logo {
+
+.community-card-logo,
+.explore-community-logo {
   background-color: white;
   border-radius: 50%;
 }
+
 /* .community-logo-default {
   padding: 1em;
 } */
 .message-avatar-container img,
-.community-card-logo img {
+.community-card-logo img,
+.explore-community-logo img {
   width: 100%;
   height: 100%;
   display: block;
@@ -1195,31 +1510,40 @@ form.create-community-form button[type="submit"],
   object-position: center;
   border-radius: 50%;
 }
+
 .message-info,
-.message-name, .community-card-info {
+.message-name,
+.community-card-info,
+.explore-community-info {
   display: flex;
   flex-direction: column;
   justify-content: space-around !important;
 }
 
-.community-card-info {
+.community-card-info,
+.explore-community-info {
   height: 100%;
 }
 
 .last-message-info,
-.community-card-members-count {
+.community-card-members-count,
+.explore-community-members {
   display: flex;
   flex-direction: column;
   position: relative;
 }
+
 .message-info .message-name,
-.community-card-info .community-card-name {
+.community-card-info .community-card-name,
+.explore-community-info .explore-community-name {
   font-size: 1.2em;
   font-weight: 700;
   color: #E7D5FF;
 }
+
 .last-message-info,
-.community-card-members-count {
+.community-card-members-count,
+.explore-community-members {
   font-size: 1em;
   font-weight: 400;
   font-style: italic;
@@ -1227,9 +1551,11 @@ form.create-community-form button[type="submit"],
   justify-self: end;
   text-align: end;
 }
+
 .community-card-members-count {
   margin-bottom: auto;
 }
+
 .message-count {
   position: absolute;
   background-color: #E7D5FF;
@@ -1254,9 +1580,28 @@ form.create-community-form button[type="submit"],
 .chat-container {
   width: 100%;
   /* background-color: white; */
-  background-color: #2b2b2b;
-  background-color: #e5e5fa;
+  background-color: #2B2B2B;
+  background-color: #E5E5FA;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.chat-navbar {
+  position: fixed;
+  width: 100%;
+  max-width: 75rem;
+  /* background-color: white; */
+  background-color: #2B2B2B;
+  background-color: #E5E5FA;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.048) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0) 0px 8px 4px, rgba(0, 0, 0, 0) 0px 16px 8px, rgba(0, 0, 0, 0) 0px 12px 16px;
+  padding: 0.7em 1em;
+  display: flex;
+  justify-content: space-between;
+}
+.chat-navbar .message-author {
+  margin-bottom: 0 !important;
+}
+.chat-navbar-status {
+  display: flex;
+  align-items: center;
 }
 
 .chat-messages {
@@ -1276,6 +1621,17 @@ form.create-community-form button[type="submit"],
   justify-content: flex-start;
   align-items: center;
   padding: 1em;
+  position: relative;
+}
+
+.typing {
+  position: absolute;
+  top: 10vh;
+  left: 1.4em;
+  color: rgb(77, 77, 77);
+  font-size: 1em;
+  font-weight: 400;
+
 }
 
 .chat-input {
@@ -1290,7 +1646,6 @@ form.create-community-form button[type="submit"],
 .chat-send-button {
   width: 5em;
   height: 2em;
-  /* border-radius: 50%; */
   border: 1px solid black;
   background-color: #000000cc;
   color: white;
@@ -1323,6 +1678,15 @@ form.create-community-form button[type="submit"],
   align-items: center;
   padding-bottom: 0.7em;
   font-weight: bold;
+}
+
+.online-circle {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background-color: #00bb09;
+  margin-left: .5em;
+  display: inline-block;
 }
 
 .message-avatar {
@@ -1360,7 +1724,9 @@ form.create-community-form button[type="submit"],
   margin-right: 0.5em;
 }
 
+
 /* ---------------- Allauth Forms -------------------- */
+
 .allauth {
   width: 100%;
   height: 100vh;
@@ -1369,6 +1735,7 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
+
 .allauth-container {
   background-color: #535353;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
@@ -1383,26 +1750,31 @@ form.create-community-form button[type="submit"],
   margin: 1em;
   max-width: 50rem;
 }
+
 .allauth-title {
   font-size: 2.5em;
   font-weight: 700;
   margin-bottom: 0.5em;
 }
+
 .allauth-note {
   font-size: 1.5em;
   font-weight: 400;
   margin-bottom: 0.5em;
   text-align: center;
 }
+
 .allauth-link {
   font-size: 1.2em;
   font-weight: 700;
-  color: #DDB9FF;
+  color: #ddb9ff;
   text-decoration: none;
 }
+
 .allauth-link:hover {
-  color: #5801CA;
+  color: #5801ca;
 }
+
 .allauth-form {
   width: 100%;
   display: flex;
@@ -1410,6 +1782,7 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
+
 .allauth-buttons-container {
   display: flex;
   flex-direction: column;
@@ -1417,10 +1790,11 @@ form.create-community-form button[type="submit"],
   align-items: center;
   margin-bottom: 0.5em;
 }
+
 .allauth-button {
   padding: 0.3em 1em;
-  background-color: #5801CA;
-  border: 1px solid #35007A;
+  background-color: #5801ca;
+  border: 1px solid #35007a;
   color: white;
   font-weight: 700;
   font-size: 1.5rem;
@@ -1430,12 +1804,15 @@ form.create-community-form button[type="submit"],
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
+
 .allauth-button:hover {
-  background-color: #2A0061;
+  background-color: #2a0061;
 }
+
 .allauth-single-button {
   margin-bottom: 1em;
 }
+
 .allauth form {
   width: 100%;
   display: flex;
@@ -1443,6 +1820,7 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
+
 .allauth form p {
   display: block;
   margin-block-start: 0;
@@ -1454,6 +1832,7 @@ form.create-community-form button[type="submit"],
   align-items: center;
   width: 100%;
 }
+
 .allauth form label[for="id_login"],
 .allauth form label[for="id_password"],
 .allauth form label[for="id_email"],
@@ -1463,6 +1842,7 @@ form.create-community-form button[type="submit"],
 .allauth form label[for="id_password2"] {
   display: none;
 }
+
 .allauth form input#id_login,
 .allauth form input#id_password,
 .allauth form input#id_email,
@@ -1478,6 +1858,7 @@ form.create-community-form button[type="submit"],
   margin: 0.7em 1em 0.7em 1em;
   font-size: 1.2rem !important;
 }
+
 .allauth form input#id_login:focus,
 .allauth form input#id_password:focus,
 .allauth form input#id_email:focus,
@@ -1487,6 +1868,7 @@ form.create-community-form button[type="submit"],
 .allauth form input#id_password2:focus {
   outline: none;
 }
+
 .allauth form input#id_login::placeholder,
 .allauth form input#id_password::placeholder,
 .allauth form input#id_email::placeholder,
@@ -1494,12 +1876,15 @@ form.create-community-form button[type="submit"],
 .allauth form input#id_username::placeholder,
 .allauth form input#id_password1::placeholder,
 .allauth form input#id_password2::placeholder {
+
   color: rgb(131, 131, 131);
   padding: 0.8em 0.5em 0.8em 0.8em !important;
 }
+
 .allauth form input#id_login:not(:placeholder-shown) {
   color: black;
 }
+
 .allauth form input#id_remember {
   margin-left: 1em;
 }
