@@ -35,7 +35,7 @@ class SearchPeopleAjax(View):
         )
         if not search_query:
             profiles = Profile.objects.all()
-        profiles_json = [{'username': profile.user.username, 'name': str(profile), 'avatar': profile.avatar_url} for profile in profiles]
+        profiles_json = [{'username': profile.user.username, 'name': str(profile), 'avatar': profile.avatar_url, 'online': profile.online } for profile in profiles]
         return JsonResponse({'profiles': profiles_json})
     
 class SearchCommunitiesAjax(View):
