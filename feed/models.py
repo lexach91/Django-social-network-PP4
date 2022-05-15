@@ -16,6 +16,7 @@ class PostEvent(models.Model):
         related_name='post_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "post"
     
     def __str__(self):
         if self.post.profile:
@@ -42,6 +43,7 @@ class CommentEvent(models.Model):
         related_name='comment_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "comment"
     
     def __str__(self):
         return f'{self.initiator.profile} commented on {self.post}'
@@ -72,6 +74,7 @@ class LikeDislikeEvent(models.Model):
     )
     like = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "like_dislike"
     
     def __str__(self):
         if self.post:
@@ -101,6 +104,7 @@ class FriendRequestEvent(models.Model):
         related_name='targeted_friend_request_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "friend_request"
     
     def __str__(self):
         return f'{self.initiator.profile} sent a friend request to {self.target.profile}'
@@ -121,9 +125,28 @@ class FriendEvent(models.Model):
         related_name='targeted_friend_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "friend_added"
     
     def __str__(self):
         return f'{self.initiator.profile} and {self.target.profile} are now friends'
+    
+    class Meta:
+        ordering = ['-timestamp']
+        
+
+class FriendRequestDeclinedEvent(models.Model):
+    initiator = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='initiated_friend_request_declined_events',
+    )
+    target = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='targeted_friend_request_declined_events',
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    type = "friend_request_declined"
     
     class Meta:
         ordering = ['-timestamp']
@@ -141,6 +164,7 @@ class RemoveFriendEvent(models.Model):
         related_name='targeted_remove_friend_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "friend_removed"
     
     def __str__(self):
         return f'{self.initiator.profile} and {self.target.profile} are no longer friends'
@@ -161,6 +185,7 @@ class CommunityJoinEvent(models.Model):
         related_name='community_join_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "community_join"
     
     def __str__(self):
         return f'{self.initiator.profile} joined community {self.community.name}'
@@ -181,6 +206,7 @@ class CommunityLeaveEvent(models.Model):
         related_name='community_leave_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "community_leave"
     
     def __str__(self):
         return f'{self.initiator.profile} left community {self.community.name}'
@@ -201,6 +227,7 @@ class CommunityCreateEvent(models.Model):
         related_name='community_create_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "community_create"
     
     def __str__(self):
         return f'{self.initiator.profile} created community {self.community.name}'
@@ -220,6 +247,7 @@ class CommunityDeleteEvent(models.Model):
         related_name='community_delete_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    type = "community_delete"
     
     def __str__(self):
         return f'{self.initiator.profile} deleted community {self.community.name}'
