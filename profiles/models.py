@@ -105,6 +105,7 @@ class Profile(models.Model):
     def last_seen(self):
         return cache.get('seen_%s' % self.user.username)
     
+    @property
     def online(self):
         if self.last_seen():
             now = datetime.datetime.now()
