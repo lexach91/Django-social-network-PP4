@@ -672,7 +672,7 @@ $(document).ready(function() {
         });
     };
 
-    $('.send-friend-button[disabled=false]').on('click', sendFriendRequest);
+    $('.send-friend-button').on('click', sendFriendRequest);
     $('.cancel-friend-button').on('click', cancelFriendRequest);
     $('.accept-friend-button').on('click', acceptFriendRequest);
     $('.decline-friend-button').on('click', declineFriendRequest);
