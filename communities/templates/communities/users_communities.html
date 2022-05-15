@@ -4,7 +4,13 @@
     
 {% block content %}
 {% if communities %}
-<div class="communities-container">
+  <div class="communities-container">
+    <div class="add-community">
+      <a href="#" class="add-community-button">
+        <div class="add-community-button-name">Create new community</div>
+        <i class="fa fa-plus"></i>
+      </a>
+    </div>
     {% for community in communities %}
       <a href="{% url 'community' community.slug %}" class="community-card-container">
         <div class="community-card">
