@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from .models import FriendRequest
 from profiles.models import Profile
+from feed.models import FriendEvent, FriendRequestEvent, RemoveFriendEvent, FriendRequestDeclinedEvent
 
 # Create your views here.
 class SendFriendRequest(View):
@@ -21,7 +22,12 @@ class SendFriendRequest(View):
                 from_profile=from_profile,
                 to_profile=to_profile
             )
-            friend_request.save()            
+            friend_request.save()
+            friend_request_event = FriendRequestEvent.objects.create(
+                initiator=from_profile.user,
+                target=to_profile.user,
+            )
+            friend_request_event.save()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})
 
@@ -42,9 +48,14 @@ class AcceptFriendRequest(View):
                 friend_request.declined = False
                 accepting_profile.friends.add(accepted_profile)
                 accepted_profile.friends.add(accepting_profile)
-                friend_request.save()
+                friend_request.delete()
                 accepting_profile.save()
                 accepted_profile.save()
+                friend_event = FriendEvent.objects.create(
+                    initiator=accepting_profile.user,
+                    target=accepted_profile.user,
+                )
+                friend_event.save()
                 return JsonResponse({'status': 'ok'})
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
@@ -65,7 +76,12 @@ class DeclineFriendRequest(View):
             if friend_request:
                 friend_request.accepted = False
                 friend_request.declined = True
-                friend_request.save()
+                friend_request.delete()
+                request_declined_event = FriendRequestDeclinedEvent.objects.create(
+                    initiator=declining_profile.user,
+                    target=declined_profile.user,
+                )
+                request_declined_event.save()
                 return JsonResponse({'status': 'ok'})
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
@@ -79,6 +95,11 @@ class RemoveFriend(View):
             friend.friends.remove(remover)
             remover.save()
             friend.save()
+            remove_friend_event = RemoveFriendEvent.objects.create(
+                initiator=remover.user,
+                target=friend.user,
+            )
+            remove_friend_event.save()
             return JsonResponse({'status': 'ok'})
         
         
@@ -92,7 +113,12 @@ class CancelFriendRequest(View):
                 from_profile=profile1,
                 to_profile=profile2
             )
+            friend_request_event = FriendRequestEvent.objects.get(
+                initiator=profile1.user,
+                target=profile2.user,
+            )
             friend_request.delete()
+            friend_request_event.delete()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})
 
