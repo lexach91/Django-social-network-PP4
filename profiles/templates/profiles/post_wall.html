@@ -21,6 +21,9 @@
                         <strong>
                             <a href="{% url 'user_profile' post.author.username %}">
                                 {{ post.author.profile }}
+                                {% if post.author.profile.online %}
+                                    <span class="online-circle" title="Online"></span>
+                                {% endif %}
                             </a>
                         </strong>
                     </div>
@@ -88,6 +91,9 @@
                                 <strong>
                                     <a href="{% url 'user_profile' comment.author.username %}">
                                         {{ comment.author.profile }}
+                                        {% if comment.author.profile.online %}
+                                            <span class="online-circle" title="Online"></span>
+                                        {% endif %}
                                     </a>
                                 </strong>
                             </div>
