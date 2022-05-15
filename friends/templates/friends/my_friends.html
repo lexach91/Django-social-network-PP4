@@ -17,6 +17,9 @@
                             <div class="profile-list-name">
                                 <strong>
                                     {{ friend }}
+                                    {% if friend.online %}
+                                        <span class="online-circle"></span>
+                                    {% endif %}
                                 </strong>
                             </div>
                     </a>
