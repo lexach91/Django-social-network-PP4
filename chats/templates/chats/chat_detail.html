@@ -54,6 +54,7 @@
         <input type="hidden" id="username" value="{{ request.user.username }}">
         <input type="hidden" id="chatId" value="{{ chat.id }}">
     </div>
+    <span class="typing"></span>
 </div>
 {{ room_name|json_script:"room_name" }}
 <script>
