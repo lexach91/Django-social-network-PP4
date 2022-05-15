@@ -1,26 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="explore-container-main">
     <div class="search-block">
-        <input type="text" name="search_query" placeholder="Search...">
-        <label for="people">People</label>
-        <input id="people" type="radio" name="search_type" value="people" checked>
-        <label for="communities">Communities</label>
-        <input id="communities" type="radio" name="search_type" value="communities">
-        <button type="reset">Reset</button>
+      <div class="search-input-container">
+        <input type="text" name="search_query" placeholder="Search..." class="search-input">
+        <i class="fa fa-search search-icon"></i>
+      </div>
+      <div class="search-options">
+        <div class="search-switchers">
+          <input id="people" type="radio" name="search_type" value="people" class="search-checkbox" checked>
+          <label for="people" class="btn label-button left active" id="sortFriedns">People</label>
+          
+          <input id="communities" type="radio" name="search_type" value="communities" class="search-checkbox">
+          <label for="communities" class="btn label-button right" id="sortCommunities">Communities</label>
+        </div>
+        <button type="reset" class="search-reset">Reset</button>
+      </div>
     </div>
+
     <div class="explore-profiles-container">
-        <h2>You may know these people</h2>
+        <h2 class="explore-title">You may know these people</h2>
         <div class="explore-profiles">
             {% for profile in profiles %}
-                <a href="{% url 'user_profile' profile.user.username %}" class="explore-profile-link">
+                <a href="{% url 'user_profile' profile.user.username %}" class="profile-list-card explore-profile-link">
                     <div class="explore-profile-container">
-                        <div class="explore-profile-avatar">
-                            <img src="{{ profile.avatar_url }}" alt="{{ profile }}">
+                        <div class="explore-profile-avatar profile-list-avatar">
+                            <img src="{{ profile.avatar_url }}" alt="{{ profile }}" class="profile-list-avatar-img">
                         </div>
                         <div class="explore-profile-info">
-                            <div class="explore-profile-name">{{ profile }}</div>
+                            <div class="explore-profile-name profile-list-name">
+                                {{ profile }}
+                                {% if profile.online %}
+                                    <span class="online-circle" title="Online"></span>
+                                {% endif %}
+                            </div>
                             {% if profile.location %}
                                 <div class="explore-profile-location">From {{ profile.location }}</div>
                             {% endif %}
@@ -33,42 +47,69 @@
                 </a>
             {% endfor %}
         </div>
-        <button class="load-more-profiles">Load more...</button>
+        <div class="load-more-profiles">
+          <button class="load-more-profiles-button">Load more...</button>
+        </div>
     </div>
     <div class="explore-communities-container hidden">
-        <h2>You may want to join these communities</h2>
+        <h2 class="explore-title">You may want to join these communities</h2>
         <div class="explore-communities">
             {% for community in communities %}
                 <a href="{% url 'community' community.slug %}" class="explore-community-link">
-                    <div class="explore-community-container">
+
                         <div class="explore-community-logo">
                             <img src="{{ community.logo_url }}" alt="{{ community }}">
                         </div>
                         <div class="explore-community-info">
                             <div class="explore-community-name">{{ community.name }}</div>
                             <div class="explore-community-description">{{ community.description }}</div>
-                            <div class="explore-community-members">{{ community.member_count }} member{{ community.member_count|pluralize:"s"}}</div>
+                            
                         </div>
-                    </div>
+                        <div class="explore-community-members">{{ community.member_count }} member{{ community.member_count|pluralize:"s"}}</div>
                 </a>
             {% endfor %}
         </div>
-        <button class="load-more-communities">Load more...</button>
+        <div class="load-more-communities">
+          <button class="load-more-communities-button">Load more...</button>
+        </div>
     </div>
-    <div class="search-results"></div>
-
+    {% comment %} <h2 class="search-results-explore-title">Search resualts</h2> {% endcomment %}
+    <h2 class="explore-search-title hidden"></h2>
+    <div class="search-results-people profiles-list"></div>
+    <div class="search-results-communities communities-list"></div>
+</div>
     
 
     <script>
+
+
+
+
         $(document).ready(function() {
+            const sortFriends = document.querySelector('#sortFriedns');
+            const sortCommunities = document.querySelector('#sortCommunities');
+
+            sortFriends.addEventListener('click', () => {
+              sortFriends.classList.add('active');
+              sortCommunities.classList.remove('active');
+            });
+
+            sortCommunities.addEventListener('click', () => {
+              sortCommunities.classList.add('active');
+              sortFriends.classList.remove('active');
+            });
+
             const searchPeopleUrl = "{% url 'search_people_ajax' %}";
             const searchCommunitiesUrl = "{% url 'search_communities_ajax' %}";
+            let searchIcon =  $('.search-icon')
 
             const search = () => {
+                $('.search-icon').replaceWith('<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>');
                 const searchQuery = $('input[name="search_query"]').val();
                 const searchType = $('input[name="search_type"]:checked').val();
-                console.log(searchType);
-                console.log(searchQuery);
+                $('.explore-search-title').removeClass('hidden');
+                $('.explore-search-title').text(`Search results for "${searchQuery}"`);
+
                 if (searchQuery.length > 0) {
                     // hide explore profiles and communities
                     $('.explore-profiles-container').addClass('hidden');
@@ -81,53 +122,85 @@
                             csrfmiddlewaretoken: '{{ csrf_token }}'
                         },
                         success: function(data) {
+                            $('.fa-spinner').replaceWith(searchIcon);
                             if (searchType === 'people') {
-                                console.log(data);
-                                $('.search-results').html('');
+                                $('.explore-profiles-container').addClass('hidden');
+                                $('.explore-communities-container').addClass('hidden');
+                                $('.search-results-people').html('');
+                                $('.search-results-communities').html('');
                                 for(let profile of data.profiles) {
                                     let resultCard = `
-                                        <a href='/profiles/${profile.username}'>
-                                            <div class="search-card">
-                                                <div class="search-card-image">
-                                                    <img src="${profile.avatar}" alt="${profile.name}">
+                                        <a href='/profiles/${profile.username}' class="search-card profile-list-card">
+                                            {% comment %} <div class="search-card"> {% endcomment %}
+                                                <div class="search-card-image profile-list-avatar">
+                                                    <img src="${profile.avatar}" alt="${profile.name}" class="profile-list-avatar-img">
                                                 </div>
-                                                <div class="search-card-info">
-                                                    ${profile.name}
+                                                <div class="search-card-info profile-list-name">
+                                                  <strong>
+                                                    ${profile.name}`
+                                    if(profile.online) {
+                                        resultCard += `
+                                                    <span class="online-circle" title="Online"></span>`
+                                    }
+                                    resultCard += `
+                                                  </strong>
                                                 </div>
-                                            </div>
+                                            {% comment %} </div> {% endcomment %}
                                         </a>`
-                                    $('.search-results').append(resultCard);
+                                    
+                                    $('.search-results-people').append(resultCard);
                                 }
                             } else {
                                 console.log(data);
-                                $('.search-results').html('');
+                                $('.explore-profiles-container').addClass('hidden');
+                                $('.explore-communities-container').addClass('hidden');
+                                $('.search-results-people').html('');
+                                $('.search-results-communities').html('');
                                 for(let community of data.communities) {
                                     let resultCard = `
-                                        <a href='/communities/${community.slug}'>
-                                            <div class="search-card">
-                                                <div class="search-card-image">
-                                                    <img src="${community.logo}" alt="${community.name}">
+                                        <a href='/communities/${community.slug}' class="community-card-container">
+                                            <div class="search-card community-card">
+                                                <div class="search-card-image community-card-logo">
+                                                    <img src="${community.logo}" alt="${community.name}"  class="community-logo-img">
                                                 </div>
-                                                <div class="search-card-info">
+                                                <div class="search-card-info community-card-info">
+                                                  <div class="community-card-name">
                                                     ${community.name}
+                                                  </div>
+                                                  <div class="community-card-description">
+                                                    ${ community.description }
+                                                  </div>
+                                                </div>
+                                                <div class="community-card-members-count">
+                                                  ${ community.member_count } members
                                                 </div>
                                             </div>
                                         </a>`
-                                    $('.search-results').append(resultCard);
+                                    $('.search-results-communities').append(resultCard);
                                 }
                             }
                         }
                     });
                 } else {
                     // show explore profiles or communities depending on search type
+                    $('.fa-spinner').replaceWith(searchIcon);
                     if (searchType === 'people') {
+                        // Hide search results
+                        $('.search-results-people').html('');
+                        $('.search-results-communities').html('');
+                        $('.explore-search-title').addClass('hidden');
                         $('.explore-profiles-container').removeClass('hidden');
                         $('.explore-communities-container').addClass('hidden');
                     } else {
+                        // Hide search results
+                        $('.search-results-people').html('');
+                        $('.search-results-communities').html('');
+                        $('.explore-search-title').addClass('hidden');
                         $('.explore-communities-container').removeClass('hidden');
                         $('.explore-profiles-container').addClass('hidden');
                     }
                 }
+
             };
 
             $('input[name="search_query"]').on('keyup', search);
@@ -136,14 +209,28 @@
                 const searchType = $(this).val();
                 const searchQuery = $('input[name="search_query"]').val();
                 if(!searchQuery) {
+                    $('.fa-spinner').replaceWith(searchIcon);
                     if (searchType === 'people') {
+                        $('.search-results-people').html('');
+                        $('.search-results-communities').html('');
                         $('.explore-communities-container').addClass('hidden');
                         $('.explore-profiles-container').removeClass('hidden');
+                        $('.explore-search-title').addClass('hidden');
+
                     } else {
+                        $('.search-results-people').html('');
+                        $('.search-results-communities').html('');
                         $('.explore-profiles-container').addClass('hidden');
                         $('.explore-communities-container').removeClass('hidden');
+                        $('.explore-search-title').addClass('hidden');
                     }
                 } else {
+                    $('.search-results-people').html('');
+                    $('.search-results-communities').html('');
+                    $('.explore-search-title').addClass('hidden');
+                    $('.explore-profiles-container').addClass('hidden');
+                    $('.explore-communities-container').addClass('hidden');
+                    
                     search();
                 }
             });
