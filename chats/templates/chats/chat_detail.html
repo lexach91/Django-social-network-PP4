@@ -15,6 +15,15 @@
 {% block content %}
 
 <div class="chat-container">
+    <div class="chat-navbar">
+        <div class="message-author">
+            <img class="message-avatar" src="{{ second_user.profile.avatar_url }}" alt="{{ second_user.profile }}" />
+            {{ second_user.profile }}
+        </div>
+        <div class="chat-navbar-status">
+          <div class="online-circle"></div>
+        </div>
+    </div>
     <div class="chat-messages">
         {% for message in chat.messages.all %}
             {% if message.author == request.user %}
@@ -53,8 +62,8 @@
         <button class="chat-send-button">Send</button>
         <input type="hidden" id="username" value="{{ request.user.username }}">
         <input type="hidden" id="chatId" value="{{ chat.id }}">
+        <span class="typing"></span>
     </div>
-    <span class="typing"></span>
 </div>
 {{ room_name|json_script:"room_name" }}
 <script>
