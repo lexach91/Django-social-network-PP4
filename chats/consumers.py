@@ -62,7 +62,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 }
             )
         elif type == 'typing':
-            print('typing')
             username = text_data_json['username']
             chat_id = text_data_json['chatId']
             await self.channel_layer.group_send(
@@ -97,7 +96,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def typing(self, event):
         type = event['type']
         if type == 'typing':
-            print('typing')
             username = event['username']
             chat_id = event['chatId']
             await self.send(text_data=json.dumps({
@@ -105,7 +103,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'username': username,
                 'chatId': chat_id,
             }))
-        
+
     # function to save message to database
     @database_sync_to_async
     def save_message(self, message, username, chat_id):

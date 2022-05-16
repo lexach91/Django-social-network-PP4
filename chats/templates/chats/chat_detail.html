@@ -21,7 +21,13 @@
             {{ second_user.profile }}
         </div>
         <div class="chat-navbar-status">
-          <div class="online-circle"></div>
+            {% if second_user.profile.online %}
+                Online<span class="online-circle" title="Online"></span>
+            {% elif second_user.profile.last_seen %}
+                Last seen {{ second_user.profile.last_seen|timesince }} ago
+            {% else %}
+                Offline
+            {% endif %}
         </div>
     </div>
     <div class="chat-messages">
