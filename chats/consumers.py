@@ -64,11 +64,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         elif type == 'typing':
             username = text_data_json['username']
             chat_id = text_data_json['chatId']
+            profile = await self.get_profile(username)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'typing',
                     'username': username,
+                    'profile_name': str(profile),
                     'chatId': chat_id,
                 }
             )
@@ -97,10 +99,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         type = event['type']
         if type == 'typing':
             username = event['username']
+            profile_name = event['profile_name']
             chat_id = event['chatId']
             await self.send(text_data=json.dumps({
                 'type': 'typing',
                 'username': username,
+                'profile_name': profile_name,
                 'chatId': chat_id,
             }))
 
