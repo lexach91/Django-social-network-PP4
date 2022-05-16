@@ -4,6 +4,15 @@
 {% block content %}
 
 <div class="profile-container">
+    <div class="profile-online">
+        {% if user_profile.online %}
+            Online<span class="online-circle" title="Online"></span>
+        {% elif second_user.last_seen %}
+          Last seen {{ user_profile.last_seen|timesince }} ago
+        {% else %}
+            Offline
+        {% endif %}
+    </div>
     <div class="profile-info">
         <div class="avatar-container">
             

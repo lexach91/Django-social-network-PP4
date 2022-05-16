@@ -90,6 +90,12 @@ body {
   border-radius: 0.7em;
   padding-left: 1em;
   color: white;
+  position: relative;
+}
+.profile-online {
+  position: absolute;
+  top: 1em;
+  right: 1em;
 }
 
 .avatar-container {
