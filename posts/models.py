@@ -70,6 +70,12 @@ class Post(models.Model):
     
     def get_comments(self):
         return self.comments.all()
+    
+    def get_url(self):
+        if self.post_type == 1:
+            return f'/profiles/{self.profile.user.username}/#post-{self.id}'
+        else:
+            return f'/communities/{self.community.slug}/#post-{self.id}'
 
     class Meta:
         ordering = ['-created_at']
@@ -116,3 +122,9 @@ class Comment(models.Model):
     
     def get_dislikes(self):
         return self.dislikes.count()
+    
+    def get_url(self):
+        if self.post.post_type == 1:
+            return f'/profiles/{self.post.profile.user.username}/#post-{self.post.id}'
+        else:
+            return f'/communities/{self.post.community.slug}/#post-{self.post.id}'
