@@ -38,7 +38,7 @@ $(document).ready(function() {
     const createCommentUrl = protocol + '//' + host + '/posts/create-comment/';
     const likeCommentUrl = protocol + '//' + host + '/posts/like-comment/';
     const dislikeCommentUrl = protocol + '//' + host + '/posts/dislike-comment/';
-    const editAvatarUrl = protocol + '//' + host + 'profiles/my_profile/edit-avatar/';
+    const editAvatarUrl = protocol + '//' + host + '/profiles/my_profile/edit_avatar/';
     const editAvatarBtn = $('.edit-avatar');
     const acceptAvatarBtn = $('.accept-avatar');
     const cancelAvatarBtn = $('.cancel-avatar');
@@ -391,11 +391,12 @@ $(document).ready(function() {
         fileInput.type = 'file';
         fileInput.accept = 'image/*';
         fileInput.click();
+        let file;
         $(fileInput).on('change', (e) => {
             console.log(e.target.files[0]);
             console.log("file selected");
             // need to replace avatar image with selected file in the frontend
-            let file = e.target.files[0];
+            file = e.target.files[0];
             e.target.value = '';
             let currentAvatarUrl = $('img.avatar').attr('src');
             console.log(currentAvatarUrl);
@@ -413,10 +414,13 @@ $(document).ready(function() {
                 $(cancelAvatarBtn).off('click');
                 $(acceptAvatarBtn).off('click');
             });
-            $(acceptAvatarBtn).click(() => {
+            $(acceptAvatarBtn).on('click', () => {
+                console.log("accept avatar");
                 let formData = new FormData();
                 formData.append('avatar', file);
                 formData.append('csrfmiddlewaretoken', csrfToken);
+                console.log(formData);
+                console.log(csrfToken);
                 $.ajax({
                     url: editAvatarUrl,
                     type: 'POST',
@@ -431,13 +435,16 @@ $(document).ready(function() {
                         $(cancelAvatarBtn).addClass('hidden');
                         // change avatar for this user in all posts
                         // $('img[src="' + currentAvatarUrl + '"]').attr('src', data.avatar_url);
-                        $('.post[data-post-id]').each((index, element) => {
-                            $(element).find('.post-avatar').attr('src', data.avatar_url);
+                        $('.post').each((index, element) => {
+                            $(element).find('.post-avatar[src="' + currentAvatarUrl + '"]').attr('src', data.avatar_url);
                         });
                         // remove event handlers from accept and cancel buttons
                         $(acceptAvatarBtn).off('click');
                         $(cancelAvatarBtn).off('click');
                         $(fileInput).remove();
+                    },
+                    error: (data) => {
+                        console.log(data);
                     }
                 });
             });
