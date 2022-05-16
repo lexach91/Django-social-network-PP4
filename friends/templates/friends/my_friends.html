@@ -34,7 +34,10 @@
                             </div>
                             <div class="profile-list-name">
                                 <strong>
-                                        {{ friend_request.from_profile }}
+                                    {{ friend_request.from_profile }}
+                                    {% if friend_request.online %}
+                                        <span class="online-circle"></span>
+                                    {% endif %}
                                 </strong>
                             </div>
                     </a>
