@@ -104,7 +104,6 @@ class DeleteCommunityView(View):
         if request.user == community.creator:
             community_delete_event = CommunityDeleteEvent.objects.create(
                 initiator=request.user,
-                community=community,
             )
             community_delete_event.save()
             community.delete()
