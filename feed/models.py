@@ -42,6 +42,11 @@ class CommentEvent(models.Model):
         on_delete=models.CASCADE,
         related_name='comment_events',
     )
+    comment = models.ForeignKey(
+        Comment,
+        on_delete=models.CASCADE,
+        related_name='comment_events'
+    )
     timestamp = models.DateTimeField(auto_now_add=True)
     type = "comment"
     
@@ -240,11 +245,6 @@ class CommunityDeleteEvent(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='initiated_community_delete_events',
-    )
-    community = models.ForeignKey(
-        'communities.Community',
-        on_delete=models.CASCADE,
-        related_name='community_delete_events',
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     type = "community_delete"
