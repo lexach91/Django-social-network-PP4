@@ -43,13 +43,18 @@ $(document).ready(function() {
             chatMessage.append(messageAuthor);
             chatMessage.append(messageText);
             chatMessage.append(messageTime);
-            messageContainer.append(chatMessage);
+            $(messageContainer).find('.typing').before(chatMessage);
+            // check if .typing contains the message author and clear it
+            if($('.typing').text().includes(data.author.username)){
+                $('.typing').text('');
+            }
         } else if (type === 'typing') {
             let userTyping = data.username;
+            let profileName = data.profile_name;
             if (userTyping !== username) {
                 let typingElement = $('.typing');
                 if (typingElement.text() === '') {
-                    typingElement.text(userTyping + ' is typing...');
+                    typingElement.text(profileName + ' is typing...');
                     setTimeout(() => {
                         typingElement.text('');
                     } , 10000);
@@ -117,9 +122,13 @@ $(document).ready(function() {
         } 
     });
     $(document).keyup(function(event) {
-        if (!(event.keyCode === 13 && event.ctrlKey)) {
+        // if (!(event.keyCode === 13 && event.ctrlKey)) {
+        //     sendTyping();
+        // } 
+        // check if user is typing inside the .chat-input or .emojionearea-editor
+        if ($('.chat-input').is(':focus') || $('.emojionearea-editor').is(':focus')) {
             sendTyping();
-        } 
+        }
     } );
 
 }); // end of document ready
