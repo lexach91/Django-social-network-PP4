@@ -16,10 +16,10 @@
 
 <div class="chat-container">
     <div class="chat-navbar">
-        <div class="message-author">
+        <a href="{% url 'user_profile' second_user.username %}" class="message-author chat-navbar-author">
             <img class="message-avatar" src="{{ second_user.profile.avatar_url }}" alt="{{ second_user.profile }}" />
             {{ second_user.profile }}
-        </div>
+        </a>
         <div class="chat-navbar-status">
             {% if second_user.profile.online %}
                 Online<span class="online-circle" title="Online"></span>
@@ -62,13 +62,13 @@
                 </div>
             </div>
         {% endfor %}
+        <span class="typing"></span>
     </div>
     <div class="chat-input-container">
         <textarea class="chat-input" placeholder="Type your message here..."></textarea>
         <button class="chat-send-button">Send</button>
         <input type="hidden" id="username" value="{{ request.user.username }}">
         <input type="hidden" id="chatId" value="{{ chat.id }}">
-        <span class="typing"></span>
     </div>
 </div>
 {{ room_name|json_script:"room_name" }}
