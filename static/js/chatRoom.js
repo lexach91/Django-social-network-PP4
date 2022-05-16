@@ -56,19 +56,14 @@ $(document).ready(function() {
                 }
 
             }
-        }
-
+        } 
         // Scroll to the bottom of the chat messages
         messageContainer.scrollTop(messageContainer[0].scrollHeight + 1000);
         
     };
 
     socket.onclose = function(event) {
-        console.log('Socket is closed. Reconnect will be attempted in 1 second.');
-        socket = null;
-        setTimeout(function() {
-            socket = new WebSocket(socketProtocol + '//' + window.location.host + '/ws/chat/' + roomName + '/');
-        }, 1000);
+        console.log('Something went wrong');       
     };
 
     const sendMessage = () => {
@@ -104,7 +99,6 @@ $(document).ready(function() {
             })
         );
     };
-       
 
     $('.chat-send-button').click(sendMessage);
     // put a focus on the emojionearea-editor

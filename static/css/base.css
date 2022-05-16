@@ -1615,7 +1615,7 @@ form.create-community-form button[type="submit"],
 
 .chat-input-container {
   width: 100%;
-  height: 20vh;
+  /* height: 20vh; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1626,7 +1626,7 @@ form.create-community-form button[type="submit"],
 
 .typing {
   position: absolute;
-  top: 10vh;
+  bottom: 1em;
   left: 1.4em;
   color: rgb(77, 77, 77);
   font-size: 1em;
