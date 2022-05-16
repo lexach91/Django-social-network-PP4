@@ -5,6 +5,7 @@ from posts.forms import PostForm, CommentForm
 from .forms import EditProfileInfoForm, ChangeAvatarForm
 # import form for password change from allauth
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
 
 from .models import Profile
 # Create your views here.
@@ -73,3 +74,12 @@ class EditProfileView(View):
                 password_form.save()
                 return JsonResponse({'success': True})
             return JsonResponse({'success': False, 'errors': password_form.errors})
+
+
+class CheckUserOnlineStatusView(View):
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            username = request.GET.get('username')
+            user = User.objects.get(username=username)
+            return JsonResponse({'online': user.profile.online})
+        return JsonResponse({'success': False})
