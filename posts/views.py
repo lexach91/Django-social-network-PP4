@@ -151,6 +151,7 @@ class CreateCommentAjaxView(View):
         comment_event = CommentEvent.objects.create(
             initiator = request.user,
             post = post,
+            comment = comment,
         )
         comment_event.save()
         avatar = comment.author.profile.avatar_url
