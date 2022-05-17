@@ -34,33 +34,68 @@
 </head>
 <body>
         {% if user.is_authenticated %}
+            <input type="hidden" value="{{ request.user.username }}" id="userUsername">
             {% block navbar %}
             <nav id="nav-bar">
                 <ul class="navigation">
                   <li class="navigation-item">
-                    <a href="{% url 'my_profile' %}"><i class="fas fa-user"></i>Profile</a>
-                  </li>
-                  <li class="navigation-item">
-                    <a href="{% url 'feed' %}"><i class="fas fa-newspaper"></i>Feed</a>
-                  </li>
-                  <li class="navigation-item">
-                    <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>Friends
-                      {% if user.profile.pending_friend_requests %}
-                      <span class="badge"> ({{ user.profile.pending_friend_requests.count }})</span>
-                      {% endif %}
+                    <a href="{% url 'my_profile' %}"><i class="fas fa-user"></i>
+                      <span class="navigation-name">
+                        Profile
+                      </span>
                     </a>
                   </li>
                   <li class="navigation-item">
-                    <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>Communities</a>
+                    <a href="{% url 'feed' %}"><i class="fas fa-newspaper"></i>
+                      <span class="navigation-name">
+                        Feed
+                      </span>
+                    </a>
                   </li>
                   <li class="navigation-item">
-                    <a href="{% url 'my_messages' %}"><i class="fas fa-comments"></i>Messages</a>
+                    <a href="{% url 'my-friends' %}"><i class="fas fa-user-friends"></i>
+                      <span class="navigation-name">
+                        Friends
+                      </span>
+                      <span class="nav-badge requests-count" title="Pending friend requests">
+                        {% if request.user.profile.pending_requests_count > 0 %}
+                          {{ request.user.profile.pending_requests_count }}
+                        {% endif %}
+                      </span>
+                    </a>
                   </li>
                   <li class="navigation-item">
-                    <a href="{% url 'search' %}"><i class="fas fa-search"></i>Search</a>
+                    <a href="{% url 'users_communities' %}"><i class="fas fa-users"></i></i>
+                      <span class="navigation-name">
+                      Communities
+                      </span>
+                    </a>
                   </li>
                   <li class="navigation-item">
-                    <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out"></i>Logout</a>
+                    <a href="{% url 'my_messages' %}"><i class="fas fa-comments"></i>
+                      <span class="navigation-name">
+                        Messages
+                      </span>
+                      <span class="nav-badge messages-count" title="Unread messages">
+                          {% if request.user.profile.unread_messages_count > 0 %}
+                            {{ request.user.profile.unread_messages_count }}
+                          {% endif %}
+                      </span>
+                    </a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'search' %}"><i class="fas fa-search"></i>
+                      <span class="navigation-name">
+                        Search  
+                      </span>                    
+                    </a>
+                  </li>
+                  <li class="navigation-item">
+                    <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out"></i>
+                      <span class="navigation-name">
+                        Logout
+                      </span>
+                    </a>
                   </li>
                 </ul>
               </nav>
@@ -77,6 +112,12 @@
     {% block corejs %}
     <script src="{% static 'js/base.js' %}"></script>
     {% endblock %}
+
+    {% if user.is_authenticated %}
+    {% block js_notifications %}
+    <script src="{% static 'js/notifications.js' %}"></script>
+    {% endblock %}
+    {% endif %}
 
 </body>
 </html>
