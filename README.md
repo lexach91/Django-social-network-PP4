@@ -74,3 +74,57 @@ People who cannot stand the complexity of modern social media apps and want to h
     + [W3C CSS validator](https://jigsaw.w3.org/css-validator/): was used to validate CSS code for the website.
     + [JShint](https://jshint.com/): was used to validate JS code for the website.
     + [PEP8](https://pep8.org/): was used to validate Python code for the website.
+
+
+
+
+
+
+
+---
+## Testing
+Please refer to the [TESTING.md](TESTING.md) file for all test-related documentation.
+---
+## Deployment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Credits
+- [Django](https://www.djangoproject.com/) for the framework.
+- [Django-channels](https://channels.readthedocs.io/) for the real-time communication library.
+- [Django-allauth](https://django-allauth.readthedocs.io/) for the authentication library.
+- [BGJar](https://www.bgjar.com/): for the free access to the background images build tool.
+- [Font awesome](https://fontawesome.com/): for the free access to icons.
+- [Heroku](https://www.heroku.com/): for the free hosting of the website.
+- [Cloudinary](https://cloudinary.com/): for the free access to the image hosting service.
+- [Redis](https://redis.io/): for the free access to channel layer.
+- [jQuery](https://jquery.com/): for providing varieties of tools to make standard HTML code look appealing.
+- [jQuery UI](https://jqueryui.com/): for providing various tools to make interactive HTML code look appealing.
+- [Coolors](https://coolors.co/): for providing a free platform to generate your own palette.
+- [Postgresql](https://www.postgresql.org/): for providing a free database.
+- [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb/related?hl=en): for providing a free platform to test website responsiveness
+- [GoFullPage](chrome://extensions/?id=fdpohaocaechififmbbbbbknoalclacl): for allowing to create free full web page screenshots;
+- [Favicon Generator. For real.](https://realfavicongenerator.net/): for providing a free platform to generate favicons.
+- [getcssscan](https://getcssscan.com/css-box-shadow-examples/): for providing a free platform to generate CSS box shadow examples.
+*All names are fictional and any resemblance to actual events or locales or persons, living or dead, is entirely coincidental.*
+---
+## Acknowledgments
+- [Tim Nelson](https://github.com/TravelTimN), my mentor, who guided me through the development of the project with his advice.
+- [Iuliia Konovalova](https://github.com/IuliiaKonovalova), my wife and my coding partner, who helped me to stay sane and happy during the project development, and helped me to choose the right styles and colors for the project design.
