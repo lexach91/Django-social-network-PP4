@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from datetime import datetime
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+import json
 
 
 
@@ -50,11 +53,29 @@ class Message(models.Model):
     class Meta:
         ordering = ['created_at']
         
-    # on save update chat's last_message_at
+    # on save update chat's last_message_at and send notification
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.chat.last_message_at = self.created_at
         self.chat.save()
+        
+        channel_layer = get_channel_layer()
+        receiver = self.chat.members.exclude(id=self.author.id)[0]
+        receivers_unread_messages_count = Message.objects.filter(
+            is_read=False,
+        ).exclude(
+            author=receiver
+        ).count()
+        
+        data = {
+            'unread_messages': receivers_unread_messages_count,
+        }
+        async_to_sync(channel_layer.group_send)(
+            f'notifications_{receiver.username}', {
+                'type': 'send_notification',
+                'data': data,
+            }
+        )
     
     @property
     def sent_at(self):
