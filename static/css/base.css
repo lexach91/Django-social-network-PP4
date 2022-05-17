@@ -2001,4 +2001,105 @@ form.create-community-form button[type="submit"],
   .main-content {
     max-width: 93rem;
   }
+  /* Profile */
+  .avatar-container {
+    width: 10em;
+    height: 10em;
+  }
+  .edit-avatar {
+    position: absolute;
+    bottom: 0.7rem;
+    right: 0.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.5em;
+    z-index: 10;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+  }
+  .profile-bio div {
+    font-size: 1.2rem;
+  }
+  .profile-settings i {
+    font-size: 1.7rem;
+  }
+  .post-info .post-author {
+    padding: 1em 0.5em 0.5em 0.5em;
+  }
+}
+@media all and (max-width: 662px) {
+  .messages-single,
+  .community-card,
+  .explore-community-link {
+    grid-template-columns: minmax(5rem, 1fr) 5.5fr;
+    gap: 0.5rem;
+    text-decoration: none;
+    position: relative;
+    padding: 1rem;
+    padding-left: 0.4em;
+  }
+  .community-card-members-count,
+  .last-message-info,
+  .explore-community-members {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.7rem;
+  }
+  .last-message-info {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    justify-content: space-between;
+  }
+  .message-avatar-container,
+  .community-card-logo,
+  .explore-community-logo {
+    width: 3rem;
+    height: 3rem;
+  }
+  /* Profile cards */
+  .profile-list-card {
+    width: 10em;
+    margin: 0.2em;
+    margin-bottom: 0.7em;
+    border-radius: 0.5em;
+    padding: 0.9em 1.1em;
+    position: relative;
+  }
+  .profile-list-avatar {
+    width: 7em;
+    height: 7em;
+  }
+  .profile-list-name {
+    font-size: 0.8rem;
+    padding: 0.2em;
+    height: 3.2rem;
+  }
+  .explore-profile-link {
+    width: 10rem !important;
+  }
+  .explore-profile-info {
+    min-height: 5rem;
+  }
+  .explore-profile-age,
+  .explore-profile-location {
+    display: none;
+  }
+  .search-options {
+    flex-direction: column;
+  }
+}
+@media all and (max-width: 550px) {
+  .community-card-description,
+  .message-last-message,
+  .explore-community-description {
+    display: none;
+  }
+}
+@media all and (max-width: 454px) {
+  .switchers {
+    width: 98%;
+    height: 2em;
+  }
 }
