@@ -11,10 +11,30 @@ $(document).ready(function() {
     const username = document.getElementById("username").value;
     const chatId = document.getElementById("chatId").value;
 
+    
+    const updateMessageStatusUrl = window.location.protocol + '//' + window.location.host + '/my_messages/update-message-read-status/';
+    const updateMessageStatus = function(messageId) {
+        $.ajax({
+            url: updateMessageStatusUrl,
+            type: 'POST',
+            data: {
+                'message_id': messageId,
+                'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    };
+
 
 
     socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
+        console.log(data);
         const type = data.type;
         if (type === 'chat_message'){
 
@@ -24,6 +44,7 @@ $(document).ready(function() {
                 chatMessage.addClass('my-message');
             } else {
                 chatMessage.addClass('other-message');
+                updateMessageStatus(data.messageId);
             }
             const messageText = $('<div class="message-text"></div>');
             const messageTime = $('<div class="message-time"></div>');
