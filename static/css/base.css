@@ -81,8 +81,9 @@ body {
 /* ---------------- Profile page -------------------- */
 
 .profile-container {
-  width: 98%;
   margin: 1.1em auto;
+  margin-left: 1em;
+  margin-right: 1em;
   display: flex;
   padding: 2vh 0 5vh 0;
   background-color: #535353;
@@ -92,9 +93,10 @@ body {
   color: white;
   position: relative;
 }
+
 .profile-online {
   position: absolute;
-  top: 1em;
+  top: 0.8em;
   right: 1em;
 }
 
@@ -523,9 +525,16 @@ form.password-form label[for="id_new_password2"] {
 .post {
   padding-bottom: 0;
   border: 1px solid black;
-  background-color: #f3f3fc;
+  background-color: #F3F3FC;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.5em;
+  position: relative;
+}
+
+.post .post-time {
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
 }
 
 .post:not(:last-child) {
@@ -564,8 +573,8 @@ form.password-form label[for="id_new_password2"] {
 
 .post-text {
   padding-left: 0.5em;
+  margin-top: 0.5em;
 }
-
 
 .likes-dislikes {
   display: flex;
@@ -577,7 +586,7 @@ form.password-form label[for="id_new_password2"] {
   justify-self: flex-end;
   align-self: flex-end;
   padding-bottom: 1.5em;
-  margin-top: 0.5em;
+  margin-top: 1.5em;
   margin-right: 0.2em;
 }
 
@@ -800,6 +809,10 @@ form.password-form label[for="id_new_password2"] {
 
 .friend-buttons {
   margin-top: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
 }
 
 .friend-buttons button,
@@ -820,21 +833,20 @@ form.password-form label[for="id_new_password2"] {
 
 .friend-buttons .chat-button {
   text-decoration: none;
+  padding: 0.4em 1em 0.6em 1em !important;
 }
-
 .send-friend-button,
 .accept-friend-button,
 .friend-buttons .chat-button,
 .community-actions .join-community-button {
-  background-color: #5801CA;
-  border: 1px solid #2a0061;
+  background-color: #310072;
+  border: 1px solid #2A0061;
 }
-
 .send-friend-button:hover,
 .accept-friend-button:hover,
 .friend-buttons .chat-button:hover,
 .community-actions .join-community-button:hover {
-  background-color: #8120ff;
+  background-color: #8120FF;
 }
 
 .decline-friend-button,
@@ -1049,7 +1061,7 @@ form.password-form label[for="id_new_password2"] {
 }
 
 .community-header {
-  width: 98%;
+  width: 97.5%;
   margin: 1.1em auto;
   display: flex;
   flex-direction: column;
@@ -1221,8 +1233,7 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   padding: 0 0.7em;
 }
-
-form.create-community-form {
+.community-form .create-community-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1234,9 +1245,8 @@ form.create-community-form {
   border-radius: 0.7em;
   color: white;
 }
-
-form.create-community-form label[for="id_name"],
-form.create-community-form label[for="id_description"] {
+.community-form .create-community-form label[for="id_name"],
+.community-form .create-community-form label[for="id_description"] {
   font-size: 1.2rem;
   margin-bottom: .3em;
   margin-top: 1em;
@@ -1245,9 +1255,8 @@ form.create-community-form label[for="id_description"] {
   text-shadow: 2px 2px black;
   color: white;
 }
-
-form.create-community-form label[for="id_bg_image"],
-form.create-community-form label[for="id_logo"] {
+.community-form .create-community-form label[for="id_bg_image"],
+.community-form .create-community-form label[for="id_logo"] {
   color: transparent;
   position: relative;
   font-size: 1.2rem;
@@ -1257,7 +1266,6 @@ form.create-community-form label[for="id_logo"] {
   font-weight: 400;
   width: 100%;
 }
-
 form.create-community-form label[for="id_bg_image"]::before,
 form.create-community-form label[for="id_logo"]::before {
   position: absolute;
@@ -1270,15 +1278,12 @@ form.create-community-form label[for="id_logo"]::before {
   text-shadow: 2px 2px black;
   color: white;
 }
-
 form.create-community-form label[for="id_logo"]::before {
   content: "Community logo";
 }
-
 form.create-community-form label[for="id_bg_image"]::before {
   content: "Community Background Image";
 }
-
 #id_name,
 #id_description {
   width: 100% !important;
@@ -1291,12 +1296,10 @@ form.create-community-form label[for="id_bg_image"]::before {
   border-radius: 4px;
   border: 1px solid #aaa !important;
 }
-
 #id_description {
   resize: none;
   height: 10em;
 }
-
 form.create-community-form button[type="submit"],
 .delete-community-button,
 .load-more-communities-button,
@@ -1317,20 +1320,17 @@ form.create-community-form button[type="submit"],
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-
 .create-community-button,
 .load-more-communities-button,
 .load-more-profiles-button {
-  background-color: #5801ca;
-  border: 1px solid #2a0061;
-
+  background-color: #5801CA;
+  border: 1px solid #2A0061;
 }
-
 .create-community-button:hover,
 .load-more-communities-button:hover,
 .load-more-profiles-button:hover {
   background-color: black;
-  background-color: #8120ff;
+  background-color: #8120FF;
 }
 
 .community-creator-options {
@@ -1630,8 +1630,9 @@ form.create-community-form button[type="submit"],
   margin: 0 auto;
   height: 80vh;
   overflow-y: scroll;
-  background-color: #f3f3fc;
+  background-color: #F3F3FC;
   border-radius: 0.2em;
+  padding-top: 4rem;
 }
 
 .chat-input-container {
@@ -1746,6 +1747,67 @@ form.create-community-form button[type="submit"],
   margin-right: 0.5em;
 }
 
+/* ---------------- Feed -------------------- */
+.feed-container {
+  padding-top: 1em;
+}
+.feed-event {
+  width: 98%;
+  margin: 0 auto;
+  background-color: #2B2B2B;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  min-height: 10rem;
+  margin-bottom: 0.7em;
+  border-radius: 0.5em;
+  padding: 1em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  text-decoration: none;
+}
+.feed-event-header,
+.feed-community,
+.feed-friend-request {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  min-height: 5rem;
+  padding-left: 0.5em;
+  font-size: 1.2rem;
+  /* set flex-wrap */
+  flex-wrap: wrap;
+}
+.feed-event-header .post-author {
+  margin: 0 0.9em 0 0.4em;
+  text-decoration: none;
+  color: #EBDBFF;
+  font-weight: 700;
+}
+.feed-event-header .feed-avatar-container {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  /* padding-left: 0.5em; */
+}
+
+.feed-event-header .post-author,
+.feed-event-header .post-author .feed-avatar-container {
+  margin-right: 0.5em;
+}
+
+.feed-event-header>a:first-child {
+  margin-left: 0 !important;
+}
+.feed-event-post-link {
+  padding: 0 0.5em !important;
+  color: #EBDBFF;
+  text-decoration: none;
+  font-weight: 700;
+}
 
 /* ---------------- Allauth Forms -------------------- */
 
@@ -1909,4 +1971,30 @@ form.create-community-form button[type="submit"],
 
 .allauth form input#id_remember {
   margin-left: 1em;
+}
+
+/* ---------------- media -------------------- */
+@media all and (max-width: 1040px) {
+  body {
+    padding-left: 7em;
+  }
+  .hidden {
+    display: none !important;
+  }
+  /* Navigation */
+  #nav-bar {
+    width: 7em;
+  }
+  .navigation-item a {
+    padding-left: 0;
+    font-size: 1rem;
+    justify-content: center;
+  }
+  .navigation-name {
+    display: none;
+  }
+  /* Main Content */
+  .main-content {
+    max-width: 93rem;
+  }
 }
