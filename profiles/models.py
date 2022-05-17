@@ -5,6 +5,7 @@ from datetime import date
 from django.core.cache import cache
 import datetime
 from social_network import settings
+from chats.models import Message
 
 # Create your models here.
 class Profile(models.Model):
@@ -95,12 +96,25 @@ class Profile(models.Model):
         return profiles_list
     
     @property
+    def pending_requests_count(self):
+        return len(self.pending_friends_in)
+    
+    @property
     def pending_friends_out(self):
         profiles_list = []
         for friend_request in self.friend_request_from_profile.all():
             if not friend_request.accepted and not friend_request.declined:
                 profiles_list.append(friend_request.to_profile)
         return profiles_list
+    
+    @property
+    def unread_messages_count(self):
+        return Message.objects.filter(
+            is_read=False
+            ).exclude(
+                author=self.user
+                ).count()
+        
 
     def last_seen(self):
         return cache.get('seen_%s' % self.user.username)
