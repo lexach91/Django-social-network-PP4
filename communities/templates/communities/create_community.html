@@ -25,10 +25,10 @@
         </div>
     </div>
     <div class="community-form">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="create-community-form">
             {% csrf_token %}
             {{ form }}
-            <button type="submit">Save community</button>
+            <button type="submit" class="create-community-button">Save community</button>
         </form>
     </div>
     {% if community %}
