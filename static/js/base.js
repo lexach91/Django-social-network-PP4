@@ -74,7 +74,7 @@ $(document).ready(function() {
             data: data,                
             success: (data) => {
                 let post = data.post;
-                console.log(post.avatar);
+                console.log(post);
                 let avatarUrl = post.avatar;
                 let author = post.author;
                 let authorUrl = post.author_url;
@@ -559,7 +559,7 @@ $(document).ready(function() {
                 console.log(data);
                 // replace accept and decline buttons with .chat-button link and .unfriend-button
                 let username = $('input[id="profile_username"]').val();
-                let chatUrl = protocol + '//' + host + '/chat-with-' + username + '/';
+                let chatUrl = protocol + '//' + host + '/my_messages/chat-with-' + username + '/';
                 let chatButton = $('<a class="chat-button" href="' + chatUrl + '">Chat</a>');
                 let unfriendButton = $('<button class="unfriend-button" data-profile-id="' + profileId + '">Unfriend</button>');
                 $(e.target).replaceWith(chatButton);
