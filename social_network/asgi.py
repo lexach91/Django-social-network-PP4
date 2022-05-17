@@ -15,6 +15,7 @@ django_asgi_app = get_asgi_application()
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 import chats.routing
+import notifications.routing
 
 # Initialize Django ASGI application early to ensure the AppRegistry
 # is populated before importing code that may import ORM models.
@@ -24,7 +25,8 @@ application = ProtocolTypeRouter({
     # Just HTTP for now. (We can add other protocols later.)
     "websocket": AuthMiddlewareStack(
         URLRouter(
-            chats.routing.websocket_urlpatterns
+            chats.routing.websocket_urlpatterns +
+            notifications.routing.websocket_urlpatterns
         )
     ),
 })
