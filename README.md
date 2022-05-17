@@ -81,6 +81,233 @@ People who cannot stand the complexity of modern social media apps and want to h
 
 
 
+
+---
+
+## Information Architecture
+
+### Database
+
+* During the earliest stages of the project, the database was created using SQLite.
+* The database was then migrated to PostgreSQL.
+
+
+
+### Data Modeling
+
+1. **Allauth User Model**
+    - The user model was created using [Django-allauth](https://django-allauth.readthedocs.io/en/latest/).
+    - The user model was then migrated to PostgreSQL.
+
+2. **Profile Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| User          | user          | OneToOneField | User, on_delete=models.CASCADE, related_name='profile'    |
+| Avatar        | avatar        | CloudinaryField    | folder='avatars', null=True, blank=True      |
+| Birthday      | birth_date    | DateField    | null=True, blank=True      |
+| First Name    | first_name    | CharField    | max_length=50, null=True, blank=True      |
+| Last Name     | last_name     | CharField    | max_length=50, null=True, blank=True      |
+| friends       | friends       | ManyToManyField | to=User, related_name='friends', blank=True      |
+| Country       | country       | CharField    | max_length=50, null=True, blank=True      |
+| City          | city          | CharField    | max_length=50, null=True, blank=True      |
+| Bio           | bio           | TextField    | max_length=500, null=True, blank=True      |
+
+3. **Community Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Name          | name          | CharField    | max_length=25, unique=True, blank=False    |
+| Slug          | slug          | SlugField    | unique=True, blank=False    |
+| Description   | description   | TextField    | max_length=200, blank=True    |
+| BG Image      | bg_image      | CloudinaryField    | folder='community_bg_images', null=True, blank=True    |
+| Logo          | logo          | CloudinaryField    | folder='community_logos', null=True, blank=True    |
+| Members       | members       | ManyToManyField | to=User, related_name='communities', blank=True    |
+| Creator       | creator       | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='created_communities'    |
+| Created On    | created_on    | DateTimeField | auto_now_add=True    |
+| Updated On    | updated_on    | DateTimeField | auto_now=True    |
+
+4. **Chat Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Members       | members       | ManyToManyField | to=User, related_name='chats', blank=True    |
+| Created at    | created_at    | DateTimeField | auto_now_add=True    |
+| Last message  | last_message_at  | DateTimeField | auto_now=True    |
+
+5. **Message Model**
+
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Chat          | chat          | ForeignKey    | to=Chat, on_delete=models.CASCADE, related_name='messages'    |
+| Author        | author        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='messages'    |
+| Content       | content       | TextField    | max_length=500, null=True, blank=True      |
+| Has Media     | has_media     | BooleanField | default=False      |
+| Is Read       | is_read       | BooleanField | default=False      |
+| Image         | image         | CloudinaryField    | folder='messages', null=True, blank=True    |
+| Video         | video         | CloudinaryField    | folder='messages', null=True, blank=True    |
+| Created at    | created_at    | DateTimeField | auto_now_add=True    |
+| Updated at    | updated_at    | DateTimeField | auto_now=True    |
+
+6. **PostEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_post_events'    |
+| Post          | post          | ForeignKey    | to=Post, on_delete=models.CASCADE, related_name='post_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "post_events"      |
+
+7. **CommentEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_comment_events'    |
+| Post          | post          | ForeignKey    | to=Post, on_delete=models.CASCADE, related_name='comment_events'    |
+| Comment       | comment       | ForeignKey    | to=Comment, on_delete=models.CASCADE, related_name='comment_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "comment_events"      |
+
+8. **LikeDislikeEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_friend_request_events'    |
+| Target        | target        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='targeted_friend_request_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "like_dislike"    |
+
+9. **FriendEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_friend_events'    |
+| Target        | target        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='targeted_friend_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "friend_added" |
+
+10. **FriendRequestDeclinedEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_friend_request_declined_events'    |
+| Target        | target        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='targeted_friend_request_declined_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "friend_request_declined"   |
+
+11. **RemoveFriendEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_remove_friend_events'    |
+| Target        | target        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='targeted_remove_friend_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "friend_removed"      |
+
+12. **CommunityJoinEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_community_join_events'    |
+| Community     | community     | ForeignKey    | to=Community, on_delete=models.CASCADE, related_name='community_join_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "community_join"     |
+
+13. **CommunityLeaveEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_community_leave_events'    |
+| Community     | community     | ForeignKey    | to=Community, on_delete=models.CASCADE, related_name='community_leave_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "community_leave"      |
+
+14. **CommunityCreateEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_community_create_events'    |
+| Community     | community     | ForeignKey    | to=Community, on_delete=models.CASCADE, related_name='community_create_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    |"community_create"      |
+
+15. **CommunityDeleteEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_community_delete_events'    |
+| Community     | community     | ForeignKey    | to=Community, on_delete=models.CASCADE, related_name='community_delete'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | community_delete"      |
+
+16. **FriendRequestEvent Model**
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Initiator     | initiator     | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='initiated_friend_request_events'    |
+| Target        | target        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='targeted_friend_request_events'    |
+| Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
+| Type          | type          | CharField    | "friend_request"      |
+17. **FriendRequest Model**
+
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| From Profile  | from_profile  | ForeignKey    | to=Profile, on_delete=models.CASCADE, related_name='friend_request_from_profile'    |
+| To Profile    | to_profile    | ForeignKey    | to=Profile, on_delete=models.CASCADE, related_name='friend_request_to_profile'    |
+| Sent On       | sent_on       | DateTimeField | auto_now_add=True    |
+| Updated On    | updated_on    | DateTimeField | auto_now=True    |
+| Accepted      | accepted      | BooleanField  | default=False    |
+| Declined      | declined      | BooleanField  | default=False    |
+
+18. **Post Model**
+
+```Python
+POST_TYPE_CHOICES = (
+    (1, 'profile_wall'),
+    (2, 'community_wall'),
+)
+```
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Author        | author        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='posts'    |
+| Content       | content       | TextField     | max_length=500    |
+| Has Media     | has_media     | BooleanField  | default=False    |
+| Image         | image         | CloudinaryField | 'post_image', folder = 'posts', null = True, blank = True   |
+| Video         | video         | CloudinaryField |'post_video', folder = 'posts', null = True, blank = True   |
+| Created On    | created_on    | DateTimeField | auto_now_add=True    |
+| Updated On    | updated_on    | DateTimeField | auto_now=True    |
+| Edited        | edited        | BooleanField  | default=False    |
+| Post Type     | post_type     | IntegerField  | choices=POST_TYPE_CHOICES    |
+| Community     | community     | ForeignKey    | to=Community, on_delete=models.CASCADE, related_name='posts'    |
+| Profile       | profile       | ForeignKey    | to=Profile, on_delete=models.CASCADE, related_name='posts'    |
+| Likes         | likes         | ManyToManyField | to=User, related_name='liked_posts'    |
+| Dislikes      | dislikes      | ManyToManyField | to=User, related_name='disliked_posts'    |
+
+19. **Comment Model**
+
+
+| Name          | Database Key  | Field Type    | Validation |
+| ------------- | ------------- | ------------- | ---------- |
+| Author        | author        | ForeignKey    | to=User, on_delete=models.CASCADE, related_name='comments', null=True    |
+| Post          | post          | ForeignKey    | to=Post, on_delete=models.CASCADE, related_name='comments'    |
+| Content       | content       | TextField     | max_length=500    |
+| Created On    | created_on    | DateTimeField | auto_now_add=True    |
+| Updated On    | updated_on    | DateTimeField | auto_now=True    |
+| Edited        | edited        | BooleanField  | default=False    |
+| Likes         | likes         | ManyToManyField | to=User, related_name='liked_comments'    |
+| Dislikes      | dislikes      | ManyToManyField | to=User, related_name='disliked_comments'    |
+
+
+
+
+
+
+
+
+---
 ---
 ## Testing
 Please refer to the [TESTING.md](TESTING.md) file for all test-related documentation.
