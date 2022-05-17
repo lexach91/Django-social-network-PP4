@@ -58,6 +58,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         'avatar': avatar_url,
                         },
                     'chatId': chat_id,
+                    'messageId': message.id,
                     'sendBy': username,
                 }
             )
@@ -82,6 +83,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message = event['message']
             author = event['author']
             send_by = event['sendBy']
+            message_id = event['messageId']
             # chat_id = event['chatId']
             print(message)
             print(author)
@@ -92,6 +94,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'message': message,
                 'author': author,
                 'sendBy': send_by,
+                'messageId': message_id,
                 # 'chatId': chat_id,
             }))
         
