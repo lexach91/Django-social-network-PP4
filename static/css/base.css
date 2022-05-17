@@ -941,7 +941,8 @@ form.password-form label[for="id_new_password2"] {
   justify-content: start;
   align-items: center;
   width: 20em;
-  height: 2em;
+  height: 2.2em;
+  margin: 0.7rem 0 0 0;
 }
 .label-button {
   cursor: pointer;
@@ -956,6 +957,9 @@ form.password-form label[for="id_new_password2"] {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.search-switchers .label-button {
+  font-size: 1.2rem;
 }
 .label-button.left {
   border-radius: 15px 0 0 15px;
