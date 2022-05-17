@@ -1,5 +1,8 @@
 from django.db import models
 from profiles.models import Profile
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+import json
 
 # Create your models here.
 class FriendRequest(models.Model):
@@ -48,3 +51,22 @@ class FriendRequest(models.Model):
     def get_pending_requests(self):
         return FriendRequest.objects.filter(accepted=False, declined=False)
     
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        channel_layer = get_channel_layer()
+        receiver = self.to_profile.user
+        
+        data = {
+            'pending_requests': receiver.profile.pending_requests_count,
+        }
+        
+        print(data)
+        print(receiver)
+        print(receiver.username)
+        
+        async_to_sync(channel_layer.group_send)(
+            f'notifications_{receiver.username}', {
+                'type': 'send_notification',
+                'data': data,
+            }
+        )
