@@ -39,3 +39,11 @@ class GetMessageTimeView(View):
             message = get_object_or_404(Message, id=request.POST['message_id'])
             sent_at = message.sent_at
             return JsonResponse({'sent_at': sent_at})
+        
+class UpdateMessageReadStatusView(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            message = get_object_or_404(Message, id=request.POST['message_id'])
+            message.is_read = True
+            message.save()
+            return JsonResponse({'message_id': message.id})
