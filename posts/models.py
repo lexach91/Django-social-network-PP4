@@ -4,6 +4,8 @@ from cloudinary.models import CloudinaryField
 from profiles.models import Profile
 from communities.models import Community
 
+
+
 POST_TYPE_CHOICES = (
     (1, 'profile_wall'),
     (2, 'community_wall'),
@@ -82,6 +84,7 @@ class Post(models.Model):
         
     def __str__(self):
         return self.content
+
 
 
 class Comment(models.Model):
