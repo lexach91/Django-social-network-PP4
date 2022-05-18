@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% load i18n %}
-
 {% block extracss %}
   <style>
     body {
@@ -9,16 +7,12 @@
     }
   </style>
 {% endblock %}
-
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
-
 {% block content %}
-  <div class="allauth">
+  <div class="allauth allauth-logout">
     <div class="allauth-container">
       <h1 class="allauth-title">{% trans "Sign Out" %}</h1>
-
       <p class="allauth-note">{% trans 'Are you sure you want to sign out?' %}</p>
-
       <form method="post" action="{% url 'account_logout' %}" class="allauth-form">
         {% csrf_token %}
         {% if redirect_field_value %}
