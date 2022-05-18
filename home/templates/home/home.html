@@ -1,37 +1,65 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block extracss %}
 <style>
   body {
     padding-left: 0 !important;
   }
 </style>
+<link rel="stylesheet" href="{% static 'css/devices.min.css' %}" type="text/css">
 {% endblock %}
-
 {% block content %}
-
 <div class="home-page">
-  <div class="home-header">
-    <h1 class="home-title">Name of the app</h1>
-    <p class="home-incentive">
-      this platform is great for those who want to communicate with their friends and family.
-    </p>
-
-  </div>
   <div class="home-main">
-    <div class="home-main-images">
-      <img src="{% static 'images/phone.png' %}" alt="">
+    <div class="marvel-device iphone5c green">
+      <div class="top-bar"></div>
+      <div class="sleep"></div>
+      <div class="volume"></div>
+      <div class="camera"></div>
+      <div class="sensor"></div>
+      <div class="speaker"></div>
+      <div class="screen">
+        <div class="screen-container">
+          <img src="{% static 'images/home_screen.svg' %}" alt="Honeycomb">
+        </div>
+      </div>
+      <div class="home"></div>
+      <div class="bottom-bar"></div>
     </div>
-    <div class="home-main-form allauth-container">
-      <h2 class="home-main-form-title">Get in</h2>
+    <div class="home-main-form">
+      <div class="home-form-title">
+        <h1 class="home-title">Honeycomb</h1>
+        <p class="home-incentive">
+          Right place to be in touch!
+        </p>
+      </div>
       <div>
         <a href="{% url 'account_signup' %}" class="allauth-button home-allauth-button">SignUp</a>
         <a href="{% url 'account_login' %}" class="allauth-button home-allauth-button">Login</a>
       </div>
     </div>
   </div>
+  <div class="references">
+    <div class="contributor__name">Created by Aleksei Konovalov</div>
+    <ul class="contributor__links">
+      <li class="contributor__link">
+        <a href="mailto:ronmctailor@protonmail.com">
+          <i class="fas fa-envelope-square"></i>
+        </a>
+      </li>
+      <li class="contributor__link">
+        <a href="https://www.linkedin.com/in/aleksei-konovalov/" target="_blank" rel="noopener"
+          aria-label="Visit Aleksei Konovalov LinkedIn page">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+      <li class="contributor__link">
+        <a href="https://github.com/lexach91" target="_blank" rel="noopener"
+          aria-label="Visit Aleksei Konovalov GitHub page">
+          <i class="fab fa-github-square"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
-
-
 {% endblock %}
