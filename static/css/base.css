@@ -1624,6 +1624,7 @@ form.create-community-form button[type="submit"],
   padding: 0.7em 1em;
   display: flex;
   justify-content: space-between;
+  z-index: 10;
 }
 .chat-navbar .message-author.chat-navbar-author {
   padding-bottom: 0 !important;
@@ -1644,6 +1645,7 @@ form.create-community-form button[type="submit"],
   background-color: #F3F3FC;
   border-radius: 0.2em;
   padding-top: 4rem;
+  position: relative;
 }
 
 .chat-input-container {
@@ -1658,9 +1660,9 @@ form.create-community-form button[type="submit"],
 }
 
 .typing {
-  /* position: absolute; */
-  /* bottom: 1em; */
-  /* left: 1.4em; */
+  position: absolute;
+  bottom: 0;
+  left: 0;
   color: rgb(77, 77, 77);
   font-size: 1em;
   font-weight: 400;
