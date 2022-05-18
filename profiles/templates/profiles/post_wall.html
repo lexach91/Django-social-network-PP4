@@ -78,6 +78,12 @@
                     <span class="comments-count">{{ post.comments_count }}</span>
                 </div>
             </div>
+            {% if post.author == request.user %}
+            <div class="author-options">
+                <i class="fas fa-edit edit-post-button" data-post-id="{{ post.id }}"></i>
+                <i class="fas fa-trash-alt delete-post-button" data-post-id="{{ post.id }}"></i>
+            </div>
+            {% endif %}
         </div>
         <div class="comments-container" data-for-post="{{ post.id }}">            
             {% for comment in post.get_comments %}
