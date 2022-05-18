@@ -85,7 +85,7 @@ body {
   margin-left: 1em;
   margin-right: 1em;
   display: flex;
-  padding: 2vh 0 5vh 0;
+  padding: 1.5rem 0 5vh 0;
   background-color: #535353;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.7em;
@@ -557,11 +557,10 @@ form.password-form label[for="id_new_password2"] {
 
 .post-author-name a {
   text-decoration: none;
-  color: #5200b1;
+  color: black
 }
-
 .post-author-name a:hover {
-  color: #9296F0;
+  color: #242424;
 }
 
 .post-avatar {
@@ -668,6 +667,13 @@ form.password-form label[for="id_new_password2"] {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.comment-author a {
+  text-decoration: none;
+  color: black;
+}
+.comment-author a:hover {
+  color: #242424;
 }
 .comment-avatar {
   width: 2em;
@@ -1520,7 +1526,8 @@ form.create-community-form button[type="submit"],
 } */
 .message-avatar-container img,
 .community-card-logo img,
-.explore-community-logo img {
+.explore-community-logo img,
+.feed-avatar-container img {
   width: 100%;
   height: 100%;
   display: block;
@@ -1790,7 +1797,7 @@ form.create-community-form button[type="submit"],
   color: #EBDBFF;
   font-weight: 700;
 }
-.feed-event-header .feed-avatar-container {
+.feed-event-header .feed-avatar-container, .feed-avatar-container {
   width: 2.5em;
   height: 2.5em;
   border-radius: 50%;
@@ -2029,6 +2036,25 @@ form.create-community-form button[type="submit"],
   }
 }
 @media all and (max-width: 662px) {
+  body {
+    padding-left: 4em;
+  }
+  
+  /* Navigation */
+  #nav-bar {
+    width: 4em;
+  }
+  .navigation-item a {
+    font-size: 0.9rem;
+  }
+  .navigation-name {
+    display: none;
+  }
+  /* Main Content */
+  .main-content {
+    max-width: 96rem;
+  }
+  /* Messages and communities lists */
   .messages-single,
   .community-card,
   .explore-community-link {
