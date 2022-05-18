@@ -1859,6 +1859,10 @@ form.create-community-form button[type="submit"],
   /* set flex-wrap */
   flex-wrap: wrap;
 }
+.feed-avatar-container {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
 
 .feed-event-header .post-author {
   margin: 0 0.9em 0 0.4em;
