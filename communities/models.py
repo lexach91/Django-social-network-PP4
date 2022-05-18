@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Community(models.Model):
-    name = models.CharField(max_length=25, unique=True, blank=False)
+    name = models.CharField(max_length=30, unique=True, blank=False)
     slug = models.SlugField(unique=True, blank=False)
     description = models.TextField(max_length=200, blank=True)
     bg_image = CloudinaryField(
