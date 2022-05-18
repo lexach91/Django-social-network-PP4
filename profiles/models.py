@@ -109,11 +109,14 @@ class Profile(models.Model):
     
     @property
     def unread_messages_count(self):
-        return Message.objects.filter(
+        # need to find all unread messages in chats that user a member of that are unread
+        messages = Message.objects.filter(
+            chat__members=self.user,
             is_read=False
             ).exclude(
                 author=self.user
                 ).count()
+        return messages
         
 
     def last_seen(self):
