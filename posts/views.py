@@ -34,7 +34,6 @@ class CreatePostAjaxView(View):
                 'author': str(post.author.profile),
                 'author_url': f'/profiles/{post.author.username}',
                 'avatar': avatar,
-                # created_at should be in format as it is in temlate date:"d/m/Y H:i"
                 'created_at': post.created_at.strftime("%d/%m/%Y %H:%M"),
                 'content': post.content,
                 'id': post.id,
@@ -52,7 +51,6 @@ class LikePostAjaxView(View):
         post = Post.objects.get(id=post_id)
         if request.user in post.likes.all():
             post.likes.remove(request.user)
-            # find the like event and delete it
             like_event = LikeDislikeEvent.objects.filter(
                 initiator = request.user,
                 post = post,
@@ -62,7 +60,6 @@ class LikePostAjaxView(View):
                 like_event.delete()
         elif request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
-            # find the dislike event and delete it
             dislike_event = LikeDislikeEvent.objects.filter(
                 initiator = request.user,
                 post = post,
@@ -97,7 +94,6 @@ class DislikePostAjaxView(View):
         post = Post.objects.get(id=post_id)
         if request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
-            # find the dislike event and delete it
             dislike_event = LikeDislikeEvent.objects.filter(
                 initiator = request.user,
                 post = post,
@@ -107,7 +103,6 @@ class DislikePostAjaxView(View):
                 dislike_event.delete()
         elif request.user in post.likes.all():
             post.likes.remove(request.user)
-            # find the like event and delete it
             like_event = LikeDislikeEvent.objects.filter(
                 initiator = request.user,
                 post = post,
@@ -251,3 +246,38 @@ class DislikeCommentAjaxView(View):
             'disliked': disliked,
             'liked': liked
             })
+
+
+class EditPostAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        post = Post.objects.get(id=request.POST.get('post_id'))
+        # remove 'post_id' from request.POST
+        request_post = request.POST.copy()
+        del request_post['post_id']        
+        form = PostForm(request_post, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})          
+        return JsonResponse({'success': False, 'errors': form.errors})
+    
+class EditCommentAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        comment = Comment.objects.get(id=request.POST.get('comment_id'))
+        comment.content = request.POST.get('content')
+        comment.edited = True
+        comment.save()
+        
+class DeletePostAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        post.delete()
+        return JsonResponse({'success': True})
+    
+
+class DeleteCommentAjaxView(View):
+    def post(self, request, *args, **kwargs):
+        comment_id = request.POST.get('comment_id')
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
+        return JsonResponse({'success': True})
