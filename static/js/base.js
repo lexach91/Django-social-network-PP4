@@ -6,7 +6,7 @@ $(document).ready(function() {
     $('.comments-container').hide();
     $('.post-form input[type="file"]').hide();    
     $('.post-form label[for="id_image"]').html('<i class="fas fa-paperclip"></i>');
-    $('.post-form label[for="id_image"]').attr('title', 'Add an image');
+    $('.post-form label[for="id_image"]').attr('title', 'Add an image to your post');
     $('.post-form label[for="id_image"]').tooltip();
     
     const protocol = window.location.protocol;
@@ -20,7 +20,7 @@ $(document).ready(function() {
     `;
 
     const postFormHtml = `
-    <form class="post-form">
+    <form class="post-form create">
         <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
         <label for="id_content">Content:</label><textarea name="content" cols="40" rows="3" maxlength="500" required="" id="id_content"></textarea>
         <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
@@ -32,7 +32,23 @@ $(document).ready(function() {
     </form>
     `;
 
+    const editPostFormHtml = `
+    <form class="post-form edit" data-post-id="">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+        <textarea name="content" cols="40" rows="3" maxlength="500" required="" id="id_content"></textarea>
+        <label for="post_file" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
+        <input type="file" name="image" accept="image/*" id="post_file" style="display: none;">        
+        <button class="cancel-edit-button" type="button">Cancel</button>
+        <button type="submit" class="post-edit-submit save-form">Save</button>
+        <input type="hidden" name="post_id" id="id_post_id">
+        <input type="hidden" name="post_type" id="id_post_type">
+        <input type="hidden" name="community" id="id_community">
+        <input type="hidden" name="profile" id="id_profile">
+    </form>
+    `;
+
     const createPostUrl = protocol + '//' + host + '/posts/create-post/';
+    const editPostUrl = protocol + '//' + host + '/posts/edit-post/';
     const likePostUrl = protocol + '//' + host + '/posts/like-post/';
     const dislikePostUrl = protocol + '//' + host + '/posts/dislike-post/';
     const createCommentUrl = protocol + '//' + host + '/posts/create-comment/';
@@ -146,13 +162,71 @@ $(document).ready(function() {
                 $('.post-form button').attr('disabled', false);
                 // remove loading icon
                 $('.post-form button i').remove();
-                // if form has div.preview, replace it with <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
                 if($('.post-form').find('div.preview').length) {
                     $('.post-form').find('div.preview').replaceWith(`
                         <label for="id_image" title="Add an image"><i class="fas fa-paperclip" aria-hidden="true"></i></label>
                     `);
                     $('#id_image').on('change', imagePreview);
                 }
+
+            }
+        });
+    };
+
+    const editPost = (e, postBackup) => {
+        e.preventDefault();
+        const form = $(e.target);
+        let postId = $(postBackup).data('post-id');
+        $(form).find('input[name="image"]').attr('id', 'id_image');
+        let postType = $('input#post_type').val();
+        let profileId = $('input#profile_id').val();
+        let communityId = $('input#community_id').val();
+        $(form).find('input[name="post_type"]').val(postType);
+        $(form).find('input[name="profile"]').val(profileId);
+        $(form).find('input[name="community"]').val(communityId);
+        let data = new FormData(form[0]);
+        let new_content = $(form).find('textarea[name="content"]').val();
+        let new_image = $(form).find('input[name="image"]').val(); 
+        data.append('post_id', postId);
+        // rename form's file input id from post_file to id_image
+
+        // make all inputs disabled
+        $(e.target).find('input').attr('disabled', true);
+        $(e.target).find('textarea').attr('disabled', true);
+        $(e.target).find('button').attr('disabled', true);
+        // add loading icon
+        $(e.target).find('.save-form').append('<i class="fas fa-spinner fa-spin"></i>');
+
+        $.ajax({
+            url: editPostUrl,
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: data,
+            success: (data) => {
+                console.log(data);
+                postBackup.find('.post-text').html(new_content);
+                if(new_image) {
+                    postBackup.find('.post-content').prepend(`
+                        <div class="post-media">
+                            <img src="${new_image}" alt="post-image" class="post-image">
+                        </div>
+                        `);                        
+                }
+                let editedAt = new Date().toLocaleString();
+                postBackup.find('.post-time em').text(`Edited at ${editedAt}`);
+                // replace the form with the postBackup
+                $(e.target).replaceWith(postBackup);
+            },
+            error: (data) => {
+                console.log(data);
+                // enable all inputs
+                $(e.target).find('input').attr('disabled', false);
+                $(e.target).find('textarea').attr('disabled', false);
+                $(e.target).find('button').attr('disabled', false);
+                // remove loading icon
+                $(e.target).find('.save-form i').remove();
 
             }
         });
@@ -370,16 +444,81 @@ $(document).ready(function() {
         });
         previewDiv.appendChild(closeButton[0]);
         // replace the fas-paperclip with the new image
-        let labelBackup = $('label[for=id_image]');
-        $('label[for=id_image]').replaceWith(previewDiv);
+        let labelBackup = $(e.target).prev().clone();
+        $(e.target).prev().replaceWith(previewDiv);
         // $(e.target).parent().find('i').replaceWith(previewDiv);
         // add event handler to the close button
         closeButton.on('click', () => {
             // remove the preview image
             $(e.target).parent().find('div.preview').replaceWith(labelBackup);
             // clear the file input
-            $('#id_image').val('');            
-            $('#id_image').on('change', imagePreview);            
+            $(e.target).val('');        
+            $(e.target).on('change', imagePreview);
+        });
+    };
+
+    const toggleEditPost = (e) => {
+        e.preventDefault();
+        let postId = $(e.target).attr('data-post-id');
+        let postBackup = $('.post[data-post-id="' + postId + '"]');
+        let formElement = editPostFormHtml.replace('data-post-id=""', 'data-post-id="' + postId + '"');
+        
+        $('.post[data-post-id="' + postId + '"]').replaceWith(formElement);
+        // insert the .post-text from the backup post into the edit post form textarea
+        $('.post-form.edit[data-post-id="' + postId + '"]').find('textarea').val(postBackup.find('.post-text').text().trim());
+        // need to check if postBackup had an image
+        if(postBackup.find('.post-image').length > 0) {
+            console.log('image found')
+            // need to create an image preview for the edit post form
+            let previewDiv = document.createElement('div');
+            previewDiv.classList.add('preview');
+            previewDiv.style.width = '100px';
+            previewDiv.style.height = '100px';
+            previewDiv.style.border = '1px solid #ccc';
+            previewDiv.style.position = 'relative';
+            previewDiv.style.borderRadius = '0 0.7rem 0 0';
+            previewDiv.style.alignSelf = 'start';
+            let img = document.createElement('img');
+            img.src = postBackup.find('.post-image').attr('src');
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.objectPosition = 'center';
+            previewDiv.appendChild(img);
+            let closeButton = $('<i class="fas fa-times-circle"></i>');
+            closeButton.css({
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                cursor: 'pointer',
+                color: '#ccc',
+            });
+            previewDiv.appendChild(closeButton[0]);
+            let labelBackup = $('.post-form.edit[data-post-id="' + postId + '"]').find('label[for=post_file]');
+            $('.post-form.edit[data-post-id="' + postId + '"]').find('label[for=post_file]').replaceWith(previewDiv);
+            // add event handler to the close button
+            closeButton.on('click', () => {
+                // remove the preview image
+                $('.post-form.edit[data-post-id="' + postId + '"]').find('div.preview').replaceWith(labelBackup);
+                
+                // clear the file input
+                $('.post-form.edit[data-post-id="' + postId + '"]').find('input[type=file]').val('');
+                $('.post-form.edit[data-post-id="' + postId + '"]').find('input[type=file]').on('change', imagePreview);
+            });
+
+        } else {
+            console.log('no image found')
+            $('.post-form.edit[data-post-id="' + postId + '"]').find('input[type=file]').on('change', imagePreview);
+        }
+        // need to add event handler to the cancel button
+        $('.post-form.edit[data-post-id="' + postId + '"]').find('.cancel-edit-button').on('click', () => {
+            $('.post-form.edit[data-post-id="' + postId + '"]').replaceWith(postBackup);
+            $('.edit-post-button[data-post-id="' + postId + '"]').on('click', toggleEditPost);
+        });
+
+        // need to add event handler to form submit
+        $('.post-form.edit[data-post-id="' + postId + '"]').on('submit', (e) => {
+            editPost(e, postBackup);
         });
     };
 
@@ -452,11 +591,13 @@ $(document).ready(function() {
     });
 
     $('.post-image').on('click', toggleImage);
-    $('.post-form').on('submit', createPost);
+    $('.post-form .create').on('submit', createPost);
     $('.like-button').on('click', likeHandler);
     $('.dislike-button').on('click', dislikeHandler);
     $('.comment-button').on('click', commentHandler);
     $('.comment-form').on('submit', createComment);
+
+    $('.edit-post-button').on('click', toggleEditPost);
 
     // -------- friend requests functions -------- 
 
