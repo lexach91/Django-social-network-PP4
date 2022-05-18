@@ -62,10 +62,9 @@ class Message(models.Model):
         channel_layer = get_channel_layer()
         receiver = self.chat.members.exclude(id=self.author.id)[0]
         receivers_unread_messages_count = Message.objects.filter(
-            is_read=False,
-        ).exclude(
-            author=receiver
-        ).count()
+            chat__members=receiver,
+            is_read=False
+        ).exclude(author=receiver).count()
         
         data = {
             'unread_messages': receivers_unread_messages_count,
