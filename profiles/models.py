@@ -25,12 +25,12 @@ class Profile(models.Model):
         null=True
     )
     first_name = models.CharField(
-        max_length=50,
+        max_length=25,
         blank=True,
         null=True
     )
     last_name = models.CharField(
-        max_length=50,
+        max_length=25,
         blank=True,
         null=True
     )
@@ -40,17 +40,17 @@ class Profile(models.Model):
         related_name='friends'
     )
     country = models.CharField(
-        max_length=50,
+        max_length=25,
         blank=True,
         null=True
     )
     city = models.CharField(
-        max_length=50,
+        max_length=25,
         blank=True,
         null=True
     )
     bio = models.TextField(
-        max_length=500,
+        max_length=100,
         blank=True,
         null=True
     )
