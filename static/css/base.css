@@ -85,11 +85,10 @@ body {
   margin-left: 1em;
   margin-right: 1em;
   display: flex;
-  padding: 1.5rem 0 5vh 0;
+  padding: 1.5rem 1rem 2rem 1rem;
   background-color: #535353;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.7em;
-  padding-left: 1em;
   color: white;
   position: relative;
 }
@@ -305,8 +304,8 @@ form.password-form label[for="id_new_password2"] {
 
 .profile-settings {
   position: absolute;
-  top: -1rem;
-  right: 0;
+  top: -1.2rem;
+  right: -1rem;
   z-index: 10;
   cursor: pointer;
   padding: 0.5em 1em;
@@ -440,7 +439,8 @@ form.password-form label[for="id_new_password2"] {
 
 .post,
 .post-form,
-.comment-form {
+.comment-form,
+.post-form-edit {
   width: 100%;
   border: 1px solid #000000cc;
   display: flex;
@@ -459,7 +459,8 @@ form.password-form label[for="id_new_password2"] {
 }
 
 .profile-wall .post-form,
-.comment-form {
+.comment-form,
+.post-form-edit {
   width: 100%;
   position: relative;
   align-items: center;
@@ -525,7 +526,7 @@ form.password-form label[for="id_new_password2"] {
 .post {
   padding-bottom: 0;
   border: 1px solid black;
-  background-color: #F3F3FC;
+  background-color: #f3f3fc;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   border-radius: 0.5em;
   position: relative;
@@ -559,6 +560,7 @@ form.password-form label[for="id_new_password2"] {
   text-decoration: none;
   color: black
 }
+
 .post-author-name a:hover {
   color: #242424;
 }
@@ -574,6 +576,7 @@ form.password-form label[for="id_new_password2"] {
   padding-left: 0.5em;
   margin-top: 0.5em;
 }
+
 
 .likes-dislikes {
   display: flex;
@@ -645,6 +648,7 @@ form.password-form label[for="id_new_password2"] {
   align-items: flex-start;
   padding-left: 2em;
 }
+
 .comment {
   width: 100%;
   border: 1px solid black;
@@ -656,36 +660,44 @@ form.password-form label[for="id_new_password2"] {
   padding: 1em;
   margin-bottom: 1em;
   padding-bottom: 0;
+  color: black;
 }
+
 .comment-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 0.7em;
 }
+
 .comment-author {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .comment-author a {
   text-decoration: none;
   color: black;
 }
+
 .comment-author a:hover {
   color: #242424;
 }
+
 .comment-avatar {
   width: 2em;
   height: 2em;
   border-radius: 50%;
   margin-right: .5em;
 }
+
 /* ---------------- Profiles/Friends/Requests list -------------------- */
 .friends-container-main,
 .explore-container-main {
   margin-top: 1em;
 }
+
 .friends-container,
 .explore-profiles-container {
   width: 100%;
@@ -696,6 +708,7 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   width: 100%;
 }
+
 .explore-profiles-container,
 .explore-communities-container {
   padding-top: 0 !important;
@@ -732,6 +745,7 @@ form.password-form label[for="id_new_password2"] {
   text-shadow: 2px 2px #000000;
   position: relative;
 }
+
 .profile-list-card .online-circle {
   position: absolute;
   top: 0.5rem;
@@ -825,7 +839,10 @@ form.password-form label[for="id_new_password2"] {
 .friend-buttons .chat-button,
 .community-actions .leave-community-button,
 .community-actions .join-community-button {
-  border-radius: 0.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
   letter-spacing: 0.012rem;
   font-weight: 700;
   font-size: 1rem;
@@ -841,6 +858,7 @@ form.password-form label[for="id_new_password2"] {
   text-decoration: none;
   padding: 0.4em 1em 0.6em 1em !important;
 }
+
 .send-friend-button,
 .accept-friend-button,
 .friend-buttons .chat-button,
@@ -848,10 +866,12 @@ form.password-form label[for="id_new_password2"] {
   background-color: #310072;
   border: 1px solid #2A0061;
 }
+
 .send-friend-button:hover,
 .accept-friend-button:hover,
 .friend-buttons .chat-button:hover,
 .community-actions .join-community-button:hover {
+  background-color: black;
   background-color: #8120FF;
 }
 
@@ -889,6 +909,7 @@ form.password-form label[for="id_new_password2"] {
   width: 98%;
   margin: 0 auto;
 }
+
 .search-input-container {
   width: 100%;
   margin: 0 auto;
@@ -902,6 +923,7 @@ form.password-form label[for="id_new_password2"] {
   color: white;
   position: relative;
 }
+
 .search-input-container i {
   position: absolute;
   top: 50%;
@@ -913,24 +935,30 @@ form.password-form label[for="id_new_password2"] {
   padding: 0 !important;
   font-size: 1.2rem !important;
 }
+
 .search-input-container i.fa-spinner {
   top: 35%;
 }
+
 .search-input {
   width: 100%;
   padding: 0.5em 0.7em;
   font-size: 1.2rem;
   color: #000000;
 }
+
 .search-input:focus {
   outline: none;
 }
+
 .search-input::placeholder {
   color: #4E4E4E;
 }
+
 .search-input:not(:placeholder-shown)+.search-icon {
   color: #0C0C0C;
 }
+
 .search-options {
   width: 100%;
   display: flex;
@@ -938,9 +966,11 @@ form.password-form label[for="id_new_password2"] {
   justify-content: space-between;
   align-items: center;
 }
+
 .search-checkbox {
   display: none;
 }
+
 .search-switchers {
   display: flex;
   flex-direction: row;
@@ -950,6 +980,7 @@ form.password-form label[for="id_new_password2"] {
   height: 2.2em;
   margin: 0.7rem 0 0 0;
 }
+
 .label-button {
   cursor: pointer;
   height: 100%;
@@ -964,19 +995,24 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   justify-content: center;
 }
+
 .search-switchers .label-button {
   font-size: 1.2rem;
 }
+
 .label-button.left {
   border-radius: 15px 0 0 15px;
 }
+
 .label-button.right {
   border-radius: 0 15px 15px 0;
 }
+
 .label-button.active {
   background-color: rgb(29, 0, 61);
   color: white;
 }
+
 .search-reset {
   height: 2em;
   border-radius: 5px;
@@ -992,15 +1028,17 @@ form.password-form label[for="id_new_password2"] {
   cursor: pointer;
   box-shadow: rgb(0 0 0 / 7%) 0px 1px 2px, rgb(0 0 0 / 7%) 0px 2px 4px, rgb(0 0 0 / 7%) 0px 4px 8px, rgb(0 0 0 / 7%) 0px 8px 16px, rgb(0 0 0 / 7%) 0px 16px 32px, rgb(0 0 0 / 7%) 0px 32px 64px;
 }
+
 .search-reset {
   background-color: #310072;
   border: 1px solid #2A0061;
   box-shadow: rgba(106, 4, 240, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
 .search-reset:hover {
-  background-color: black;
   background-color: #8120FF;
 }
+
 .explore-title,
 .explore-search-title {
   width: 98% !important;
@@ -1019,9 +1057,11 @@ form.password-form label[for="id_new_password2"] {
   padding: 1em;
   color: black;
 }
+
 .explore-profile-link {
   width: 17rem !important;
 }
+
 .explore-profile-info {
   display: flex;
   flex-direction: column;
@@ -1029,6 +1069,7 @@ form.password-form label[for="id_new_password2"] {
   justify-content: space-between !important;
   min-height: 10rem;
 }
+
 .explore-profile-location,
 .explore-profile-age,
 .explore-profile-friends {
@@ -1040,10 +1081,12 @@ form.password-form label[for="id_new_password2"] {
   padding: 0.5em;
   color: white !important;
 }
+
 .explore-profile-name,
 .explore-profile-friends {
   font-weight: 700;
 }
+
 .load-more-communities {
   display: flex;
   justify-content: center;
@@ -1052,6 +1095,7 @@ form.password-form label[for="id_new_password2"] {
   height: 5rem;
   margin: 0 auto;
 }
+
 .load-more-communities-button,
 .load-more-profiles-button {
   box-shadow: rgba(0, 0, 0, 0.699) 0px 1px 20px, rgb(0 0 0 / 7%) 0px 2px 4px, rgb(0 0 0 / 7%) 0px 4px 8px, rgb(0 0 0 / 7%) 0px 8px 16px, rgb(0 0 0 / 7%) 0px 16px 32px, rgb(0 0 0 / 7%) 0px 32px 64px;
@@ -1062,12 +1106,17 @@ form.password-form label[for="id_new_password2"] {
 .community-container,
 .friends-container-main,
 .explore-container-main,
-.explore-communities-container {
+.explore-communities-container,
+.feed-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+.community-container {
+  justify-content: center;
 }
 
 .community-header {
@@ -1243,6 +1292,7 @@ form.password-form label[for="id_new_password2"] {
   align-items: center;
   padding: 0 0.7em;
 }
+
 .community-form .create-community-form {
   width: 100%;
   display: flex;
@@ -1255,6 +1305,7 @@ form.password-form label[for="id_new_password2"] {
   border-radius: 0.7em;
   color: white;
 }
+
 .community-form .create-community-form label[for="id_name"],
 .community-form .create-community-form label[for="id_description"] {
   font-size: 1.2rem;
@@ -1265,6 +1316,8 @@ form.password-form label[for="id_new_password2"] {
   text-shadow: 2px 2px black;
   color: white;
 }
+
+
 .community-form .create-community-form label[for="id_bg_image"],
 .community-form .create-community-form label[for="id_logo"] {
   color: transparent;
@@ -1276,6 +1329,7 @@ form.password-form label[for="id_new_password2"] {
   font-weight: 400;
   width: 100%;
 }
+
 form.create-community-form label[for="id_bg_image"]::before,
 form.create-community-form label[for="id_logo"]::before {
   position: absolute;
@@ -1288,12 +1342,15 @@ form.create-community-form label[for="id_logo"]::before {
   text-shadow: 2px 2px black;
   color: white;
 }
+
 form.create-community-form label[for="id_logo"]::before {
   content: "Community logo";
 }
+
 form.create-community-form label[for="id_bg_image"]::before {
   content: "Community Background Image";
 }
+
 #id_name,
 #id_description {
   width: 100% !important;
@@ -1306,10 +1363,12 @@ form.create-community-form label[for="id_bg_image"]::before {
   border-radius: 4px;
   border: 1px solid #aaa !important;
 }
+
 #id_description {
   resize: none;
   height: 10em;
 }
+
 form.create-community-form button[type="submit"],
 .delete-community-button,
 .load-more-communities-button,
@@ -1330,17 +1389,20 @@ form.create-community-form button[type="submit"],
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
+
 .create-community-button,
 .load-more-communities-button,
 .load-more-profiles-button {
-  background-color: #5801CA;
-  border: 1px solid #2A0061;
+  background-color: #5801ca;
+  border: 1px solid #2a0061;
+
 }
+
 .create-community-button:hover,
 .load-more-communities-button:hover,
 .load-more-profiles-button:hover {
   background-color: black;
-  background-color: #8120FF;
+  background-color: #8120ff;
 }
 
 .community-creator-options {
@@ -1431,6 +1493,7 @@ form.create-community-form button[type="submit"],
   justify-content: end;
   margin-bottom: 1em;
 }
+
 .add-community-button {
   height: 2em;
   border-radius: 5px;
@@ -1452,10 +1515,12 @@ form.create-community-form button[type="submit"],
   align-items: center;
   text-decoration: none;
 }
+
 .add-community-button:hover {
   background-color: black;
   background-color: #8120FF;
 }
+
 .add-community-button-name {
   margin-right: 0.5em;
 }
@@ -1508,7 +1573,8 @@ form.create-community-form button[type="submit"],
 
 .message-avatar-container,
 .community-card-logo,
-.explore-community-logo {
+.explore-community-logo,
+.feed-avatar-container {
   align-self: center;
   justify-self: center;
   width: 5rem;
@@ -1611,6 +1677,7 @@ form.create-community-form button[type="submit"],
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   position: relative;
 }
+
 .chat-navbar {
   position: absolute;
   top: 0;
@@ -1626,10 +1693,9 @@ form.create-community-form button[type="submit"],
   justify-content: space-between;
   z-index: 10;
 }
+
 .chat-navbar .message-author.chat-navbar-author {
   padding-bottom: 0 !important;
-  text-decoration: none;
-  color: black;
 }
 
 .chat-navbar-status {
@@ -1667,7 +1733,6 @@ form.create-community-form button[type="submit"],
   font-size: 1em;
   font-weight: 400;
   padding: 0.5em;
-
 }
 
 .chat-input {
@@ -1764,21 +1829,24 @@ form.create-community-form button[type="submit"],
 .feed-container {
   padding-top: 1em;
 }
+
 .feed-event {
   width: 98%;
   margin: 0 auto;
-  background-color: #2B2B2B;
+  background-color: #2b2b2b;
   box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   min-height: 10rem;
   margin-bottom: 0.7em;
   border-radius: 0.5em;
   padding: 1em 2em;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
   text-decoration: none;
 }
+
 .feed-event-header,
 .feed-community,
 .feed-friend-request {
@@ -1793,13 +1861,15 @@ form.create-community-form button[type="submit"],
   /* set flex-wrap */
   flex-wrap: wrap;
 }
+
 .feed-event-header .post-author {
   margin: 0 0.9em 0 0.4em;
   text-decoration: none;
-  color: #EBDBFF;
+  color: #ebdbff;
   font-weight: 700;
 }
-.feed-event-header .feed-avatar-container, .feed-avatar-container {
+
+.feed-event-header .feed-avatar-container {
   width: 2.5em;
   height: 2.5em;
   border-radius: 50%;
@@ -1807,24 +1877,34 @@ form.create-community-form button[type="submit"],
   /* padding-left: 0.5em; */
 }
 
+/* .feed-event-header>div>.post-author:first-child {
+  margin-left: 0 !important;
+} */
+
 .feed-event-header .post-author,
 .feed-event-header .post-author .feed-avatar-container {
   margin-right: 0.5em;
 }
 
+.feed-event-header a {
+  /* margin: 0 0.4em; */
+}
+
 .feed-event-header>a:first-child {
   margin-left: 0 !important;
 }
+
 .feed-event-post-link {
   padding: 0 0.5em !important;
-  color: #EBDBFF;
+  color: #ebdbff;
   text-decoration: none;
   font-weight: 700;
 }
 
 /* ---------------- Allauth Forms -------------------- */
 
-.allauth {
+.allauth,
+.home-page {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -1832,6 +1912,16 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
+
+.allauth.allauth-logout {
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 
 .allauth-container {
   background-color: #535353;
@@ -1845,17 +1935,23 @@ form.create-community-form button[type="submit"],
   align-items: center;
   text-shadow: 2px 2px black;
   margin: 1em;
-  max-width: 50rem;
+  max-width: 40rem;
+}
+
+
+.allauth.allauth-logout .allauth-container {
+  margin: 0;
+  margin-left: 15rem;
 }
 
 .allauth-title {
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: 700;
   margin-bottom: 0.5em;
 }
 
 .allauth-note {
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: 400;
   margin-bottom: 0.5em;
   text-align: center;
@@ -1890,20 +1986,20 @@ form.create-community-form button[type="submit"],
 
 .allauth-button {
   padding: 0.3em 1em;
-  background-color: #5801ca;
-  border: 1px solid #35007a;
+  background-color: #420099;
+  border: 1px solid #2A0061;
+  box-shadow: rgb(106 4 240 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 0%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(183 0 255 / 13%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
   color: white;
   font-weight: 700;
   font-size: 1.5rem;
   text-shadow: 2px 2px black;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
   border-radius: 0.4em;
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
 
 .allauth-button:hover {
-  background-color: #2a0061;
+  background-color: #8120FF;
 }
 
 .allauth-single-button {
@@ -1986,35 +2082,139 @@ form.create-community-form button[type="submit"],
   margin-left: 1em;
 }
 
-/* ---------------- media -------------------- */
+/* ---------------- Home Page ---------------- */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+.home-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.home-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.home-incentive {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 0.5em;
+  text-align: center;
+  max-width: 80%;
+}
+
+.home-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* max-height: 20rem; */
+}
+
+.home-main-images {
+  height: 50vh;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.home-main-images img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* .home-main-images, */
+.home-main-form {
+  width: 50%;
+  border: 1px solid black;
+  background-color: #f3f3fc;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30vh;
+}
+
+.home-main-form-title {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  text-align: center;
+  max-width: 80%;
+  color: #000000;
+  text-shadow: none;
+  font-weight: 700;
+}
+
+.home-allauth-button {
+  width: 15rem;
+  margin: 1.5em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+}
+
+/* ---------------- Media -------------------- */
 @media all and (max-width: 1040px) {
   body {
     padding-left: 7em;
   }
+
+  .allauth.allauth-logout .allauth-container {
+    margin-left: 7rem;
+  }
+
   .hidden {
     display: none !important;
   }
+
   /* Navigation */
+
   #nav-bar {
     width: 7em;
   }
+
   .navigation-item a {
     padding-left: 0;
     font-size: 1rem;
     justify-content: center;
   }
+
   .navigation-name {
     display: none;
   }
+
   /* Main Content */
   .main-content {
     max-width: 93rem;
   }
+
   /* Profile */
   .avatar-container {
     width: 10em;
     height: 10em;
   }
+
   .edit-avatar {
     position: absolute;
     bottom: 0.7rem;
@@ -2027,36 +2227,121 @@ form.create-community-form button[type="submit"],
     font-size: 1.5rem;
     color: white;
   }
+
   .profile-bio div {
     font-size: 1.2rem;
   }
+
   .profile-settings i {
     font-size: 1.7rem;
   }
-  .post-info .post-author {
+
+  .post-info .post-author,
+  .comment-author {
     padding: 1em 0.5em 0.5em 0.5em;
   }
 }
+
+@media all and (max-width: 750px) {
+  .allauth-container {
+    border-radius: 0.4em;
+    color: white;
+    padding: 1.5em 1em;
+    max-width: 30rem;
+  }
+
+  .allauth-title {
+    font-size: 1.5em;
+    margin-bottom: 0.4em;
+  }
+
+  .allauth-note {
+    font-size: 1em;
+    margin-bottom: 0.3em;
+    max-width: 90%;
+  }
+
+  .allauth-link {
+    font-size: 1.05em;
+    font-weight: 700;
+  }
+
+  .allauth-buttons-container {
+    margin-bottom: 0.4em;
+  }
+
+  .allauth-button {
+    padding: 0.3em 1em 0.2em 1em;
+    font-size: 1.2rem;
+    border-radius: 0.2em;
+    margin-top: 0.7em;
+  }
+
+  .allauth-single-button {
+    margin-bottom: 0.7em;
+  }
+
+  .allauth form input#id_login,
+  .allauth form input#id_password,
+  .allauth form input#id_email,
+  .allauth form input#id_email2,
+  .allauth form input#id_username,
+  .allauth form input#id_password1,
+  .allauth form input#id_password2 {
+    width: 90% !important;
+    min-width: 15rem;
+    padding: 0.5em 0.3em 0.5em 0.5em;
+    border-radius: 0.1em;
+    margin: 0.3em 0;
+    font-size: 1rem !important;
+  }
+
+  .allauth form input#id_login::placeholder,
+  .allauth form input#id_password::placeholder,
+  .allauth form input#id_email::placeholder,
+  .allauth form input#id_email2::placeholder,
+  .allauth form input#id_username::placeholder,
+  .allauth form input#id_password1::placeholder,
+  .allauth form input#id_password2::placeholder {
+    padding: 0.5em 0.3em 0.5em 0.5em !important;
+  }
+
+  .allauth form input#id_remember {
+    margin-left: 0.7em;
+  }
+}
+
 @media all and (max-width: 662px) {
+
   body {
     padding-left: 4em;
   }
-  
+
+  .allauth.allauth-logout .allauth-container {
+    margin-left: 4rem;
+  }
+
   /* Navigation */
+
   #nav-bar {
     width: 4em;
   }
+
   .navigation-item a {
     font-size: 0.9rem;
   }
+
   .navigation-name {
     display: none;
   }
+
   /* Main Content */
   .main-content {
     max-width: 96rem;
   }
-  /* Messages and communities lists */
+
+  /* Messages, communities lists */
+
   .messages-single,
   .community-card,
   .explore-community-link {
@@ -2067,6 +2352,7 @@ form.create-community-form button[type="submit"],
     padding: 1rem;
     padding-left: 0.4em;
   }
+
   .community-card-members-count,
   .last-message-info,
   .explore-community-members {
@@ -2074,60 +2360,218 @@ form.create-community-form button[type="submit"],
     top: 0.3rem;
     right: 0.7rem;
   }
+
   .last-message-info {
     display: flex;
     flex-direction: column;
     min-height: 100%;
     justify-content: space-between;
   }
+
   .message-avatar-container,
   .community-card-logo,
   .explore-community-logo {
     width: 3rem;
     height: 3rem;
   }
+
+  .last-message-time,
+  .community-card-members-count {
+    font-size: 0.8rem;
+  }
+
   /* Profile cards */
+
   .profile-list-card {
     width: 10em;
     margin: 0.2em;
+
     margin-bottom: 0.7em;
     border-radius: 0.5em;
     padding: 0.9em 1.1em;
     position: relative;
   }
+
   .profile-list-avatar {
     width: 7em;
     height: 7em;
   }
+
   .profile-list-name {
     font-size: 0.8rem;
     padding: 0.2em;
     height: 3.2rem;
   }
+
   .explore-profile-link {
     width: 10rem !important;
   }
+
   .explore-profile-info {
     min-height: 5rem;
   }
+
   .explore-profile-age,
   .explore-profile-location {
     display: none;
   }
+
+  /* Profile */
+  .avatar-container {
+    width: 7em;
+    height: 7em;
+  }
+
+  .profile-bio div {
+    font-size: 1rem;
+  }
+
+  .edit-avatar {
+    bottom: 0.1rem;
+    font-size: 1.2rem;
+  }
+
+  .profile-settings {
+    top: -1.5rem;
+    right: -1.5rem;
+    border-radius: 0.4em;
+  }
+
+  .profile-settings i {
+    font-size: 1.5rem;
+  }
+
+
+
+  /* Wall Posts */
+  .comment-info {
+    position: relative;
+  }
+
+  .post .post-time,
+  .comment-info .comment-time {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  /* Search */
+
   .search-options {
     flex-direction: column;
   }
+
+  /* Allauth */
+  /* .allauth-container {
+    background-color: #535353;
+    box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    border-radius: 0.7em;
+    color: white;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 2px 2px black;
+    margin: 1em;
+    max-width: 30rem;
+  } */
+
+  .allauth-logout .allauth-container {
+    max-width: 20rem;
+  }
 }
+
 @media all and (max-width: 550px) {
+
   .community-card-description,
   .message-last-message,
   .explore-community-description {
     display: none;
   }
+
+  .message-info .message-name,
+  .community-card-info .community-card-name,
+  .explore-community-info .explore-community-name {
+    font-size: 0.9em;
+  }
+
+
+  .explore-title,
+  .explore-search-title {
+    margin: 0.5em auto;
+    font-size: 1rem;
+    padding: 0.7em;
+    border-radius: 0.4em;
+    padding: 0.7em;
+  }
+
+  /* Profile */
+  .avatar-container {
+    width: 5em;
+    height: 5em;
+  }
+
+  .profile-bio {
+    padding-left: 1em;
+  }
+
+  .profile-bio div,
+  .post-author-name,
+  .comment-author {
+    font-size: 0.8rem;
+  }
+
+  .post-form .save-form,
+  .comment-form .comment-submit {
+    bottom: 0.5rem;
+    width: unset;
+    height: 1.8em;
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em 0.6em 0.8em;
+  }
+
+  .allauth-logout .allauth-container {
+    max-width: 15rem;
+  }
 }
+
+
 @media all and (max-width: 454px) {
+
+  /* Profile */
+  .profile-container {
+    flex-direction: column;
+    padding: 1em;
+  }
+
+  .profile-bio {
+    padding-left: 0;
+    margin-top: 1em;
+  }
+
+  .profile-settings {
+    top: -7.1rem;
+  }
+
+  /* Switchers */
   .switchers {
     width: 98%;
     height: 2em;
+
   }
+
+  .search-switchers {
+    width: 100%;
+    height: 2.2em;
+    margin: 0.7rem 0 0 0;
+  }
+
+  .search-switchers .label-button {
+    font-size: 1rem;
+  }
+
+
+
 }
