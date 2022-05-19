@@ -219,6 +219,9 @@ $(document).ready(function() {
                         `);      
                     }
                 }
+                if(had_image && !data.image) {
+                    postBackup.find('.post-media').remove();
+                }
                 let editedAt = new Date().toLocaleString();
                 postBackup.find('.post-time em').text(`Edited at ${editedAt}`);
                 // replace the form with the postBackup
