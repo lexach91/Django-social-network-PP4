@@ -599,18 +599,28 @@ form.password-form label[for="id_new_password2"] {
 .comments {
   cursor: pointer;
 }
-
 .likes .fas,
-.dislikes .fas {
-  color: #5200b1;
+.dislikes .fas,
+.comments a {
+  color: #5200B1;
+  text-decoration: none;
 }
-
+.comments a {
+  color: black;
+}
+.author-options {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 1.5rem;
+}
 .likes:hover,
 .dislikes:hover,
-.comments:hover {
+.comments:hover,
+.comments a:hover,
+.author-options .edit-post-button:hover,
+.author-options .delete-post-button:hover {
   color: #9A42FF;
 }
-
 .post-media {
   width: 100%;
   height: auto;
