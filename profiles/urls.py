@@ -5,6 +5,7 @@ from .views import (
     EditAvatarAjaxView,
     EditProfileView,
     CheckUserOnlineStatusView,
+    ResetAvatarView
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('my_profile/edit_avatar/', EditAvatarAjaxView.as_view(), name='edit_avatar_ajax'),
     path('my_profile/edit/', EditProfileView.as_view(), name='edit_profile'),
     path('check_online/', CheckUserOnlineStatusView.as_view(), name='check_online'),
+    path('my_profile/reset_avatar/', ResetAvatarView.as_view(), name='reset-avatar')
 ]
