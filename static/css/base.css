@@ -669,6 +669,7 @@ form.password-form label[for="id_new_password2"] {
   margin-bottom: 1em;
   padding-bottom: 0;
   color: black;
+  position: relative;
 }
 
 .comment-info {
