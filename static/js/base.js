@@ -49,6 +49,7 @@ $(document).ready(function() {
 
     const createPostUrl = protocol + '//' + host + '/posts/create-post/';
     const editPostUrl = protocol + '//' + host + '/posts/edit-post/';
+    const deletePostUrl = protocol + '//' + host + '/posts/delete-post/';
     const likePostUrl = protocol + '//' + host + '/posts/like-post/';
     const dislikePostUrl = protocol + '//' + host + '/posts/dislike-post/';
     const createCommentUrl = protocol + '//' + host + '/posts/create-comment/';
@@ -241,6 +242,52 @@ $(document).ready(function() {
                 // remove loading icon
                 $(e.target).find('.save-form i').remove();
 
+            }
+        });
+    };
+
+    const deletePost = (e) => {
+        e.preventDefault();
+        let postId = $(e.target).data('post-id');
+        let post = $(`.post[data-post-id='${postId}']`);
+        // need to cover the post with a transparent div with a spinner icon
+        let spinner = `
+            <div class="spinner-container">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        `;
+        post.append(spinner);
+        // make post's position relative and spinner-container absolute
+        post.css('position', 'relative');
+        $('.spinner-container').css('position', 'absolute');
+        // let spinner container to cover the post
+        $('.spinner-container').css({
+            'top': '0',
+            'left': '0',
+            'width': '100%',
+            'height': '100%',
+            'z-index': '100',
+            'background-color': 'rgba(0,0,0,0.5)',
+            'display': 'flex',
+            'justify-content': 'center',
+            'align-items': 'center'
+        });
+        
+        $.ajax({
+            url: deletePostUrl,
+            type: 'POST',
+            data: {
+                post_id: postId,
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: (data) => {
+                console.log(data);
+                post.remove();
+
+                $(`.comments-container[data-for-post='${postId}']`).remove();
+            },
+            error: (data) => {
+                console.log(data);
             }
         });
     };
@@ -611,6 +658,19 @@ $(document).ready(function() {
     $('.comment-form').on('submit', createComment);
 
     $('.edit-post-button').on('click', toggleEditPost);
+    $('.delete-post-button').on('click', (e) => {
+        // need to ask for confirmation with popup
+        let postId = $(e.target).attr('data-post-id');
+        let post = $('.post[data-post-id="' + postId + '"]');
+        let postBackup = post.clone();
+        let confirmDelete = confirm('Are you sure you want to delete this post?');
+        if (confirmDelete) {
+            deletePost(e);
+        } else {
+            // do nothing
+            console.log('cancelled');
+        }
+    });
 
     // -------- friend requests functions -------- 
 
