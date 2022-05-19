@@ -5,7 +5,6 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 {% block extrajs %}
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -38,6 +37,8 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             let user_country = '{{ user.profile.country }}';
@@ -93,7 +94,7 @@
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'yy-mm-dd',
-                yearRange: '-100:+0',
+                yearRange: '-100:-12',
 
             });
             $('#save-bio-btn').on('click', () => {
@@ -270,6 +271,53 @@
                 })
                 
             })
+        
+            $('#reset-avatar-btn').on('click', () => {
+                let currentAvatarUrl = $('img.avatar').attr('src');
+                let defaultAvatarUrl = "{% static 'images/default_avatar.svg' %}";
+                $('img.avatar').attr('src', defaultAvatarUrl);
+                let confirmation = confirm('Are you sure you want to reset your avatar?');
+                if (confirmation) {
+                    // add loading icon
+                    $('#reset-avatar-btn').append('<i class="fas fa-spinner fa-spin"></i>');
+                    // disable buttons
+                    $('#reset-avatar-btn').prop('disabled', true);
+                    $('#edit-avatar-btn').prop('disabled', true);
+                    $.ajax({
+                        url: "{% url 'reset-avatar' %}",
+                        type: 'POST',
+                        data: {
+                            'csrfmiddlewaretoken': "{{ csrf_token }}"
+                        },
+                        success: function(data) {
+                            // remove loading icon
+                            $('#reset-avatar-btn i').remove();
+                            // enable buttons
+                            $('#reset-avatar-btn').prop('disabled', false);
+                            $('#edit-avatar-btn').prop('disabled', false);
+                            // show success message
+                            $('#reset-avatar-btn').after('<span class="success-message">Saved!</span>');
+                            // remove success message after 3 seconds
+                            setTimeout(() => {
+                                $('.success-message').remove();
+                            }, 3000);
+                        },
+                        error: function(data) {
+                            // remove loading icon
+                            $('#reset-avatar-btn i').remove();
+                            // enable buttons
+                            $('#reset-avatar-btn').prop('disabled', false);
+                            $('#edit-avatar-btn').prop('disabled', false);
+                            // show error message
+                            $('#reset-avatar-btn').after('<span class="error-message">Error!</span>');
+                            // remove error message after 3 seconds
+                            setTimeout(() => {
+                                $('.error-message').remove();
+                            }, 3000);
+                        }
+                    });
+                }
+            });
         });
     </script>
 {% endblock %}
