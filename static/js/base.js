@@ -186,7 +186,8 @@ $(document).ready(function() {
         $(form).find('input[name="community"]').val(communityId);
         let data = new FormData(form[0]);
         let new_content = $(form).find('textarea[name="content"]').val();
-        let new_image = $(form).find('input[name="image"]').val(); 
+        let new_image = $(form).find('input[name="image"]').val();
+        let had_image = $(postBackup).find('img.post-image').length;
         data.append('post_id', postId);
         // rename form's file input id from post_file to id_image
 
@@ -208,16 +209,25 @@ $(document).ready(function() {
                 console.log(data);
                 postBackup.find('.post-text').html(new_content);
                 if(new_image) {
-                    postBackup.find('.post-content').prepend(`
+                    if(had_image) {
+                        postBackup.find('.post-media img').attr('src', data.image);
+                    } else {
+                        postBackup.find('.post-content').prepend(`
                         <div class="post-media">
-                            <img src="${new_image}" alt="post-image" class="post-image">
+                            <img src="${data.image}" alt="post-image" class="post-image">
                         </div>
-                        `);                        
+                        `);      
+                    }
                 }
                 let editedAt = new Date().toLocaleString();
                 postBackup.find('.post-time em').text(`Edited at ${editedAt}`);
                 // replace the form with the postBackup
                 $(e.target).replaceWith(postBackup);
+                // add event listeners to likes, dislikes, comments, edit, delete, and imageToggle
+                $(`.like-button[data-post-id='${postId}']`).on('click', likeHandler);
+                $(`.dislike-button[data-post-id='${postId}']`).on('click', dislikeHandler);
+                $(`.comment-button[data-post-id='${postId}']`).on('click', commentHandler);
+                $('.edit-post-button[data-post-id=' + postId + ']').on('click', toggleEditPost);
             },
             error: (data) => {
                 console.log(data);
