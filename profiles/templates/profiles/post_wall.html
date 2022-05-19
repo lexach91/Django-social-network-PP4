@@ -30,12 +30,12 @@
                 </div>
                 <div class="post-time">
                     {% if post.edited %}
-                        <em>Edited at
-                            {{ post.updated_at|date:"d/m/Y H:i" }}
+                        <em title='{{ post.updated_at|date:"d/m/Y H:i" }}'>
+                            Edited {{ post.updated_at|timesince }} ago
                         </em>
                     {% else %} 
-                        <em>Posted at
-                            {{ post.created_at|date:"d/m/Y H:i" }}
+                        <em title='{{ post.created_at|date:"d/m/Y H:i" }}'>
+                            Posted {{ post.created_at|timesince }} ago
                         </em>
                     {% endif %}
                 </div>
@@ -105,9 +105,15 @@
                             </div>
                         </div>
                         <div class="comment-time">
-                            <em>
-                                {{ comment.created_at|date:"d/m/Y H:i" }}
-                            </em>
+                            {% if comment.edited %}
+                                <em title='{{ comment.updated_at|date:"d/m/Y H:i" }}'>
+                                    Edited {{ comment.updated_at|timesince }} ago
+                                </em>
+                            {% else %} 
+                                <em title='{{ comment.created_at|date:"d/m/Y H:i" }}'>
+                                    {{ comment.created_at|timesince }} ago
+                                </em>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="comment-content">
@@ -131,6 +137,12 @@
                             <span class="dislikes-count">{{ comment.get_dislikes }}</span>
                         </div>
                     </div>
+                    {% if comment.author == request.user %}
+                    <div class="author-options">
+                        <i class="fas fa-edit edit-comment-button" data-comment-id="{{ comment.id }}"></i>
+                        <i class="fas fa-trash-alt delete-comment-button" data-comment-id="{{ comment.id }}"></i>
+                    </div>
+                    {% endif %}
                 </div>
             {% endfor %}
             {% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
