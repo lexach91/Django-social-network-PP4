@@ -65,7 +65,14 @@
                 success: function(data) {
                     let select = $('#id_country');
                     for (var i = 0; i < data.geonames.length; i++) {
-                        select.append($('<option value="' + data.geonames[i].countryCode + '">' + data.geonames[i].countryName + '</option>'));
+                        select.append($('<option>', {
+                            value: data.geonames[i].countryName,
+                            text: data.geonames[i].countryName,
+                            data: {
+                                code: data.geonames[i].countryCode,
+                            }
+                        }));
+                        // select.append($('<option value="' + data.geonames[i].countryCode + '">' + data.geonames[i].countryName + '</option>'));
                     }
                     // select user's country by default
                     $('#id_country').val(user_country).trigger('change');
@@ -74,9 +81,10 @@
             
             })
             $('#id_country').on('change', () => {
+                let country_code = $('#id_country').find(':selected').data('code');
                 let country = $('#id_country').val();
                 $.ajax({
-                    url: 'https://secure.geonames.org/searchJSON?username=lexach91&country=' + country + '&maxRows=1000&style=SHORT',
+                    url: 'https://secure.geonames.org/searchJSON?username=lexach91&country=' + country_code + '&maxRows=1000&style=SHORT',
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
