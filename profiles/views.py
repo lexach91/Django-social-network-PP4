@@ -53,6 +53,8 @@ class EditProfileView(View):
     def get(self, request, *args, **kwargs):
         profile_form = EditProfileInfoForm(instance=request.user.profile)
         password_form = PasswordChangeForm(user=request.user)
+        password_form.fields['old_password'].widget.attrs['autofocus'] = False
+        
         avatar_form = ChangeAvatarForm(instance=request.user.profile)
         context = {
             'profile_form': profile_form,
@@ -82,4 +84,14 @@ class CheckUserOnlineStatusView(View):
             username = request.GET.get('username')
             user = User.objects.get(username=username)
             return JsonResponse({'online': user.profile.online})
+        return JsonResponse({'success': False})
+
+
+class ResetAvatarView(View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            user = request.user
+            user.profile.avatar = None
+            user.profile.save()
+            return JsonResponse({'success': True})
         return JsonResponse({'success': False})
