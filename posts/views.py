@@ -253,47 +253,58 @@ class DislikeCommentAjaxView(View):
 class EditPostAjaxView(View):
     def post(self, request, *args, **kwargs):
         post = Post.objects.get(id=request.POST.get('post_id'))
-        # remove 'post_id' from request.POST
-        request_post = request.POST.copy()
-        del request_post['post_id']        
-        form = PostForm(request_post, request.FILES, instance=post)
-        if form.is_valid():
-            # check if post had an image before and if form doesn't have an image
-            # delete the image from storage
-            if post.image and not request.FILES.get('image'):
-                cloudinary.uploader.destroy(post.image.public_id, invalidate=True)
-                post.image = None
-            form.save()
-            image = post.image
-            if image:
-                image_url = image.url
-                post.has_media = True
-            else:
-                image_url = None
-                post.has_media = False
-            post.edited = True
-            post.save()
-            return JsonResponse({'success': True, 'image': image_url})        
+        if request.user == post.author:
+            # remove 'post_id' from request.POST
+            request_post = request.POST.copy()
+            del request_post['post_id']        
+            form = PostForm(request_post, request.FILES, instance=post)
+            if form.is_valid():
+                # check if post had an image before and if form doesn't have an image
+                # delete the image from storage
+                if post.image and not request.FILES.get('image'):
+                    cloudinary.uploader.destroy(post.image.public_id, invalidate=True)
+                    post.image = None
+                form.save()
+                image = post.image
+                if image:
+                    image_url = image.url
+                    post.has_media = True
+                else:
+                    image_url = None
+                    post.has_media = False
+                post.edited = True
+                post.save()
+                return JsonResponse({'success': True, 'image': image_url})        
         return JsonResponse({'success': False, 'errors': form.errors})
     
 class EditCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         comment = Comment.objects.get(id=request.POST.get('comment_id'))
-        comment.content = request.POST.get('content')
-        comment.edited = True
-        comment.save()
+        if request.user == comment.author:
+            comment.content = request.POST.get('comment_content')
+            comment.edited = True
+            comment.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+            
         
 class DeletePostAjaxView(View):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
         post = Post.objects.get(id=post_id)
-        post.delete()
-        return JsonResponse({'success': True})
+        if request.user == post.author:
+            post.delete()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
     
 
 class DeleteCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         comment_id = request.POST.get('comment_id')
         comment = Comment.objects.get(id=comment_id)
-        comment.delete()
-        return JsonResponse({'success': True})
+        if request.user == comment.author:
+            comment_count = comment.post.comments_count() - 1
+            post_id = comment.post.id
+            comment.delete()
+            return JsonResponse({'success': True, 'comment_count': comment_count, 'post_id': post_id})
+        return JsonResponse({'success': False})
