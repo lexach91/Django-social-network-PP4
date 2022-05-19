@@ -715,6 +715,10 @@ $(document).ready(function() {
         $('.post-form.edit[data-post-id="' + postId + '"]').find('.cancel-edit-button').on('click', () => {
             $('.post-form.edit[data-post-id="' + postId + '"]').replaceWith(postBackup);
             $('.edit-post-button[data-post-id="' + postId + '"]').on('click', toggleEditPost);
+            $('.like-button[data-post-id="' + postId + '"]').on('click', likeHandler);
+            $('.dislike-button[data-post-id="' + postId + '"]').on('click', dislikeHandler);
+            $('.comment-button[data-post-id="' + postId + '"]').on('click', commentHandler);
+            $('.delete-post-button[data-post-id="' + postId + '"]').on('click', deletePost);
             // remove the cover div
             $('.cover').remove();
             // allow the page to scroll
