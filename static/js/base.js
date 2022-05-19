@@ -144,6 +144,11 @@ $(document).ready(function() {
                                 <span class="comments-count">0</span>
                             </div>
                         </div>
+                        <div class="author-options">
+                            <i class="fas fa-edit edit-post-button" data-post-id="${post.id}" aria-hidden="true"></i>
+                            <i class="fas fa-trash-alt delete-post-button" data-post-id="${post.id}" aria-hidden="true"></i>
+                        </div>
+
                     </div>
                 `);
                 // check if the post has_media and if it does, add it to the .post-content before .post-text
@@ -168,6 +173,8 @@ $(document).ready(function() {
                 $(`.comment-button[data-post-id='${post.id}']`).on('click', commentHandler);
                 $(`.comment-form[data-post-id='${post.id}']`).on('submit', createComment);
                 $(`.post[data-post-id='${post.id}'] img.post-image`).on('click', toggleImage);
+                $(`.edit-post-button[data-post-id='${post.id}']`).on('click', toggleEditPost);
+                $(`.delete-post-button[data-post-id='${post.id}']`).on('click', toggleDeletePost);
                 // enable all inputs
                 $('.post-form input').attr('disabled', false);
                 $('.post-form textarea').attr('disabled', false);
@@ -446,6 +453,10 @@ $(document).ready(function() {
                                 <span class="dislikes-count">0</span>
                             </div>
                         </div>
+                        <div class="author-options">
+                            <i class="fas fa-edit edit-comment-button" data-comment-id="${commentId}" aria-hidden="true"></i>
+                            <i class="fas fa-trash-alt delete-comment-button" data-comment-id="${commentId}" aria-hidden="true"></i>
+                        </div>
                     </div>
                 `;
                 let commentsContainer = $(`div[data-for-post=${postId}]`);
@@ -465,6 +476,8 @@ $(document).ready(function() {
                 $(this).find('textarea').val('');
                 $('.like-button').on('click', likeHandler);
                 $('.dislike-button').on('click', dislikeHandler);
+                $('.edit-comment-button').on('click', toggleEditComment);
+                $('.delete-comment-button').on('click', toggleDeleteComment);
             }
         });
     };
