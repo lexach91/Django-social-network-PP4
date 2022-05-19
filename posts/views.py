@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from .models import Post, Comment
 from .forms import PostForm
 from feed.models import PostEvent, CommentEvent, LikeDislikeEvent
+import cloudinary
+import cloudinary.uploader
 
 
 # Create your views here.
@@ -256,6 +258,11 @@ class EditPostAjaxView(View):
         del request_post['post_id']        
         form = PostForm(request_post, request.FILES, instance=post)
         if form.is_valid():
+            # check if post had an image before and if form doesn't have an image
+            # delete the image from storage
+            if post.image and not request.FILES.get('image'):
+                cloudinary.uploader.destroy(post.image.public_id, invalidate=True)
+                post.image = None
             form.save()
             image = post.image
             if image:
