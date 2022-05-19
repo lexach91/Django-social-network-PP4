@@ -257,7 +257,16 @@ class EditPostAjaxView(View):
         form = PostForm(request_post, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return JsonResponse({'success': True})          
+            image = post.image
+            if image:
+                image_url = image.url
+                post.has_media = True
+            else:
+                image_url = None
+                post.has_media = False
+            post.edited = True
+            post.save()
+            return JsonResponse({'success': True, 'image': image_url})        
         return JsonResponse({'success': False, 'errors': form.errors})
     
 class EditCommentAjaxView(View):
