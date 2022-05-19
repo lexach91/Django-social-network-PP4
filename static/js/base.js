@@ -47,12 +47,23 @@ $(document).ready(function() {
     </form>
     `;
 
+    const editCommentFormHtml = `
+    <form class="comment-form edit" data-comment-id="">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+        <textarea name="content" cols="40" rows="3" maxlength="500" required="" id="id_content"></textarea>
+        <button class="cancel-edit-button" type="button">Cancel</button>
+        <button type="submit" class="comment-edit-submit save-form">Save</button>
+    </form>`;
+
+
     const createPostUrl = protocol + '//' + host + '/posts/create-post/';
     const editPostUrl = protocol + '//' + host + '/posts/edit-post/';
     const deletePostUrl = protocol + '//' + host + '/posts/delete-post/';
     const likePostUrl = protocol + '//' + host + '/posts/like-post/';
     const dislikePostUrl = protocol + '//' + host + '/posts/dislike-post/';
     const createCommentUrl = protocol + '//' + host + '/posts/create-comment/';
+    const editCommentUrl = protocol + '//' + host + '/posts/edit-comment/';
+    const deleteCommentUrl = protocol + '//' + host + '/posts/delete-comment/';
     const likeCommentUrl = protocol + '//' + host + '/posts/like-comment/';
     const dislikeCommentUrl = protocol + '//' + host + '/posts/dislike-comment/';
     const editAvatarUrl = protocol + '//' + host + '/profiles/my_profile/edit_avatar/';
@@ -232,6 +243,10 @@ $(document).ready(function() {
                 $(`.dislike-button[data-post-id='${postId}']`).on('click', dislikeHandler);
                 $(`.comment-button[data-post-id='${postId}']`).on('click', commentHandler);
                 $('.edit-post-button[data-post-id=' + postId + ']').on('click', toggleEditPost);
+                $('.delete-post-button[data-post-id=' + postId + ']').on('click', toggleDeletePost);
+                // remove .cover div and restore scroll for the page
+                $('.cover').remove();
+                $('body').css('overflow', 'auto');
             },
             error: (data) => {
                 console.log(data);
@@ -277,8 +292,8 @@ $(document).ready(function() {
             url: deletePostUrl,
             type: 'POST',
             data: {
-                post_id: postId,
-                csrfmiddlewaretoken: csrfToken
+                'post_id': postId,
+                'csrfmiddlewaretoken': csrfToken
             },
             success: (data) => {
                 console.log(data);
@@ -305,9 +320,9 @@ $(document).ready(function() {
             url: url,
             type: 'POST',
             data: {
-                post_id: postId,
-                comment_id: commentId,
-                csrfmiddlewaretoken: csrfToken
+                'post_id': postId,
+                'comment_id': commentId,
+                'csrfmiddlewaretoken': csrfToken
             },
             success: (data) => {
                 let likesCount = data.likes_count;
@@ -344,9 +359,9 @@ $(document).ready(function() {
             url: url,
             type: 'POST',
             data: {
-                post_id: postId,
-                comment_id: commentId,
-                csrfmiddlewaretoken: csrfToken
+                'post_id': postId,
+                'comment_id': commentId,
+                'csrfmiddlewaretoken': csrfToken
             },
             success: (data) => {
                 let likesCount = data.likes_count;
@@ -387,9 +402,9 @@ $(document).ready(function() {
             url: createCommentUrl,
             type: 'POST',
             data: {
-                post_id: postId,
-                comment_content: commentContent,
-                csrfmiddlewaretoken: csrfToken
+                'post_id': postId,
+                'comment_content': commentContent,
+                'csrfmiddlewaretoken': csrfToken
             },
             success: (data) => {
                 let comment = data.comment;
@@ -450,6 +465,92 @@ $(document).ready(function() {
                 $(this).find('textarea').val('');
                 $('.like-button').on('click', likeHandler);
                 $('.dislike-button').on('click', dislikeHandler);
+            }
+        });
+    };
+
+    const editComment = (e, commentBackup) => {
+        e.preventDefault();
+        const form = $(e.target);
+        const commentId = $(commentBackup).data('comment-id');
+        const data = {
+            'comment_id': commentId,
+            'comment_content': form.find('textarea').val(),
+            'csrfmiddlewaretoken': csrfToken
+        };
+        console.log(data);
+        let new_content = $(form).find('textarea').val();
+        // data.append('comment_id', commentId);
+        // make all inputs disabled
+        form.find('textarea').prop('disabled', true);
+        form.find('button').prop('disabled', true);
+        // add loading icon
+        $(e.target).find('.save-form').append(`<i class="fas fa-spinner fa-spin"></i>`);
+        $.ajax({
+            url: editCommentUrl,
+            type: 'POST',
+            data: data,
+            success: (data) => {
+                commentBackup.find('.comment-content').html(new_content);
+                let editedAt = new Date().toLocaleString();
+                commentBackup.find('.comment-time').find('em').text(`Edited at ${editedAt}`);
+                $(e.target).replaceWith(commentBackup);
+                $('.like-button[data-comment-id=' + commentId + ']').on('click', likeHandler);
+                $('.dislike-button[data-comment-id=' + commentId + ']').on('click', dislikeHandler);
+                $('.edit-comment-button[data-comment-id=' + commentId + ']').on('click', toggleEditComment);
+                $('.delete-comment-button[data-comment-id=' + commentId + ']').on('click', toggleDeleteComment);
+                // remove .cover div and restore scroll
+                $('.cover').remove();
+                $('body').css('overflow', 'auto');
+            },
+            error: (data) => {
+                console.log(data);
+                $(e.target).find('.save-form').find('i').remove();
+                form.find('textarea').prop('disabled', false);
+                form.find('button').prop('disabled', false);
+            }
+        });
+    };
+
+    const deleteComment = (e) => {
+        e.preventDefault();
+        let commentId = $(e.target).data('comment-id');
+        let comment = $('.comment[data-comment-id=' + commentId + ']');
+        let spinner = `
+            <div class="spinner-container">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        `;
+        comment.append(spinner);
+        comment.css('position', 'relative');
+        $('.spinner-container').css({
+            'position': 'absolute',
+            'top': '0',
+            'left': '0',
+            'width': '100%',
+            'height': '100%',
+            'z-index': '100',
+            'background-color': 'rgba(0, 0, 0, 0.5)',
+            'display': 'flex',
+            'justify-content': 'center',
+            'align-items': 'center'
+        });
+        $.ajax({
+            url: deleteCommentUrl,
+            type: 'POST',
+            data: {
+                'comment_id': commentId,
+                'csrfmiddlewaretoken': csrfToken
+            },
+            success: (data) => {
+                comment.remove();
+                let postId = data.post_id;
+                let postElement = $(`.post[data-post-id=${postId}]`);
+                let commentCount = data.comment_count;
+                postElement.find('.comments-count').text(commentCount);
+            },
+            error: (data) => {
+                console.log(data);
             }
         });
     };
@@ -556,6 +657,12 @@ $(document).ready(function() {
             previewDiv.appendChild(closeButton[0]);
             let labelBackup = $('.post-form.edit[data-post-id="' + postId + '"]').find('label[for=post_file]');
             $('.post-form.edit[data-post-id="' + postId + '"]').find('label[for=post_file]').replaceWith(previewDiv);
+            
+
+
+
+
+
             // add event handler to the close button
             closeButton.on('click', () => {
                 // remove the preview image
@@ -570,16 +677,117 @@ $(document).ready(function() {
             console.log('no image found')
             $('.post-form.edit[data-post-id="' + postId + '"]').find('input[type=file]').on('change', imagePreview);
         }
+        // need to create a div that will cover all the page except the edit post form
+        let coverDiv = document.createElement('div');
+        coverDiv.classList.add('cover');
+        coverDiv.style.position = 'fixed';
+        coverDiv.style.top = '0';
+        coverDiv.style.left = '0';
+        coverDiv.style.width = '100%';
+        coverDiv.style.height = '100%';
+        coverDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        coverDiv.style.zIndex = '10';
+        
+        // add the cover div to the body
+        $('body').append(coverDiv);
+        // scroll the page so that the edit post form is in the middle of the page
+        $(document).scrollTop($('.post-form.edit[data-post-id="' + postId + '"]').offset().top - $(window).height() / 2);
+        // make form z-index higher than the cover div
+        $('.post-form.edit[data-post-id="' + postId + '"]').css('z-index', '11');
+        // prevent the page from scrolling
+        $('body').css('overflow', 'hidden');
+        
+
         // need to add event handler to the cancel button
         $('.post-form.edit[data-post-id="' + postId + '"]').find('.cancel-edit-button').on('click', () => {
             $('.post-form.edit[data-post-id="' + postId + '"]').replaceWith(postBackup);
             $('.edit-post-button[data-post-id="' + postId + '"]').on('click', toggleEditPost);
+            // remove the cover div
+            $('.cover').remove();
+            // allow the page to scroll
+            $('body').css('overflow', 'auto');
+            
         });
 
         // need to add event handler to form submit
         $('.post-form.edit[data-post-id="' + postId + '"]').on('submit', (e) => {
             editPost(e, postBackup);
         });
+    };
+
+    const toggleDeletePost = (e) => {
+        // need to ask for confirmation with popup
+        let confirmDelete = confirm('Are you sure you want to delete this post?');
+        if (confirmDelete) {
+            deletePost(e);
+        } else {
+            // do nothing
+            console.log('cancelled');
+        }
+    };
+
+    const toggleEditComment = (e) => {
+        e.preventDefault();
+        let commentId = $(e.target).attr('data-comment-id');
+        let commentBackup = $('.comment[data-comment-id="' + commentId + '"]');
+        let formElement = editCommentFormHtml.replace('data-comment-id=""', 'data-comment-id="' + commentId + '"');
+        $('.comment[data-comment-id="' + commentId + '"]').replaceWith(formElement);
+        // insert the .comment-text from the backup comment into the edit comment form textarea
+        $('.comment-form.edit[data-comment-id="' + commentId + '"]').find('textarea').val(commentBackup.find('.comment-content').text().trim());
+        
+        // need to create a div that will cover all the page except the edit post form
+        let coverDiv = document.createElement('div');
+        coverDiv.classList.add('cover');
+        coverDiv.style.position = 'fixed';
+        coverDiv.style.top = '0';
+        coverDiv.style.left = '0';
+        coverDiv.style.width = '100%';
+        coverDiv.style.height = '100%';
+        coverDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        coverDiv.style.zIndex = '10';
+        
+        // add the cover div to the body
+        $('body').append(coverDiv);
+        // scroll the page so that the edit comment form is in the middle of the page
+        $(document).scrollTop($('.comment-form.edit[data-comment-id="' + commentId + '"]').offset().top - $(window).height() / 2);
+        // make form z-index higher than the cover div
+        $('.comment-form.edit[data-comment-id="' + commentId + '"]').css('z-index', '11');
+        // prevent the page from scrolling
+        $('body').css('overflow', 'hidden');
+        
+        
+        
+        
+        
+        // add event handler to the cancel button
+        $('.comment-form.edit[data-comment-id="' + commentId + '"]').find('.cancel-edit-button').on('click', () => {
+            $('.comment-form.edit[data-comment-id="' + commentId + '"]').replaceWith(commentBackup);
+            $('.edit-comment-button[data-comment-id="' + commentId + '"]').on('click', toggleEditComment);
+            $('.delete-comment-button[data-comment-id="' + commentId + '"]').on('click', toggleDeleteComment);
+            // recover event handler for like and dislike buttons
+            $('.like-button[data-comment-id="' + commentId + '"]').on('click', likeHandler);
+            $('.dislike-button[data-comment-id="' + commentId + '"]').on('click', dislikeHandler);
+            // remove the cover div
+            $('.cover').remove();
+            // allow the page to scroll
+            $('body').css('overflow', 'auto');
+        });
+        // need to add event handler to form submit
+        $('.comment-form.edit[data-comment-id="' + commentId + '"]').on('submit', (e) => {
+            editComment(e, commentBackup);
+        });
+
+    };
+
+    const toggleDeleteComment = (e) => {
+        // need to ask for confirmation with popup
+        let confirmDelete = confirm('Are you sure you want to delete this comment?');
+        if (confirmDelete) {
+            deleteComment(e);
+        } else {
+            // do nothing
+            console.log('cancelled');
+        }
     };
 
     $('#id_image').on('change', imagePreview);
@@ -658,20 +866,9 @@ $(document).ready(function() {
     $('.comment-form').on('submit', createComment);
 
     $('.edit-post-button').on('click', toggleEditPost);
-    $('.delete-post-button').on('click', (e) => {
-        // need to ask for confirmation with popup
-        let postId = $(e.target).attr('data-post-id');
-        let post = $('.post[data-post-id="' + postId + '"]');
-        let postBackup = post.clone();
-        let confirmDelete = confirm('Are you sure you want to delete this post?');
-        if (confirmDelete) {
-            deletePost(e);
-        } else {
-            // do nothing
-            console.log('cancelled');
-        }
-    });
-
+    $('.delete-post-button').on('click', toggleDeletePost);
+    $('.edit-comment-button').on('click', toggleEditComment);
+    $('.delete-comment-button').on('click', toggleDeleteComment);
     // -------- friend requests functions -------- 
 
     const sendFriendRequestUrl = protocol + '//' + host + '/friends/send-friend-request/';
