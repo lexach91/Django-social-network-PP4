@@ -3,225 +3,55 @@
 {% block content %}
 
     <div class="feed-container">
-        {% for event in events %}
-          <div class="feed-event">
-            {% if event.type == "post" %}
-              <div class="feed-event-header">
-                {% if event.post.author == request.user %}
-                    {% if event.post.profile %}
-                        {% if event.post.profile == request.user.profile %}
-                            You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                                posted 
-                            </a> on your profile
-                        {% else %}
-                            You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                                posted 
-                            </a> on {{ event.post.profile }}'s profile
-                        {% endif %}
-                    {% else %}
-                        You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                            posted 
-                        </a> in
-                        <a href="{% url 'community' event.post.community.slug %}" class="feed-event-post-link">
-                          {{ event.post.community }}
-                        </a>
-                    {% endif %}
-                {% else %}
-                  {% if event.post.profile %}
-                      {% if event.post.profile == request.user.profile %}
-                          {{ event.post.author.profile }} 
-                          <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                              posted 
-                          </a>
-                          on your profile
-                      {% else %}
-                          {{ event.post.author.profile }} <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                              posted 
-                          </a> on {{ event.post.profile }}'s profile
-                      {% endif %}
-                  {% else %}
-                      {{ event.post.author.profile }} <a href="{{ event.post.get_url}}" class="feed-event-post-link">
-                          posted 
-                      </a> 
-                      in 
-                      <a href="{% url 'community' event.post.community.slug %}" class="feed-event-post-link">
-                        {{ event.post.community }}
-                      </a>
-                  {% endif %}
-              {% endif %}
-            </div>
-
-            <div class="post" data-post-id="{{ event.post.id }}">
-                <div class="post-info">
-                    <div class="post-author">
-                        <div class="feed-avatar-container">
-                            <img src="{{ event.post.author.profile.avatar_url }}" alt="avatar" class="post-avatar">
-                        </div>
-                        <div class="post-author-name">
-                            <strong>
-                                <a href="{% url 'user_profile' event.post.author.username %}" class="post-author">
-                                    {{ event.post.author.profile }}
-                                    {% if event.post.author.profile.online %}
-                                        <span class="online-circle" title="Online"></span>
-                                    {% endif %}
+        {% if events %}
+            {% for event in events %}
+                <div class="feed-event">
+                    {% if event.type == "post" %}
+                    <div class="feed-event-header">
+                        {% if event.post.author == request.user %}
+                            {% if event.post.profile %}
+                                {% if event.post.profile == request.user.profile %}
+                                    You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                        posted 
+                                    </a> on your profile
+                                {% else %}
+                                    You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                        posted 
+                                    </a> on {{ event.post.profile }}'s profile
+                                {% endif %}
+                            {% else %}
+                                You <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                    posted 
+                                </a> in
+                                <a href="{% url 'community' event.post.community.slug %}" class="feed-event-post-link">
+                                {{ event.post.community }}
                                 </a>
-                            </strong>
-                        </div>
-                    </div>
-                    <div class="post-time">
-                        {% if event.post.edited %}
-                            <em>Edited at
-                                {{ event.post.updated_at|date:"d/m/Y H:i" }}
-                            </em>
-                        {% else %} 
-                            <em>Posted at
-                                {{ event.post.created_at|date:"d/m/Y H:i" }}
-                            </em>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="post-content">
-                    {% if event.post.has_media %}
-                    <div class="post-media">
-                        {% if event.post.image %}
-                            <img src="{{ event.post.image.url }}" alt="post image" class="post-image">
-                        {% elif event.post.video %}
-                            <video controls class="post-video">
-                                <source src="{{ event.post.video.url }}" type="video/mp4">
-                            </video>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                    <div class="post-text">
-                        {{ event.post.content|safe|linebreaksbr }}
-                    </div>
-                </div>
-                <div class="likes-dislikes">
-                    <div class="likes">
-                        {% if request.user in event.post.likes.all %}
-                            <i class="fas fa-heart like-button" data-post-id="{{ event.post.id }}"></i>
-                        {% else %}
-                            <i class="far fa-heart like-button" data-post-id="{{ event.post.id }}"></i>
-                        {% endif %}
-                        <span class="likes-count">{{ event.post.get_likes }}</span>
-                    </div>
-                    <div class="dislikes">
-                        {% if request.user in event.post.dislikes.all %}
-                            <i class="fas fa-times-circle dislike-button" data-post-id="{{ event.post.id }}"></i>
-                        {% else %}
-                            <i class="far fa-times-circle dislike-button" data-post-id="{{ event.post.id }}"></i>
-                        {% endif %}
-                        <span class="dislikes-count">{{ event.post.get_dislikes }}</span>
-                    </div>
-                    <div class="comments">
-                        <a href="{{ event.post.get_url}}">
-                            <i class="far fa-comment comment-button"></i>
-                        </a>
-                        <span class="comments-count">{{ event.post.comments_count }}</span>
-                    </div>
-                </div>
-            </div>
-            
-
-            {% elif event.type == "comment" %}
-                <div class="feed-event-header">
-                  {% if event.initiator == request.user %}
-                      {% if event.post.author == request.user %}
-                          You commented on your <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                      {% else %}
-                          You commented on {{ event.post.author.profile }}'s <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                      {% endif %}
-                  {% else %}
-                      {% if event.post.author == request.user %}
-                          {{ event.initiator.profile }} commented on your <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                      {% else %}
-                          {{ event.initiator.profile }} commented on {{ event.post.author.profile }}'s <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                      {% endif %}
-                  {% endif %}
-                </div>
-                <div class="comment" data-comment-id="{{ event.comment.id }}">
-                    <div class="comment-info">
-                        <div class="comment-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.comment.author.profile.avatar_url }}" alt="avatar" class="comment-avatar">
-                          </div>
-                            <div class="comment-author-name">
-                                <strong>
-                                    <a href="{% url 'user_profile' event.comment.author.username %}" class="post-author">
-                                        {{ event.comment.author.profile }}
-                                        {% if event.comment.author.profile.online %}
-                                            <span class="online-circle" title="Online"></span>
-                                        {% endif %}
-                                    </a>
-                                </strong>
-                            </div>
-                        </div>
-                        <div class="comment-time">
-                            <em>
-                                {{ event.comment.created_at|date:"d/m/Y H:i" }}
-                            </em>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        {{ event.comment.content }}
-                    </div>
-                    <div class="likes-dislikes">
-                        <div class="likes">
-                            {% if request.user in event.comment.likes.all %}
-                                <i class="fas fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
-                            {% else %}
-                                <i class="far fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
                             {% endif %}
-                            <span class="likes-count">{{ event.comment.get_likes }}</span>
-                        </div>
-                        <div class="dislikes">
-                            {% if request.user in event.comment.dislikes.all %}
-                                <i class="fas fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                        {% else %}
+                        {% if event.post.profile %}
+                            {% if event.post.profile == request.user.profile %}
+                                {{ event.post.author.profile }} 
+                                <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                    posted 
+                                </a>
+                                on your profile
                             {% else %}
-                                <i class="far fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                {{ event.post.author.profile }} <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                    posted 
+                                </a> on {{ event.post.profile }}'s profile
                             {% endif %}
-                            <span class="dislikes-count">{{ event.comment.get_dislikes }}</span>
-                        </div>
+                        {% else %}
+                            {{ event.post.author.profile }} <a href="{{ event.post.get_url}}" class="feed-event-post-link">
+                                posted 
+                            </a> 
+                            in 
+                            <a href="{% url 'community' event.post.community.slug %}" class="feed-event-post-link">
+                                {{ event.post.community }}
+                            </a>
+                        {% endif %}
+                    {% endif %}
                     </div>
-                </div>
 
-                  
-            {% elif event.type == "like_dislike" %}
-
-                {% if event.initiator == request.user %}
-                  <div class="feed-event-header">
-                    {% if event.post %}
-                        {% if event.like %}
-                            You liked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                        {% else %}
-                            You disliked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                        {% endif %}
-                    {% else %}
-                        {% if event.like %}
-                            You liked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
-                        {% else %}
-                            You disliked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
-                        {% endif %}
-                    {% endif %}
-                  </div>
-                {% else %}
-                  <div class="feed-event-header">
-                    {% if event.post %}
-                        {% if event.like %}
-                            {{ event.initiator.profile }} liked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                        {% else %}
-                            {{ event.initiator.profile }} disliked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
-                        {% endif %}
-                    {% else %}
-                        {% if event.like %}
-                            {{ event.initiator.profile }} liked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
-                        {% else %}
-                            {{ event.initiator.profile }} disliked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
-                        {% endif %}
-                    {% endif %}
-                  </div>
-                {% endif %}
-                {% if event.post %}
                     <div class="post" data-post-id="{{ event.post.id }}">
                         <div class="post-info">
                             <div class="post-author">
@@ -230,8 +60,11 @@
                                 </div>
                                 <div class="post-author-name">
                                     <strong>
-                                        <a href="{% url 'user_profile' event.post.author.username %}">
+                                        <a href="{% url 'user_profile' event.post.author.username %}" class="post-author">
                                             {{ event.post.author.profile }}
+                                            {% if event.post.author.profile.online %}
+                                                <span class="online-circle" title="Online"></span>
+                                            {% endif %}
                                         </a>
                                     </strong>
                                 </div>
@@ -289,319 +122,494 @@
                             </div>
                         </div>
                     </div>
-                {% else %}
-                    <div class="comment" data-comment-id="{{ event.comment.id }}">
-                        <div class="comment-info">
-                            <div class="comment-author">
-                              <div class="feed-avatar-container">
-                                <img src="{{ event.comment.author.profile.avatar_url }}" alt="avatar" class="comment-avatar">
-                              </div>
-                                <div class="comment-author-name">
-                                    <strong>
-                                        <a href="{% url 'user_profile' event.comment.author.username %}" class="post-author">
-                                            {{ event.comment.author.profile }}
-                                            {% if event.comment.author.profile.online %}
-                                                <span class="online-circle" title="Online"></span>
-                                            {% endif %}
-                                        </a>
-                                    </strong>
+                    
+
+                    {% elif event.type == "comment" %}
+                        <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            {% if event.post.author == request.user %}
+                                You commented on your <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                            {% else %}
+                                You commented on {{ event.post.author.profile }}'s <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                            {% endif %}
+                        {% else %}
+                            {% if event.post.author == request.user %}
+                                {{ event.initiator.profile }} commented on your <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                            {% else %}
+                                {{ event.initiator.profile }} commented on {{ event.post.author.profile }}'s <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                        <div class="comment" data-comment-id="{{ event.comment.id }}">
+                            <div class="comment-info">
+                                <div class="comment-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.comment.author.profile.avatar_url }}" alt="avatar" class="comment-avatar">
+                                </div>
+                                    <div class="comment-author-name">
+                                        <strong>
+                                            <a href="{% url 'user_profile' event.comment.author.username %}" class="post-author">
+                                                {{ event.comment.author.profile }}
+                                                {% if event.comment.author.profile.online %}
+                                                    <span class="online-circle" title="Online"></span>
+                                                {% endif %}
+                                            </a>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="comment-time">
+                                    <em>
+                                        {{ event.comment.created_at|date:"d/m/Y H:i" }}
+                                    </em>
                                 </div>
                             </div>
-                            <div class="comment-time">
-                                <em>
-                                    {{ event.comment.created_at|date:"d/m/Y H:i" }}
-                                </em>
+                            <div class="comment-content">
+                                {{ event.comment.content }}
+                            </div>
+                            <div class="likes-dislikes">
+                                <div class="likes">
+                                    {% if request.user in event.comment.likes.all %}
+                                        <i class="fas fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    {% else %}
+                                        <i class="far fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    {% endif %}
+                                    <span class="likes-count">{{ event.comment.get_likes }}</span>
+                                </div>
+                                <div class="dislikes">
+                                    {% if request.user in event.comment.dislikes.all %}
+                                        <i class="fas fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    {% else %}
+                                        <i class="far fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    {% endif %}
+                                    <span class="dislikes-count">{{ event.comment.get_dislikes }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="comment-content">
-                            {{ event.comment.content }}
-                        </div>
-                        <div class="likes-dislikes">
-                            <div class="likes">
-                                {% if request.user in event.comment.likes.all %}
-                                    <i class="fas fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+
+                        
+                    {% elif event.type == "like_dislike" %}
+
+                        {% if event.initiator == request.user %}
+                        <div class="feed-event-header">
+                            {% if event.post %}
+                                {% if event.like %}
+                                    You liked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
                                 {% else %}
-                                    <i class="far fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    You disliked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
                                 {% endif %}
-                                <span class="likes-count">{{ event.comment.get_likes }}</span>
-                            </div>
-                            <div class="dislikes">
-                                {% if request.user in event.comment.dislikes.all %}
-                                    <i class="fas fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                            {% else %}
+                                {% if event.like %}
+                                    You liked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
                                 {% else %}
-                                    <i class="far fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                    You disliked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
                                 {% endif %}
-                                <span class="dislikes-count">{{ event.comment.get_dislikes }}</span>
-                            </div>
+                            {% endif %}
                         </div>
-                    </div>
-                {% endif %}
-
-
-
-            {% elif event.type == "friend_request" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-friend-request">
-                        You sent a friend request to 
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                            <div class="feed-avatar-container">
-                              <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                        {% else %}
+                        <div class="feed-event-header">
+                            {% if event.post %}
+                                {% if event.like %}
+                                    {{ event.initiator.profile }} liked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                                {% else %}
+                                    {{ event.initiator.profile }} disliked a <a href="{{ event.post.get_url}}" class="feed-event-post-link">post</a>
+                                {% endif %}
+                            {% else %}
+                                {% if event.like %}
+                                    {{ event.initiator.profile }} liked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
+                                {% else %}
+                                    {{ event.initiator.profile }} disliked a <a href="{{ event.comment.get_url}}" class="feed-event-post-link">comment</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% if event.post %}
+                            <div class="post" data-post-id="{{ event.post.id }}">
+                                <div class="post-info">
+                                    <div class="post-author">
+                                        <div class="feed-avatar-container">
+                                            <img src="{{ event.post.author.profile.avatar_url }}" alt="avatar" class="post-avatar">
+                                        </div>
+                                        <div class="post-author-name">
+                                            <strong>
+                                                <a href="{% url 'user_profile' event.post.author.username %}">
+                                                    {{ event.post.author.profile }}
+                                                </a>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="post-time">
+                                        {% if event.post.edited %}
+                                            <em>Edited at
+                                                {{ event.post.updated_at|date:"d/m/Y H:i" }}
+                                            </em>
+                                        {% else %} 
+                                            <em>Posted at
+                                                {{ event.post.created_at|date:"d/m/Y H:i" }}
+                                            </em>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    {% if event.post.has_media %}
+                                    <div class="post-media">
+                                        {% if event.post.image %}
+                                            <img src="{{ event.post.image.url }}" alt="post image" class="post-image">
+                                        {% elif event.post.video %}
+                                            <video controls class="post-video">
+                                                <source src="{{ event.post.video.url }}" type="video/mp4">
+                                            </video>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                    <div class="post-text">
+                                        {{ event.post.content|safe|linebreaksbr }}
+                                    </div>
+                                </div>
+                                <div class="likes-dislikes">
+                                    <div class="likes">
+                                        {% if request.user in event.post.likes.all %}
+                                            <i class="fas fa-heart like-button" data-post-id="{{ event.post.id }}"></i>
+                                        {% else %}
+                                            <i class="far fa-heart like-button" data-post-id="{{ event.post.id }}"></i>
+                                        {% endif %}
+                                        <span class="likes-count">{{ event.post.get_likes }}</span>
+                                    </div>
+                                    <div class="dislikes">
+                                        {% if request.user in event.post.dislikes.all %}
+                                            <i class="fas fa-times-circle dislike-button" data-post-id="{{ event.post.id }}"></i>
+                                        {% else %}
+                                            <i class="far fa-times-circle dislike-button" data-post-id="{{ event.post.id }}"></i>
+                                        {% endif %}
+                                        <span class="dislikes-count">{{ event.post.get_dislikes }}</span>
+                                    </div>
+                                    <div class="comments">
+                                        <a href="{{ event.post.get_url}}">
+                                            <i class="far fa-comment comment-button"></i>
+                                        </a>
+                                        <span class="comments-count">{{ event.post.comments_count }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            {{ event.target.profile }}
-                        </a>
-                    </div>
-                {% elif event.target == request.user %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                        {% else %}
+                            <div class="comment" data-comment-id="{{ event.comment.id }}">
+                                <div class="comment-info">
+                                    <div class="comment-author">
+                                    <div class="feed-avatar-container">
+                                        <img src="{{ event.comment.author.profile.avatar_url }}" alt="avatar" class="comment-avatar">
+                                    </div>
+                                        <div class="comment-author-name">
+                                            <strong>
+                                                <a href="{% url 'user_profile' event.comment.author.username %}" class="post-author">
+                                                    {{ event.comment.author.profile }}
+                                                    {% if event.comment.author.profile.online %}
+                                                        <span class="online-circle" title="Online"></span>
+                                                    {% endif %}
+                                                </a>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div class="comment-time">
+                                        <em>
+                                            {{ event.comment.created_at|date:"d/m/Y H:i" }}
+                                        </em>
+                                    </div>
+                                </div>
+                                <div class="comment-content">
+                                    {{ event.comment.content }}
+                                </div>
+                                <div class="likes-dislikes">
+                                    <div class="likes">
+                                        {% if request.user in event.comment.likes.all %}
+                                            <i class="fas fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+                                        {% else %}
+                                            <i class="far fa-heart like-button" data-comment-id="{{ event.comment.id }}"></i>
+                                        {% endif %}
+                                        <span class="likes-count">{{ event.comment.get_likes }}</span>
+                                    </div>
+                                    <div class="dislikes">
+                                        {% if request.user in event.comment.dislikes.all %}
+                                            <i class="fas fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                        {% else %}
+                                            <i class="far fa-times-circle dislike-button" data-comment-id="{{ event.comment.id }}"></i>
+                                        {% endif %}
+                                        <span class="dislikes-count">{{ event.comment.get_dislikes }}</span>
+                                    </div>
+                                </div>
                             </div>
-                            {{ event.initiator.profile }}
+                        {% endif %}
 
-                        </a>
-                        sent you a friend request
-                    </div>
-                {% else %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                            <div class="feed-avatar-container">
-                              <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+
+
+                    {% elif event.type == "friend_request" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-friend-request">
+                                You sent a friend request to 
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                    <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                    </div>
+                                    {{ event.target.profile }}
+                                </a>
                             </div>
-                            {{ event.initiator.profile }}
-                        </a>
-                        sent a friend request to 
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                        {% elif event.target == request.user %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                    </div>
+                                    {{ event.initiator.profile }}
+
+                                </a>
+                                sent you a friend request
                             </div>
-                            {{ event.target.profile }}
-                        </a>
-                    </div>
-                {% endif %}
+                        {% else %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                    <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                    </div>
+                                    {{ event.initiator.profile }}
+                                </a>
+                                sent a friend request to 
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                    </div>
+                                    {{ event.target.profile }}
+                                </a>
+                            </div>
+                        {% endif %}
 
-              </div>
-            {% elif event.type == "friend_request_declined" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-friend-request">
-                        You declined a friend request from 
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
                     </div>
-                {% elif event.target == request.user %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        declined your friend request
+                    {% elif event.type == "friend_request_declined" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-friend-request">
+                                You declined a friend request from 
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                            </div>
+                        {% elif event.target == request.user %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                declined your friend request
+                            </div>
+                        {% else %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                declined a friend request from 
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        declined a friend request from 
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
+                    {% elif event.type == "friend_added" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user or event.target == request.user %}
+                            <div class="feed-friend-request">
+                                You and
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                                are friends now
+                            </div>
+                        
+                        {% else %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                and
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                                are friends now
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-              </div>
-            {% elif event.type == "friend_added" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user or event.target == request.user %}
-                    <div class="feed-friend-request">
-                        You and
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
-                        are friends now
-                    </div>
-                
-                {% else %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        and
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
-                        are friends now
-                    </div>
-                {% endif %}
-              </div>
 
-            {% elif event.type == "friend_removed" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user or event.target == request.user %}
-                    <div class="feed-friend-request">
-                        You and
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
-                        are not friends anymore
+                    {% elif event.type == "friend_removed" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user or event.target == request.user %}
+                            <div class="feed-friend-request">
+                                You and
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                                are not friends anymore
+                            </div>
+                        
+                        {% else %}
+                            <div class="feed-friend-request">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                and
+                                <a href="{% url 'user_profile' event.target.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.target.profile }}
+                                </a>
+                                are not friends anymore
+                            </div>
+                        {% endif %}
                     </div>
-                
-                {% else %}
-                    <div class="feed-friend-request">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        and
-                        <a href="{% url 'user_profile' event.target.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.target.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.target.profile }}
-                        </a>
-                        are not friends anymore
-                    </div>
-                {% endif %}
-              </div>
 
-            {% elif event.type == "community_join" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-community">
-                        You joined the community 
-                        <a href="{% url 'community' event.community.slug %}">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
+                    {% elif event.type == "community_join" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-community">
+                                You joined the community 
+                                <a href="{% url 'community' event.community.slug %}">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="feed-community">
+                                <a href="{% url 'user_profile' event.initiator.username %}">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                joined the community 
+                                <a href="{% url 'community' event.community.slug %}">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="feed-community">
-                        <a href="{% url 'user_profile' event.initiator.username %}">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        joined the community 
-                        <a href="{% url 'community' event.community.slug %}">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
-                    </div>
-                {% endif %}
-              </div>
 
-            {% elif event.type == "community_leave" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-community">
-                        You left the community 
-                        <a href="{% url 'community' event.community.slug %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
+                    {% elif event.type == "community_leave" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-community">
+                                You left the community 
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="feed-community">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                left the community 
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="feed-community">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        left the community 
-                        <a href="{% url 'community' event.community.slug %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
+                    {% elif event.type == "community_create" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-community">
+                                You created the community 
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="feed-community">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                created the community 
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
+                                </div>
+                                {{ event.community.name }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-              </div>
-            {% elif event.type == "community_create" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-community">
-                        You created the community 
-                        <a href="{% url 'community' event.community.slug %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
+                    {% elif event.type == "community_delete" %}
+                    <div class="feed-event-header">
+                        {% if event.initiator == request.user %}
+                            <div class="feed-community">
+                                You deleted one of communities you created
+                            </div>
+                        {% else %}
+                            <div class="feed-community">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
+                                <div class="feed-avatar-container">
+                                    <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
+                                </div>
+                                {{ event.initiator.profile }}
+                                </a>
+                                deleted one of communities their created
+                            </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="feed-community">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        created the community 
-                        <a href="{% url 'community' event.community.slug %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
-                          </div>
-                          {{ event.community.name }}
-                        </a>
-                    </div>
-                {% endif %}
-              </div>
-            {% elif event.type == "community_delete" %}
-              <div class="feed-event-header">
-                {% if event.initiator == request.user %}
-                    <div class="feed-community">
-                        You deleted one of communities you created
-                    </div>
-                {% else %}
-                    <div class="feed-community">
-                        <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
-                          <div class="feed-avatar-container">
-                            <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
-                          </div>
-                          {{ event.initiator.profile }}
-                        </a>
-                        deleted one of communities their created
-                    </div>
-                {% endif %}
-              </div>
 
-            {% endif %}
-        </div>
-        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>
+                <h3>Your feed is empty yet...</h3>
+                <p>You may want to add friends or join communities first.</p>
+                <p>Go to <a href="{% url 'search' %}">Search</a> page and start connecting.</p>
+            </div>
+        {% endif %}
     </div>
 
     {% csrf_token %}
