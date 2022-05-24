@@ -9,6 +9,7 @@
         </div>
         <div class="friends-container">
             <div id="friends" class="profiles-list">
+                {% if friends %}
                 {% for friend in friends %}
                     <a href="{% url 'user_profile' friend.user.username %}" class="profile-list-card">
                             <div class="profile-list-avatar">
@@ -24,9 +25,16 @@
                             </div>
                     </a>
                 {% endfor %}
+                {% else %}
+                    <div class="no-friends">
+                        <h3>You have no friends yet</h3>
+                        <p>Find people to become friends with on the <a href="{% url 'search' %}">search page</a>.</p>
+                    </div>
+                {% endif %}
             </div>
 
             <div id="friend-requests" class="profiles-list">
+                {% if pending_requests %}
                 {% for friend_request in pending_requests %}
                     <a href="{% url 'user_profile' friend_request.from_profile.user.username %}" class="profile-list-card">
                             <div class="profile-list-avatar">
@@ -42,6 +50,12 @@
                             </div>
                     </a>
                 {% endfor %}
+                {% else %}
+                    <div class="no-friends">
+                        <h3>You have no incoming friend requests</h3>
+                        <p>Find people to become friends with on the <a href="{% url 'search' %}">search page</a>.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
