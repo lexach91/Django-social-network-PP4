@@ -1,13 +1,14 @@
 {% load static %}
 <!-- show form only if request.user is a member of a community or a friend with a page owner or its his profile -->
 {% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
-<form class="post-form">
+<form class="post-form create">
     {% csrf_token %}
     {{ post_form }}
     <button type="submit" class="post-submit save-form">Post</button>
 </form>
 {% endif %}
 <div class="post-wall">
+    {% if posts %}
     {% for post in posts %}
         <div id="post-{{ post.id }}" class="post" data-post-id="{{ post.id }}">
             <div class="post-info">
@@ -30,11 +31,11 @@
                 </div>
                 <div class="post-time">
                     {% if post.edited %}
-                        <em title='{{ post.updated_at|date:"d/m/Y H:i" }}'>
+                        <em title='{{ post.updated_at }}'>
                             Edited {{ post.updated_at|timesince }} ago
                         </em>
                     {% else %} 
-                        <em title='{{ post.created_at|date:"d/m/Y H:i" }}'>
+                        <em title='{{ post.created_at }}'>
                             Posted {{ post.created_at|timesince }} ago
                         </em>
                     {% endif %}
@@ -154,4 +155,27 @@
             {% endif %}
         </div>
     {% endfor %}
+    {% else %}
+        <div class="no-posts">
+            <h2>No posts here yet</h2>
+            <!-- check if its in profile or in community -->
+            {% if user_profile %}
+                {% if request.user.profile == user_profile %}
+                    <p>You can start posting to share your thoughts with you friends</p>
+                {% else %}
+                    {% if request.user.profile in user_profile.friends.all %}
+                        <p>You can post something to make {{ user_profile }} notice you</p>
+                    {% else %}
+                        <p>You need to add this person to friends to start posting here</p>
+                    {% endif %}
+                {% endif %}
+            {% elif community %}
+                {% if request.user in community.members.all %}
+                    <p>You can start posting to share your thoughts with the community</p>
+                {% else %}
+                    <p>You need to join this community to start posting here</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
