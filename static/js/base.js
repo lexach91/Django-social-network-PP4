@@ -251,6 +251,7 @@ $(document).ready(function() {
                 $(`.comment-button[data-post-id='${postId}']`).on('click', commentHandler);
                 $('.edit-post-button[data-post-id=' + postId + ']').on('click', toggleEditPost);
                 $('.delete-post-button[data-post-id=' + postId + ']').on('click', toggleDeletePost);
+                $('.post-image').on('click', toggleImage);
                 // remove .cover div and restore scroll for the page
                 $('.cover').remove();
                 $('body').css('overflow', 'auto');
@@ -876,7 +877,7 @@ $(document).ready(function() {
     });
 
     $('.post-image').on('click', toggleImage);
-    $('.post-form .create').on('submit', createPost);
+    $('.post-form.create').on('submit', createPost);
     $('.like-button').on('click', likeHandler);
     $('.dislike-button').on('click', dislikeHandler);
     $('.comment-button').on('click', commentHandler);
