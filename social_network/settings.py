@@ -15,7 +15,7 @@ import os
 
 
 import dj_database_url
-import django_heroku
+# import django_heroku
 
 if os.path.exists('env.py'):
     import env
@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
     'chats',
     'home',
@@ -134,13 +134,13 @@ WSGI_APPLICATION = 'social_network.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
-}
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.sqlite3',
+#     #     'NAME': BASE_DIR / 'db.sqlite3',
+#     # },
+#     'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
+# }
 
 
 cloudinary.config(
@@ -204,8 +204,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('redis://:p29969e72fba7b1d3f52a76a08642f83c2015d102609cdb371d037f81821ea2d6@ec2-46-137-29-65.eu-west-1.compute.amazonaws.com:31099')],
-            "capacity": 200,
+            "hosts": [('127.0.0.1', 6379)],
+            # "capacity": 200,
         },
     },
 }
@@ -214,8 +214,16 @@ ASGI_THREADS = 100
 
 
 if 'DEVELOPMENT' in os.environ:
+    print('Development environment')
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
 else:
+    print('Production environment')
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
@@ -223,6 +231,9 @@ else:
     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
     DEFAULT_FROM_EMAIL = 'django.social.network@example.com'
+    DATABASES = {    
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    }
 
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
