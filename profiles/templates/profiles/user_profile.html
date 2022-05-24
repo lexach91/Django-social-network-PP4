@@ -66,14 +66,143 @@
     </div>
 
 </div>
+<div class="friends-communities">
+    <div class="profile-friends">
+        <p>Has {{ user_profile.friends.count }} friend{{ user_profile.friends.count|pluralize }}</p>
+        <a href="javascript:void(0)" class="show-friends-button">Show friends</a>
+    </div>
+    <div class="profile-communities">
+        <p>Is a member of {{ user_profile.user.communities.count }} communit{% if user_profile.user.communities.count|pluralize %}ies{% else %}y{% endif %}</p>
+        <a href="javascript:void(0)" class="show-communities-button">Show communities</a>
+    </div>
+</div>
 
 <div class="profile-wall">
     {% include 'profiles/post_wall.html' %}
 </div>
+
+<div class="profile-friends-modal hidden">
+    <div class="friends-modal-container">
+        <button class="close-modal-button">&times;</button>
+        {% if user_profile.friends %}        
+            <h3>{{ user_profile}}'s friends</h3>
+                <div class="modal-friends-list">
+                    {% for friend in user_profile.friends.all %}
+                        <a href="{% url 'user_profile' friend.user.username %}" class="profile-list-card small">
+                                <div class="profile-list-avatar">
+                                    <img src="{{ friend.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
+                                </div>
+                                <div class="profile-list-name">
+                                    <strong>
+                                        {{ friend }}
+                                        {% if friend.online %}
+                                            <span class="online-circle"></span>
+                                        {% endif %}
+                                    </strong>
+                                </div>
+                        </a>
+                    {% endfor %}
+                </div>
+        {% else %}
+            <p>{{ user_profile }} has no friends yet</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="profile-communities-modal hidden">
+    <div class="communities-modal-container">
+        <button class="close-modal-button">&times;</button>
+        {% if user_profile.user.communities %}
+            <h3>{{ user_profile }}'s communities</h3>
+            <div class="modal-communities-list">
+                {% for community in user_profile.user.communities.all %}
+                    <a href="{% url 'community' community.slug %}" class="explore-community-link">
+
+                            <div class="explore-community-logo">
+                                <img src="{{ community.logo_url }}" alt="{{ community }}">
+                            </div>
+                            <div class="explore-community-info">
+                                <div class="explore-community-name">{{ community.name }}</div>
+                                <div class="explore-community-description">{{ community.description }}</div>
+                                
+                            </div>
+                            <div class="explore-community-members">{{ community.member_count }} member{{ community.member_count|pluralize:"s"}}</div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{{ user_profile }} isn't a member of any communities yet</p>
+        {% endif %}
+    </div>
+
+
 
 <input type="hidden" value="{{ user_profile.id }}" id="profile_id">
 <input type="hidden" value="1" id="post_type">
 <input type="hidden" value="{{ user_profile.user.username }}" id="profile_username">
 {% csrf_token %}
 
+
+<script>
+    $(document).ready(function() {
+        const friendsModal = $('.profile-friends-modal');
+        const showFriendsButton = $('.show-friends-button');
+
+        const communitiesModal = $('.profile-communities-modal');
+        const showCommunitiesButton = $('.show-communities-button');
+
+        showFriendsButton.click(function() {
+            friendsModal.removeClass('hidden');
+            $('.close-modal-button').on('click', function() {
+                friendsModal.addClass('hidden');
+                $('.close-modal-button').off('click');
+                $(friendsModal).off('click');
+                $(document).off('keypress');
+            });
+            $(friendsModal).on('click', function(event) {
+                if (event.target === this) {
+                    friendsModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(friendsModal).off('click');
+                    $(document).off('keypress');
+                }
+            });
+            $(document).on('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    friendsModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(friendsModal).off('click');
+                    $(document).off('keypress');
+                }
+            });
+            
+        });
+
+        showCommunitiesButton.click(function() {
+            communitiesModal.removeClass('hidden');
+            $('.close-modal-button').on('click', function() {
+                communitiesModal.addClass('hidden');
+                $('.close-modal-button').off('click');
+                $(communitiesModal).off('click');
+                $(document).off('keypress');
+            });
+            $(communitiesModal).on('click', function(event) {
+                if (event.target === this) {
+                    communitiesModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(communitiesModal).off('click');
+                    $(document).off('keypress');
+                }
+            });
+            $(document).on('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    communitiesModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(communitiesModal).off('click');
+                    $(document).off('keypress');
+                }
+            });
+        });
+    }); 
+</script>
 {% endblock %}
