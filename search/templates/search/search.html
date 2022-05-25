@@ -10,7 +10,7 @@
       <div class="search-options">
         <div class="search-switchers">
           <input id="people" type="radio" name="search_type" value="people" class="search-checkbox" checked>
-          <label for="people" class="btn label-button left active" id="sortFriedns">People</label>
+          <label for="people" class="btn label-button left active" id="sortFriends">People</label>
           
           <input id="communities" type="radio" name="search_type" value="communities" class="search-checkbox">
           <label for="communities" class="btn label-button right" id="sortCommunities">Communities</label>
@@ -90,7 +90,7 @@
 
 
         $(document).ready(function() {
-            const sortFriends = document.querySelector('#sortFriedns');
+            const sortFriends = document.querySelector('#sortFriends');
             const sortCommunities = document.querySelector('#sortCommunities');
 
             sortFriends.addEventListener('click', () => {
