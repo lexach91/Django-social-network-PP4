@@ -5,13 +5,17 @@ $(document).ready(function() {
     const notificationSocket = new WebSocket(socketProtocol + '//' + window.location.host + '/ws/notifications/' + roomName + '/');
 
     const updateFriendRequests = function(num) {
-        $('.nav-badge.requests-count').text(num);
+        if(num > 0) {
+            $('.nav-badge.requests-count').text(`(${num})`);
+        }
         // highlight it
         $('.nav-badge.requests-count').effect('highlight', {color: '#ff0000'}, 1000);
     };
 
     const updateMessagesCount = function(num) {
-        $('.nav-badge.messages-count').text(num);
+        if(num > 0) {
+            $('.nav-badge.messages-count').text(`(${num})`);
+        }
         // highlight it
         $('.nav-badge.messages-count').effect('highlight', {color: '#ff0000'}, 1000);
     };
