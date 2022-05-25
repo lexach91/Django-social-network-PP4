@@ -37,6 +37,7 @@ $(document).ready(function() {
         console.log(data);
         const type = data.type;
         if (type === 'chat_message'){
+            $('.no-messages').remove();
 
             const chatMessage = $('<div class="chat-message"></div>');
             const messageAuthor = $('<div class="message-author"></div>');
