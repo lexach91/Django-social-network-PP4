@@ -33,6 +33,9 @@
     {% endfor %}
 </div>
 {% else %}
-<p>You are not a member of any community.</p>
+<h3>You are not a member of any community.</h3>
+<p>Find communities to join on the <a href="{% url 'search' %}">search page</a>.</p>
+<p>Or create your own community using the button above.</p>
+
 {% endif %}
 {% endblock %}
