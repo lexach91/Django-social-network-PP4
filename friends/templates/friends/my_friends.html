@@ -63,67 +63,27 @@
 
 
     <script>
-    const acceptFriendUrl = "{% url 'accept-friend-request' %}";
-    const declineFriendUrl = "{% url 'decline-friend-request' %}";
+    $(document).ready(function(){
+        const friendsSwitch = document.querySelector('#profilesFriends');
+        const requestsSwitch = document.querySelector('#profilesRequests');
     
-
-    const friendsSwitch = document.querySelector('#profilesFriends');
-    const requestsSwitch = document.querySelector('#profilesRequests');
-
-    const friendsContainer = document.querySelector('#friends');
-    const requestsContainer = document.querySelector('#friend-requests');
-    requestsContainer.classList.add('hidden');
-
-    friendsSwitch.addEventListener('click', () => {
-        friendsSwitch.classList.add('active');
-        requestsSwitch.classList.remove('active');
-        friendsContainer.classList.remove('hidden');
+        const friendsContainer = document.querySelector('#friends');
+        const requestsContainer = document.querySelector('#friend-requests');
         requestsContainer.classList.add('hidden');
-    });
-
-    requestsSwitch.addEventListener('click', () => {
-        requestsSwitch.classList.add('active');
-        friendsSwitch.classList.remove('active');
-        requestsContainer.classList.remove('hidden');
-        friendsContainer.classList.add('hidden');
-    });
-
-
-    $('.acceptFriend').click(function() {
-        const id = $(this).data('request-id');
-        $.ajax({
-            url: acceptFriendUrl,
-            method: 'POST',
-            data: {
-                'id': id,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(data) {
-                console.log(data);
-                // need to remove the friend request from the list
-                // $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().remove();
-                // need to remove it with animation
-                $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().slideUp();
-            }
+    
+        friendsSwitch.addEventListener('click', () => {
+            friendsSwitch.classList.add('active');
+            requestsSwitch.classList.remove('active');
+            friendsContainer.classList.remove('hidden');
+            requestsContainer.classList.add('hidden');
         });
-    });
-
-    $('.declineFriend').click(function() {
-        const id = $(this).data('request-id');
-        $.ajax({
-            url: declineFriendUrl,
-            method: 'POST',
-            data: {
-                'id': id,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(data) {
-                console.log(data);
-                // need to replace the button with the message that the request has been sent
-                // $('.declineFriend[data-id=' + id + ']').replaceWith('<span>Friend request declined</span>');
-                $('#friend-requests').find(`[data-request-id="${id}"]`).parent().parent().slideUp();
-            }
-        });
+    
+        requestsSwitch.addEventListener('click', () => {
+            requestsSwitch.classList.add('active');
+            friendsSwitch.classList.remove('active');
+            requestsContainer.classList.remove('hidden');
+            friendsContainer.classList.add('hidden');
+        });        
     });
 </script>
     
