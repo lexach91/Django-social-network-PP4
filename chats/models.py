@@ -30,20 +30,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='messages')
     content = models.TextField()
-    has_media = models.BooleanField(default=False)
-    is_read = models.BooleanField(default=False)
-    image = CloudinaryField(
-        'message_image',
-        folder = 'messages',
-        null = True,
-        blank = True
-    )
-    video = CloudinaryField(
-        'message_video',
-        folder = 'messages',
-        null = True,
-        blank = True
-    )
+    is_read = models.BooleanField(default=False)    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -112,7 +99,7 @@ class Message(models.Model):
             else:
                 return 'a minute ago'
         elif seconds > 0:
-            if seconds > 1:
+            if seconds >= 10:
                 return '{} seconds ago'.format(seconds)
             else:
                 return 'a few seconds ago'
