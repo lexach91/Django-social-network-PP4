@@ -15,7 +15,7 @@ class Chat(models.Model):
     last_message_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'Chat with {self.members.all()[1]}'
+        return f'Chat between {" and ".join([member.username for member in self.members.all()])}'
     
     def get_last_message(self):
         return self.messages.last()
