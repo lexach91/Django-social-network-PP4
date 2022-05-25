@@ -1726,6 +1726,12 @@ form.create-community-form button[type="submit"],
   position: relative;
 }
 
+.no-messages {
+  text-align: center;
+  font-size: large;
+  color: black;
+}
+
 .chat-navbar {
   position: absolute;
   top: 0;
