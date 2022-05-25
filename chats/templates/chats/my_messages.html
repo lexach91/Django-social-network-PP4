@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
     <div class="messages-all">
+        {% if chats %}
         {% for chat in chats %}
             {% for member in chat.members.all %}
                 {% if member != request.user %}
@@ -45,6 +46,12 @@
                 {% endif %}
             {% endfor %}
         {% endfor %}
+        {% else %}
+            <div class="no-messages">
+                <h3>You have no messages yet</h3>
+                <p>Find people to add to friends and start chatting on the <a href="{% url 'search' %}">search page</a>.</p>
+            </div>
+        {% endif %}
     </div>
 
     <script>
