@@ -30,6 +30,7 @@
         </div>
     </div>
     <div class="chat-messages">
+        {% if chat.messages.all %}
         {% for message in chat.messages.all %}
             {% if message.author == request.user %}
             <div class="chat-message my-message">
@@ -61,6 +62,11 @@
                 </div>
             </div>
         {% endfor %}
+        {% else %}
+            <div class="no-messages">
+                No messages yet.
+            </div>
+        {% endif %}
         <span class="typing"></span>
     </div>
     <div class="chat-input-container">
