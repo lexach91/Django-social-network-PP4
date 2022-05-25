@@ -101,6 +101,7 @@ $(document).ready(function() {
             cache: false,
             data: data,                
             success: (data) => {
+                $('.no-posts').remove();
                 let post = data.post;
                 console.log(post);
                 let avatarUrl = post.avatar;
@@ -1135,7 +1136,7 @@ $(document).ready(function() {
             success: (data) => {
                 console.log(data);
                 // replace join community button with leave community button
-                let leaveCommunityButton = $('<button class="leave-community-button" data-community-id="' + communityId + '">Leave community</button>');
+                let leaveCommunityButton = $('<button class="leave-community-button" data-community-id="' + communityId + '">Leave community <i class="fas fa-sign-out-alt"></button>');
                 $(e.target).replaceWith(leaveCommunityButton);
                 // add event handler to the leave community button
                 $(leaveCommunityButton).on('click', leaveCommunity);
@@ -1183,7 +1184,7 @@ $(document).ready(function() {
             success: (data) => {
                 console.log(data);
                 // replace leave community button with join community button
-                let joinCommunityButton = $('<button class="join-community-button" data-community-id="' + communityId + '">Join community</button>');
+                let joinCommunityButton = $('<button class="join-community-button" data-community-id="' + communityId + '">Join community <i class="fas fa-sign-in-alt"></button>');
                 $(e.target).replaceWith(joinCommunityButton);
                 // add event handler to the join community button
                 $(joinCommunityButton).on('click', joinCommunity);
