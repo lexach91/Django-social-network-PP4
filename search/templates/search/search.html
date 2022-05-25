@@ -20,6 +20,7 @@
     </div>
 
     <div class="explore-profiles-container">
+        {% if profiles %}
         <h2 class="explore-title">You may know these people</h2>
         <div class="explore-profiles">
             {% for profile in profiles %}
@@ -47,11 +48,13 @@
                 </a>
             {% endfor %}
         </div>
-        <div class="load-more-profiles">
-          <button class="load-more-profiles-button">Load more...</button>
-        </div>
+        {% else %}
+        <h2 class="explore-title">There is no one to recommend to you yet. We're sorry.</h2>
+        {% endif %}
+
     </div>
     <div class="explore-communities-container hidden">
+        {% if communities %}
         <h2 class="explore-title">You may want to join these communities</h2>
         <div class="explore-communities">
             {% for community in communities %}
@@ -69,11 +72,12 @@
                 </a>
             {% endfor %}
         </div>
-        <div class="load-more-communities">
-          <button class="load-more-communities-button">Load more...</button>
-        </div>
+        {% else %}
+        <h2 class="explore-title">There are no communities to recommend to you. We're sorry.</h2>
+        {% endif %}
+
     </div>
-    {% comment %} <h2 class="search-results-explore-title">Search resualts</h2> {% endcomment %}
+    {% comment %} <h2 class="search-results-explore-title">Search results</h2> {% endcomment %}
     <h2 class="explore-search-title hidden"></h2>
     <div class="search-results-people profiles-list"></div>
     <div class="search-results-communities communities-list"></div>
