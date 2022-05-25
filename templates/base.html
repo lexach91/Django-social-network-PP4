@@ -59,7 +59,7 @@
                       </span>
                       <span class="nav-badge requests-count" title="Pending friend requests">
                         {% if request.user.profile.pending_requests_count > 0 %}
-                          {{ request.user.profile.pending_requests_count }}
+                          ({{ request.user.profile.pending_requests_count }})
                         {% endif %}
                       </span>
                     </a>
@@ -78,7 +78,7 @@
                       </span>
                       <span class="nav-badge messages-count" title="Unread messages">
                           {% if request.user.profile.unread_messages_count > 0 %}
-                            {{ request.user.profile.unread_messages_count }}
+                            ({{ request.user.profile.unread_messages_count }})
                           {% endif %}
                       </span>
                     </a>
