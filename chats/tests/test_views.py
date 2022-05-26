@@ -30,13 +30,7 @@ class TestViews(TestCase):
             last_name='Test',
             email='testuser3@example.com'
         )
-        self.user4 = User.objects.create_user(
-            username='user4',
-            password='Testuser4',
-            first_name='User4',
-            last_name='Test',
-            email='testuser4@example.com'
-        )
+        
         
         self.client = Client()
         self.my_messages_url = reverse('my_messages')
@@ -98,7 +92,6 @@ class TestViews(TestCase):
             content='Test message'
         )
         message_id = message.id
-        # need to make ajax post request with message_id to get message time
         response = self.client.post(self.get_message_time_url, {'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertJSONEqual(response.content.decode('utf-8'), {'sent_at': message.sent_at})
