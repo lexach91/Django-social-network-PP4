@@ -68,6 +68,10 @@ body {
   margin-right: .5em;
 }
 
+.requests-count {
+  margin-left: 0.3em;
+}
+
 /* ---------------- Main Content -------------------- */
 .main-content {
   width: 100%;
@@ -426,7 +430,8 @@ form.password-form label[for="id_new_password2"] {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.678);
+  backdrop-filter: blur(5px);
   z-index: 10;
   display: flex;
   justify-content: center;
@@ -443,6 +448,16 @@ form.password-form label[for="id_new_password2"] {
   flex-direction: column;
   align-items: center;
   position: relative;
+  background-image: url("../images/background_main.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.friends-modal-container h3,
+.communities-modal-container h3 {
+  padding: 1em;
 }
 
 .close-modal-button {
@@ -455,9 +470,72 @@ form.password-form label[for="id_new_password2"] {
   z-index: 10;
   cursor: pointer;
   font-size: 1.5rem;
+  border-radius: 4px;
   color: white;
+  background-color: #2B2B2B;
+  box-shadow: rgb(46 5 100 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(183 0 255 / 13%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
 }
 
+.close-modal-button:focus {
+  outline: none;
+}
+
+.modal-friends-list,
+.modal-communities-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+
+/* ---------- Other User Profiles Friends -------------- */
+.friends-communities {
+  width: 100%;
+  max-width: 75rem;
+  padding: 0 1em;
+  margin-bottom: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.profile-friends,
+.profile-communities {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2em;
+  background-color: #535353;
+  box-shadow: rgb(46 5 100 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(183 0 255 / 13%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+  border-radius: 0.7em;
+  color: white;
+  width: 100%;
+  color: #fbf8ff;
+  text-shadow: 2px 2px black;
+  text-decoration: none;
+}
+
+.profile-friends a,
+.profile-communities a {
+  color: #ebdbff;
+  text-shadow: 2px 2px black;
+  text-decoration: none;
+}
+
+.profile-friends a:hover,
+.profile-communities a:hover {
+  color: #d3b1ff;
+  text-decoration: none;
+}
 
 /* ---------------- Posts -------------------- */
 .profile-wall,
@@ -638,20 +716,24 @@ form.password-form label[for="id_new_password2"] {
 .comments {
   cursor: pointer;
 }
+
 .likes .fas,
 .dislikes .fas,
 .comments a {
   color: #5200B1;
   text-decoration: none;
 }
+
 .comments a {
   color: black;
 }
+
 .author-options {
   position: absolute;
   bottom: 0.7rem;
   left: 1.5rem;
 }
+
 .likes:hover,
 .dislikes:hover,
 .comments:hover,
@@ -660,6 +742,7 @@ form.password-form label[for="id_new_password2"] {
 .author-options .delete-post-button:hover {
   color: #9A42FF;
 }
+
 .post-media {
   width: 100%;
   height: auto;
@@ -685,6 +768,55 @@ form.password-form label[for="id_new_password2"] {
 .post-media.full-height {
   max-height: 100%;
 }
+
+.cancel-edit-button {
+  padding: 0.3em 1em;
+  background-color: #420099;
+  border: 1px solid #2A0061;
+  box-shadow: rgb(106 4 240 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 0%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(183 0 255 / 13%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px black;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  cursor: pointer;
+}
+
+.cancel-edit-button:hover {
+  background-color: #8120FF;
+}
+
+/* No posts */
+.no-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f3f3fc;
+  color: #000000cc;
+  border-radius: 0.5em;
+  font-weight: 700;
+  padding: 2em;
+  box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.no-posts h2 {
+  padding-bottom: 1em;
+}
+
+/* Edit-post */
+.post-form.edit label {
+  position: absolute;
+  top: 8.5rem;
+  left: 1.4rem;
+  font-size: 1.5rem;
+}
+
 
 /* ---------------- Comments -------------------- */
 .comments-container {
@@ -782,7 +914,6 @@ form.password-form label[for="id_new_password2"] {
   min-height: 10rem;
   margin-bottom: 0.7em;
   border-radius: 0.5em;
-  padding: 1em 2em;
   color: white;
   border: 1px solid #000000cc;
   display: flex;
@@ -1201,7 +1332,7 @@ form.password-form label[for="id_new_password2"] {
 .community-logo {
   position: absolute;
   top: 50%;
-  left: 3em;
+  left: 2.5em;
   transform: translateY(-50%);
   width: 10em;
   height: 10em;
@@ -1221,7 +1352,7 @@ form.password-form label[for="id_new_password2"] {
 
 .community-info {
   min-width: 40%;
-  max-width: 50%;
+  max-width: 30rem;
   min-height: 50%;
   max-height: 70%;
   text-align: center;
@@ -1235,14 +1366,13 @@ form.password-form label[for="id_new_password2"] {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 1em;
+  padding: 0.5em;
   text-shadow: 2px 2px black;
 }
 
 .community-info h2 {
   width: 100%;
-  height: 1.5em;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: 700;
   background-color: #535353;
   border-radius: 0.5em 0.5em 0 0;
@@ -1629,6 +1759,10 @@ form.create-community-form button[type="submit"],
   height: 5rem;
 }
 
+.feed-avatar-container {
+  margin-right: 0.5em;
+}
+
 .community-card-logo,
 .explore-community-logo {
   background-color: white;
@@ -1915,6 +2049,7 @@ form.create-community-form button[type="submit"],
   /* set flex-wrap */
   flex-wrap: wrap;
 }
+
 .feed-avatar-container {
   width: 2.5rem !important;
   height: 2.5rem !important;
@@ -2173,7 +2308,7 @@ form.create-community-form button[type="submit"],
   margin: 0 auto;
   /* background-color: oldlace; */
   position: relative;
-  margin-bottom: 10vh;
+  /* margin-bottom: 10vh; */
 }
 
 
@@ -2314,6 +2449,7 @@ form.create-community-form button[type="submit"],
 .contributor__name {
   font-weight: 500;
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .contributor__link {
@@ -2331,6 +2467,12 @@ form.create-community-form button[type="submit"],
 }
 
 /* ---------------- Media -------------------- */
+@media all and (max-width: 1093px) {
+  .password-form .helptext {
+    display: none;
+  }
+}
+
 @media all and (max-width: 1040px) {
   body {
     padding-left: 7em;
@@ -2396,6 +2538,83 @@ form.create-community-form button[type="submit"],
   .comment-author {
     padding: 1em 0.5em 0.5em 0.5em;
   }
+}
+
+@media all and (max-width: 932px) {
+
+  /* Community */
+  .community-logo {
+    left: 1.1em;
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+
+  .community-info {
+    min-width: 40%;
+    max-width: 30rem;
+    min-height: 50%;
+    max-height: 70%;
+    right: 1.5em;
+    padding: 0.3em;
+  }
+}
+
+@media all and (max-width: 807px) {
+
+  /* Profile settings */
+  .avatar-container.edit-page {
+    margin-left: 0;
+    margin-top: 0;
+    margin: 0 auto;
+  }
+
+  .profile-container-edit {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-bio-edit {
+    padding-left: 0 !important;
+  }
+
+
+  /* Community */
+  .community-logo {
+    left: 0.7em;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .community-info {
+    min-width: 40%;
+    max-width: 20rem;
+    min-height: 50%;
+    max-height: 70%;
+    right: 1em;
+    font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .references {
+    padding: 0.2em;
+  }
+
+  .contributor__links {
+    padding: 0.2em;
+  }
+
+  .contributor__name {
+    font-size: 1rem;
+  }
+
+  .contributor__link {
+    text-decoration: none;
+  }
+
+  .contributor__link a {
+    font-size: 1.2em;
+  }
+
 }
 
 @media all and (max-width: 750px) {
@@ -2489,6 +2708,10 @@ form.create-community-form button[type="submit"],
 
   .navigation-name {
     display: none;
+  }
+
+  .requests-count {
+    margin-left: 0.009em;
   }
 
   /* Main Content */
@@ -2618,24 +2841,25 @@ form.create-community-form button[type="submit"],
     flex-direction: column;
   }
 
-  /* Allauth */
-  /* .allauth-container {
-    background-color: #535353;
-    box-shadow: rgba(46, 5, 100, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(183, 0, 255, 0.13) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    border-radius: 0.7em;
-    color: white;
-    padding: 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-shadow: 2px 2px black;
-    margin: 1em;
-    max-width: 30rem;
-  } */
-
   .allauth-logout .allauth-container {
     max-width: 20rem;
+  }
+
+  /* Home */
+  .home-main-form {
+    justify-content: center;
+    margin-left: 5rem;
+  }
+
+  .marvel-device.iphone5s,
+  .marvel-device.iphone5c {
+    left: 20px;
+    bottom: -150px;
+  }
+
+  /* Profile communities and friends */
+  .friends-communities {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2673,6 +2897,19 @@ form.create-community-form button[type="submit"],
     padding-left: 1em;
   }
 
+  .friend-buttons {
+    margin-top: 1em;
+  }
+
+  .chat-button,
+  .unfriend-button,
+  .accept-friend-button,
+  .decline-friend-button,
+  .send-friend-button,
+  .cancel-friend-button {
+    font-size: 0.7rem !important;
+  }
+
   .profile-bio div,
   .post-author-name,
   .comment-author {
@@ -2691,8 +2928,48 @@ form.create-community-form button[type="submit"],
   .allauth-logout .allauth-container {
     max-width: 15rem;
   }
+
+  /* Home */
+  .home-main-form {
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .marvel-device.iphone5c.green {
+    display: none !important;
+  }
 }
 
+@media all and (max-width: 533px) {
+
+  /* Community */
+  .community-logo {
+    left: 0.4em;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .community-info {
+    max-width: 15rem;
+  }
+}
+
+@media all and (max-width: 490px) {
+  .community-final-deletion {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .community-final-deletion .delete-confirm,
+  .community-final-deletion .delete-cancel {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 0.5em;
+  }
+}
 
 @media all and (max-width: 454px) {
 
@@ -2727,7 +3004,72 @@ form.create-community-form button[type="submit"],
   .search-switchers .label-button {
     font-size: 1rem;
   }
+}
+
+@media all and (max-width: 435px) {
+  .community-logo {
+    display: none;
+  }
+
+  .community-info {
+    max-width: 92%;
+    min-height: 50%;
+    max-height: 70%;
+    right: 1em;
+    left: 1em;
+  }
+}
+
+@media all and (max-width: 400px) {
+
+  .home-allauth-button {
+    width: 100%;
+    margin: 1.5em auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+}
 
 
+@media all and (max-height: 830px) {
 
+  /* Home */
+  .home-main-form {
+    justify-content: center;
+    margin-left: 0;
+    margin-bottom: 2rem;
+  }
+
+  .marvel-device.iphone5c.green {
+    display: none !important;
+  }
+}
+
+@media all and (max-height: 610px) {
+
+  /* Home */
+  .home-main-form {
+    margin-bottom: 4.5rem;
+    padding: 3vh 2vw;
+  }
+
+  .references {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    transform: none;
+    padding: 1em;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contributor__links {
+    max-width: 8rem;
+  }
 }
