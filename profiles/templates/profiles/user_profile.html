@@ -68,12 +68,12 @@
 </div>
 <div class="friends-communities">
     <div class="profile-friends">
-        <p>Has {{ user_profile.friends.count }} friend{{ user_profile.friends.count|pluralize }}</p>
-        <a href="javascript:void(0)" class="show-friends-button">Show friends</a>
+        <p>{{ user_profile.friends.count }} friend{{ user_profile.friends.count|pluralize }}</p>
+        <a href="javascript:void(0)" class="show-friends-button">Show</a>
     </div>
     <div class="profile-communities">
-        <p>Is a member of {{ user_profile.user.communities.count }} communit{% if user_profile.user.communities.count|pluralize %}ies{% else %}y{% endif %}</p>
-        <a href="javascript:void(0)" class="show-communities-button">Show communities</a>
+        <p>{{ user_profile.user.communities.count }} communit{% if user_profile.user.communities.count|pluralize %}ies{% else %}y{% endif %}</p>
+        <a href="javascript:void(0)" class="show-communities-button">Show</a>
     </div>
 </div>
 
