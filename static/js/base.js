@@ -638,8 +638,12 @@ $(document).ready(function() {
         let postId = $(e.target).attr('data-post-id');
         let postBackup = $('.post[data-post-id="' + postId + '"]');
         let formElement = editPostFormHtml.replace('data-post-id=""', 'data-post-id="' + postId + '"');
-        
+        let lastPostOnThePage = $('.post').last();
         $('.post[data-post-id="' + postId + '"]').replaceWith(formElement);
+        if (postBackup[0] === lastPostOnThePage[0]) {
+            console.log('last post');
+            $('.post-form.edit[data-post-id="' + postId + '"]').css('margin-bottom', '7em');
+        }
         // insert the .post-text from the backup post into the edit post form textarea
         $('.post-form.edit[data-post-id="' + postId + '"]').find('textarea').val(postBackup.find('.post-text').text().trim());
         // need to check if postBackup had an image
@@ -709,6 +713,7 @@ $(document).ready(function() {
         $(document).scrollTop($('.post-form.edit[data-post-id="' + postId + '"]').offset().top - $(window).height() / 2);
         // make form z-index higher than the cover div
         $('.post-form.edit[data-post-id="' + postId + '"]').css('z-index', '11');
+        // if this is the last post on the page add margin-bottom to the edit post form
         // prevent the page from scrolling
         $('body').css('overflow', 'hidden');
         
