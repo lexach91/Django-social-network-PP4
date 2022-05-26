@@ -8,7 +8,7 @@ from django.utils.text import slugify
 class Community(models.Model):
     name = models.CharField(max_length=30, unique=True, blank=False)
     slug = models.SlugField(unique=True, blank=False)
-    description = models.TextField(max_length=200, blank=True)
+    description = models.TextField(max_length=100, blank=True)
     bg_image = CloudinaryField(
         'community_bg_image',
         folder = 'community_bg_images',
