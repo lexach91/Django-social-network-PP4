@@ -26,12 +26,6 @@ class Post(models.Model):
         null = True,
         blank = True
     )
-    video = CloudinaryField(
-        'post_video',
-        folder='posts',
-        null=True,
-        blank=True
-    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     edited = models.BooleanField(default=False)

@@ -8,18 +8,14 @@ import cloudinary
 import cloudinary.uploader
 
 
-# Create your views here.
 class CreatePostAjaxView(View):
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST, request.FILES)
-        print(form.is_valid())
         if form.is_valid():
-            print(form.cleaned_data)
             post = form.save(commit=False)
             post.has_media = True if request.FILES else False
             if post.has_media:
                 post.image = request.FILES['image']
-                print(request.FILES['image'])
             
             post.author = request.user
             post.save()
@@ -89,7 +85,8 @@ class LikePostAjaxView(View):
             'liked': liked,
             'disliked': disliked
             })
-    
+
+
 class DislikePostAjaxView(View):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
@@ -132,11 +129,11 @@ class DislikePostAjaxView(View):
             'disliked': disliked,
             'liked': liked
             })
-        
+
+
 class CreateCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
-        print(post_id)
         post = Post.objects.get(id=post_id)
         comment_content = request.POST.get('comment_content')
         comment = Comment(
@@ -162,6 +159,7 @@ class CreateCommentAjaxView(View):
             'comment_count': comment.post.comments_count()
         }
         return JsonResponse({'success': True, 'comment': comment_data})
+
 
 class LikeCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
@@ -205,7 +203,8 @@ class LikeCommentAjaxView(View):
             'liked': liked,
             'disliked': disliked
             })
-        
+
+
 class DislikeCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         comment_id = request.POST.get('comment_id')
@@ -276,7 +275,8 @@ class EditPostAjaxView(View):
                 post.save()
                 return JsonResponse({'success': True, 'image': image_url})        
         return JsonResponse({'success': False, 'errors': form.errors})
-    
+
+
 class EditCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
         comment = Comment.objects.get(id=request.POST.get('comment_id'))
@@ -287,7 +287,7 @@ class EditCommentAjaxView(View):
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
             
-        
+
 class DeletePostAjaxView(View):
     def post(self, request, *args, **kwargs):
         post_id = request.POST.get('post_id')
