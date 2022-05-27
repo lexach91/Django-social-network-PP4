@@ -1006,6 +1006,12 @@ $(document).ready(function() {
                 // add event handlers to the post form
                 $('.post-form').on('submit', createPost);
                 $('#id_image').on('change', imagePreview);
+                // if there's .no-posts div change it p inner text to '<p>You can post something to make  ${user_profile}  notice you</p>'
+                if ($('.no-posts').length) {
+                    let name = $('.profile-name').text().replace(/\n/g, '').replace(/Name:/, '').trim();
+                    let text = '<p>You can post something to make ' + name + ' notice you</p>';
+                    $('.no-posts').html(text);
+                }
                 // for each post in the wall add a comment form html
                 $('.post').each(function () {
                     let postId = $(this).data('post-id');
@@ -1098,6 +1104,10 @@ $(document).ready(function() {
                 // remove all .post-form and .comment-form inputs, buttons, and textareas
                 $('.post-form').remove();
                 $('.comment-form').remove();
+                if ($('.no-posts').length) {
+                    let text = '<p>You need to add this person to friends to start posting here</p>';
+                    $('.no-posts').html(text);
+                }
             },
             error: (data) => {
                 console.log(data);
@@ -1161,6 +1171,9 @@ $(document).ready(function() {
                     $('.comments-container[data-for-post="' + postId + '"]').append(commentForm);
                 });
                 $('.comment-form').on('submit', createComment);
+                if($('.no-posts').length) {
+                    $('.no-posts').html('<p>You can start posting to share your thoughts with the community</p>');
+                }
             },
             error: (data) => {
                 console.log(data);
@@ -1196,6 +1209,10 @@ $(document).ready(function() {
                 // remove all .post-form and .comment-form inputs, buttons, and textareas
                 $('.post-form').remove();
                 $('.comment-form').remove();
+                if ($('.no-posts').length) {
+                    let text = '<p>You need to join this community to start posting here</p>';
+                    $('.no-posts').html(text);
+                }
             },
             error: (data) => {
                 console.log(data);
