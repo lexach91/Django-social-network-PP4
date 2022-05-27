@@ -250,7 +250,7 @@ class CommunityDeleteEvent(models.Model):
     type = "community_delete"
     
     def __str__(self):
-        return f'{self.initiator.profile} deleted community {self.community.name}'
+        return f'{self.initiator.profile} deleted community'
     
     class Meta:
         ordering = ['-timestamp']
