@@ -15,7 +15,7 @@ import os
 
 
 import dj_database_url
-# import django_heroku
+import django_heroku
 
 if os.path.exists('env.py'):
     import env
@@ -200,15 +200,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ASGI_APPLICATION = 'social_network.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-            # "capacity": 200,
-        },
-    },
-}
 
 ASGI_THREADS = 100
 
@@ -220,6 +211,15 @@ if 'DEVELOPMENT' in os.environ:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
+        },
+    }
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts": [('127.0.0.1', 6379)],
+                # "capacity": 200,
+            },
         },
     }
 else:
@@ -234,6 +234,14 @@ else:
     DATABASES = {    
         'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts": [(os.environ.get("REDIS_URL"))],
+            },
+        },
+    }
 
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
