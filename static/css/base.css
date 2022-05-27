@@ -1963,10 +1963,17 @@ form.create-community-form button[type="submit"],
 
 .message-author {
   display: flex;
+
   flex-direction: row;
   align-items: center;
-  padding-bottom: 0.7em;
+
   font-weight: bold;
+  text-decoration: none;
+  color: #282828;
+}
+
+.message-author:hover {
+  color: #2A0061;
 }
 
 .online-circle {
