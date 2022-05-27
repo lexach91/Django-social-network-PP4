@@ -59,11 +59,7 @@ class FriendRequest(models.Model):
         data = {
             'pending_requests': receiver.profile.pending_requests_count,
         }
-        
-        print(data)
-        print(receiver)
-        print(receiver.username)
-        
+                
         async_to_sync(channel_layer.group_send)(
             f'notifications_{receiver.username}', {
                 'type': 'send_notification',
