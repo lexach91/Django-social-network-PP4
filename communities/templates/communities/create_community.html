@@ -27,7 +27,14 @@
     <div class="community-form">
         <form method="post" enctype="multipart/form-data" class="create-community-form">
             {% csrf_token %}
-            {{ form }}
+            {% for field in form %}
+                {% if field.is_hidden %}
+                    {{ field }}
+                {% else %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
             <button type="submit" class="create-community-button">Save community</button>
         </form>
     </div>
