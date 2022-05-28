@@ -18,14 +18,13 @@ class TestHomeViews(TestCase):
         )
         self.client = Client()
         self.home_url = reverse('home')
-        
-        
+
     def test_home_url_unauthorized_user(self):
         """Test the home url."""
         response = self.client.get(self.home_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home/home.html')
-        
+
     def test_home_url_authorized_user(self):
         """Test the home url."""
         self.client.login(username='testuser', password='Testuser1')
