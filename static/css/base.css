@@ -1444,7 +1444,6 @@ form.password-form label[for="id_new_password2"] {
 
 .member-avatar {
   width: 100%;
-  height: 100%;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
@@ -2974,7 +2973,8 @@ form.create-community-form button[type="submit"],
 }
 
 @media all and (max-width: 490px) {
-  .community-final-deletion {
+  .community-final-deletion,
+  .profile-final-deletion {
     margin-top: 1em;
     display: flex;
     flex-direction: column;
@@ -2983,7 +2983,9 @@ form.create-community-form button[type="submit"],
   }
 
   .community-final-deletion .delete-confirm,
-  .community-final-deletion .delete-cancel {
+  .community-final-deletion .delete-cancel,
+  .profile-final-deletion .delete-confirm,
+  .profile-final-deletion .delete-cancel {
     width: 100%;
     margin: 0 auto;
     margin-top: 0.5em;
