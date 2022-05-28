@@ -3,12 +3,11 @@ from django.views import View
 from django.http import JsonResponse, HttpResponseRedirect
 from posts.forms import PostForm, CommentForm
 from .forms import EditProfileInfoForm, ChangeAvatarForm
-# import form for password change from allauth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 
 from .models import Profile
-# Create your views here.
+
 
 class MyProfileView(View):
     def get(self, request, *args, **kwargs):
@@ -26,8 +25,8 @@ class MyProfileView(View):
             'user_profile': request.user.profile,
         }
         return render(request, 'profiles/my_profile.html', context)
-    
-    
+
+
 class UserProfileView(View):
     def get(self, request, username, *args, **kwargs):
         user_profile = Profile.objects.get(user__username=username)
@@ -53,14 +52,14 @@ class EditAvatarAjaxView(View):
         user.profile.save()
         avatar_url = user.profile.avatar.url
         return JsonResponse({'success': True, 'avatar_url': avatar_url})
-    
+
 
 class EditProfileView(View):
     def get(self, request, *args, **kwargs):
         profile_form = EditProfileInfoForm(instance=request.user.profile)
         password_form = PasswordChangeForm(user=request.user)
         password_form.fields['old_password'].widget.attrs['autofocus'] = False
-        
+
         avatar_form = ChangeAvatarForm(instance=request.user.profile)
         context = {
             'profile_form': profile_form,
@@ -68,20 +67,25 @@ class EditProfileView(View):
             'avatar_form': avatar_form,
         }
         return render(request, 'profiles/edit_profile.html', context)
-    
+
     def post(self, request, *args, **kwargs):
         if request.POST['form_type'] == 'profile':
-            profile_form = EditProfileInfoForm(request.POST, instance=request.user.profile)
+            profile_form = EditProfileInfoForm(
+                request.POST, instance=request.user.profile)
             if profile_form.is_valid():
                 profile_form.save()
                 return JsonResponse({'success': True})
-            return JsonResponse({'success': False, 'errors': profile_form.errors})
+            return JsonResponse(
+                {'success': False, 'errors': profile_form.errors}
+            )
         if request.POST['form_type'] == 'password':
             password_form = PasswordChangeForm(request.POST)
             if password_form.is_valid():
                 password_form.save()
                 return JsonResponse({'success': True})
-            return JsonResponse({'success': False, 'errors': password_form.errors})
+            return JsonResponse(
+                {'success': False, 'errors': password_form.errors}
+            )
 
 
 class CheckUserOnlineStatusView(View):

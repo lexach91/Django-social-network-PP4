@@ -10,14 +10,15 @@ class ChangeAvatarForm(forms.ModelForm):
             'avatar': forms.ClearableFileInput(attrs={
                 'multiple': False,
                 'class': 'edit-avatar-btn'
-                }),
+            }),
         }
 
 
 class EditProfileInfoForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'country', 'city', 'bio', 'birth_date']
+        fields = ['first_name', 'last_name',
+                  'country', 'city', 'bio', 'birth_date']
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
