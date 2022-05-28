@@ -95,3 +95,11 @@ class ResetAvatarView(View):
             user.profile.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
+
+
+class DeleteUserView(View):
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user = request.user
+            user.delete()
+            return redirect('home')
