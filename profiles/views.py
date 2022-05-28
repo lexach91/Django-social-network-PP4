@@ -36,7 +36,13 @@ class UserProfileView(View):
         post_form = PostForm()
         comment_form = CommentForm()
         posts = user_profile.posts.all()
-        return render(request, 'profiles/user_profile.html', {'user_profile': user_profile, 'post_form': post_form, 'comment_form':comment_form, 'posts': posts})
+        context = {
+            'post_form': post_form,
+            'comment_form': comment_form,
+            'posts': posts,
+            'user_profile': user_profile,
+        }
+        return render(request, 'profiles/user_profile.html', context)
 
 
 class EditAvatarAjaxView(View):
