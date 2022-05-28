@@ -48,7 +48,7 @@
         </p>
       {% endif %}
 
-      <form class="login" method="POST" action="{% url 'account_login' %}" class="allauth-form">
+      <form method="POST" action="{% url 'account_login' %}" class="allauth-form login">
         {% csrf_token %}
         {{ form.as_p }}
         {% if redirect_field_value %}
