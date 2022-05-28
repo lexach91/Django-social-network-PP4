@@ -3019,7 +3019,6 @@ form.create-community-form button[type="submit"],
 }
 
 @media all and (max-width: 400px) {
-
   .home-allauth-button {
     width: 100%;
     margin: 1.5em auto;
@@ -3028,6 +3027,23 @@ form.create-community-form button[type="submit"],
     justify-content: center;
     align-items: center;
     text-decoration: none;
+  }
+  .profile-container {
+    padding: 0.4em;
+  }
+  .avatar-container.edit-page {
+    width: 100%;
+  }
+  .avatar-container.edit-page img {
+    width: 10em;
+    height: 10em;
+  }
+  .password-form input[type=password] {
+    width: 10em;
+  }
+  form.edit-bio button.profile-bio-edit-btn,
+  form.password-form button.password-form-btn {
+    width: 10rem !important;
   }
 }
 
