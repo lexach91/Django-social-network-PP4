@@ -18,11 +18,14 @@ class SearchView(View):
         communities = Community.objects.exclude(
             members__in=[request.user]
         )
+        
+        context = {
+            'profiles': profiles,
+            'communities': communities,
+        }
+        return render(request, 'search/search.html', context)
             
-        return render(request, 'search/search.html', {'profiles': profiles, 'communities': communities})
 
-    
-    
 class SearchPeopleAjax(View):
     def post(self, request, *args, **kwargs):
         search_query = request.POST.get('search_query')
