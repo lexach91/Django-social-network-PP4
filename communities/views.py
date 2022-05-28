@@ -4,14 +4,23 @@ from django.http import JsonResponse, HttpResponseRedirect
 from .models import Community
 from posts.forms import PostForm, CommentForm
 from .forms import CommunityForm
-from feed.models import CommunityCreateEvent, CommunityJoinEvent, CommunityLeaveEvent, CommunityDeleteEvent
+from feed.models import (
+    CommunityCreateEvent,
+    CommunityJoinEvent,
+    CommunityLeaveEvent,
+    CommunityDeleteEvent
+)
 
 
 class UsersCommunitiesView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
         communities = Community.objects.filter(members__in=[user])
-        return render(request, 'communities/users_communities.html', {'communities': communities})
+        return render(
+            request,
+            'communities/users_communities.html',
+            {'communities': communities}
+        )
 
 
 class CommunityView(View):
@@ -27,7 +36,7 @@ class CommunityView(View):
             'posts': posts
         }
         return render(request, 'communities/community.html', context)
-    
+
 
 class JoinCommunityView(View):
     def post(self, request, *args, **kwargs):
@@ -43,7 +52,8 @@ class JoinCommunityView(View):
             community_join_event.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
-    
+
+
 class LeaveCommunityView(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -63,8 +73,12 @@ class LeaveCommunityView(View):
 class CreateCommunityView(View):
     def get(self, request, *args, **kwargs):
         form = CommunityForm()
-        return render(request, 'communities/create_community.html', {'form': form})
-    
+        return render(
+            request,
+            'communities/create_community.html',
+            {'form': form}
+        )
+
     def post(self, request, *args, **kwargs):
         form = CommunityForm(request.POST, request.FILES)
         if form.is_valid():
@@ -79,25 +93,36 @@ class CreateCommunityView(View):
             )
             community_create_event.save()
             return HttpResponseRedirect(f'/communities/{community.slug}/')
-            
+
+
 class EditCommunityView(View):
     def get(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
             form = CommunityForm(instance=community)
-            return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+            return render(
+                request,
+                'communities/create_community.html',
+                {'form': form, 'community': community}
+            )
         return HttpResponseRedirect(f'/communities/{community.slug}/')
-    
+
     def post(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
-            form = CommunityForm(request.POST, request.FILES, instance=community)
+            form = CommunityForm(
+                request.POST, request.FILES, instance=community)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(f'/communities/{community.slug}/')
-            return render(request, 'communities/create_community.html', {'form': form, 'community': community})
+            return render(
+                request,
+                'communities/create_community.html',
+                {'form': form, 'community': community}
+            )
         return HttpResponseRedirect(f'/communities/{community.slug}/')
-    
+
+
 class DeleteCommunityView(View):
     def post(self, request, slug, *args, **kwargs):
         community = Community.objects.get(slug=slug)
@@ -109,6 +134,3 @@ class DeleteCommunityView(View):
             community.delete()
             return HttpResponseRedirect('/communities/')
         return HttpResponseRedirect(f'/communities/{community.slug}/')
-        
-        
-
