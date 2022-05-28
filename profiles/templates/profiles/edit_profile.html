@@ -68,6 +68,23 @@
                     allowClear: true,
                 }
             );
+
+            // when select is opened, prevent page horizontal scroll
+            $('#id_country').on('select2:open', function() {
+                $('body').css('overflow-x', 'hidden');
+            });
+            $('#id_city').on('select2:open', function() {
+                $('body').css('overflow-x', 'hidden');
+            });
+
+            // when select is closed, allow page horizontal scroll
+            $('#id_country').on('select2:close', function() {
+                $('body').css('overflow-x', 'auto');
+            });
+            $('#id_city').on('select2:close', function() {
+                $('body').css('overflow-x', 'auto');
+            });
+
             
             
             // need to fetch only country names from geonames.org
