@@ -11,6 +11,7 @@ from chats.views import (
 
 class TestUrls(SimpleTestCase):
     """Tests for the urls of the chats app."""
+
     def test_my_messages_url(self):
         """Test my messages url"""
         url = reverse('my_messages')
@@ -29,4 +30,5 @@ class TestUrls(SimpleTestCase):
     def test_update_message_read_status_url(self):
         """Test update message read status url"""
         url = reverse('update_message_read_status')
-        self.assertEqual(resolve(url).func.view_class, UpdateMessageReadStatusView)
+        self.assertEqual(resolve(url).func.view_class,
+                         UpdateMessageReadStatusView)

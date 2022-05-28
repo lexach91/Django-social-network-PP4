@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 
 class TestViews(TestCase):
     """Tests for the views of the chats app."""
+
     def setUp(self):
-        """Set up test users"""        
+        """Set up test users"""
         self.user1 = User.objects.create_user(
             username='user1',
             password='Testuser1',
@@ -30,13 +31,13 @@ class TestViews(TestCase):
             last_name='Test',
             email='testuser3@example.com'
         )
-        
-        
+
         self.client = Client()
         self.my_messages_url = reverse('my_messages')
         self.get_message_time_url = reverse('get_message_time')
-        self.update_message_read_status_url = reverse('update_message_read_status')
-        
+        self.update_message_read_status_url = reverse(
+            'update_message_read_status')
+
     def test_my_messages_view(self):
         """Test my messages view"""
         self.client.login(username='user1', password='Testuser1')
@@ -53,12 +54,13 @@ class TestViews(TestCase):
         chat2.members.add(self.user1, self.user3)
         response = self.client.get(self.my_messages_url)
         self.assertEqual(response.context['chats'].count(), 2)
-        
+
     def test_chat_view(self):
         """Test chat view"""
         self.client.login(username='user1', password='Testuser1')
         self.user1.profile.friends.add(self.user2.profile)
-        chat_detail_url = reverse('chat_detail', kwargs={'username': self.user2.username})
+        chat_detail_url = reverse('chat_detail', kwargs={
+                                  'username': self.user2.username})
         response = self.client.get(chat_detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'chats/chat_detail.html')
@@ -78,9 +80,11 @@ class TestViews(TestCase):
         response = self.client.get(chat_detail_url)
         self.assertEqual(response.context['chat'].messages.count(), 1)
         self.assertEqual(response.context['chat'].messages.first(), message1)
-        self.assertEqual(response.context['chat'].messages.first().author, self.user1)
-        self.assertEqual(response.context['chat'].messages.first().content, 'Test message')
-        
+        self.assertEqual(
+            response.context['chat'].messages.first().author, self.user1)
+        self.assertEqual(
+            response.context['chat'].messages.first().content, 'Test message')
+
     def test_get_message_time_view(self):
         """Test get message time ajax view"""
         self.client.login(username='user1', password='Testuser1')
@@ -92,9 +96,11 @@ class TestViews(TestCase):
             content='Test message'
         )
         message_id = message.id
-        response = self.client.post(self.get_message_time_url, {'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(self.get_message_time_url, {
+                                    'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
-        self.assertJSONEqual(response.content.decode('utf-8'), {'sent_at': message.sent_at})
+        self.assertJSONEqual(response.content.decode(
+            'utf-8'), {'sent_at': message.sent_at})
 
     def test_update_message_read_status(self):
         """Test update message is_read status ajax view"""
@@ -108,5 +114,6 @@ class TestViews(TestCase):
         )
         self.assertEqual(message.is_read, False)
         message_id = message.id
-        self.client.post(self.update_message_read_status_url, {'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post(self.update_message_read_status_url, {
+                         'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(Message.objects.get(id=message_id).is_read, True)
