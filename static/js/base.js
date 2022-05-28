@@ -649,7 +649,7 @@ $(document).ready(function() {
         $('.post-form.edit[data-post-id="' + postId + '"]').find('textarea').val(postBackup.find('.post-text').text().trim());
         // need to check if postBackup had an image
         if(postBackup.find('.post-image').length > 0) {
-            console.log('image found')
+            console.log('image found');
             // need to create an image preview for the edit post form
             let previewDiv = document.createElement('div');
             previewDiv.classList.add('preview');
@@ -694,7 +694,7 @@ $(document).ready(function() {
             });
 
         } else {
-            console.log('no image found')
+            console.log('no image found');
             $('.post-form.edit[data-post-id="' + postId + '"]').find('input[type=file]').on('change', imagePreview);
         }
         // need to create a div that will cover all the page except the edit post form
