@@ -1,13 +1,14 @@
 /* jshint esversion: 8, jquery: true, scripturl: true */
-console.log('base.js');
 $(document).ready(function() {
     
+    // Tooltip to all elements that have a title attribute
+    $('*[title]').tooltip();
+
     // -------- posts, comments, profile functions --------
     $('.comments-container').hide();
     $('.post-form input[type="file"]').hide();    
     $('.post-form label[for="id_image"]').html('<i class="fas fa-paperclip"></i>');
     $('.post-form label[for="id_image"]').attr('title', 'Add an image to your post');
-    $('.post-form label[for="id_image"]').tooltip();
     
     const protocol = window.location.protocol;
     const host = window.location.host;
