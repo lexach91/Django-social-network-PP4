@@ -9,13 +9,16 @@ class PostForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={
                 'rows': 3,
-                'placeholder': 'What\'s on your mind?'             
+                'placeholder': 'What\'s on your mind?'
             }),
-            'image': forms.ClearableFileInput(attrs={'multiple': False, 'accept': 'image/*'}),
+            'image': forms.ClearableFileInput(
+                attrs={'multiple': False, 'accept': 'image/*'}
+            ),
             'post_type': forms.HiddenInput(),
             'community': forms.HiddenInput(),
             'profile': forms.HiddenInput(),
         }
+
 
 class CommentForm(forms.ModelForm):
     class Meta:

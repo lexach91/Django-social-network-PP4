@@ -28,7 +28,7 @@ class TestViews(TestCase):
         self.delete_post_url = reverse('delete_post_ajax')
         self.edit_comment_url = reverse('edit_comment_ajax')
         self.delete_comment_url = reverse('delete_comment_ajax')
-        
+
     def test_create_post_ajax(self):
         """Test create post ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -40,8 +40,9 @@ class TestViews(TestCase):
         self.assertEqual(Post.objects.count(), 1)
         self.assertEqual(Post.objects.first().author, self.user)
         self.assertEqual(Post.objects.first().content, 'Test post')
-        self.assertEqual(Post.objects.first().post_type, POST_TYPE_CHOICES[0][0])
-        
+        self.assertEqual(Post.objects.first().post_type,
+                         POST_TYPE_CHOICES[0][0])
+
     def test_like_post_ajax(self):
         """Test like post ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -55,7 +56,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Post.objects.first().get_likes(), 1)
-        
+
     def test_dislike_post_ajax(self):
         """Test dislike post ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -69,7 +70,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Post.objects.first().get_dislikes(), 1)
-        
+
     def test_create_comment_ajax(self):
         """Test create comment ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -87,7 +88,7 @@ class TestViews(TestCase):
         self.assertEqual(Comment.objects.first().author, self.user)
         self.assertEqual(Comment.objects.first().content, 'Test comment')
         self.assertEqual(Comment.objects.first().post, post)
-        
+
     def test_like_comment_ajax(self):
         """Test like comment ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -106,7 +107,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Comment.objects.first().get_likes(), 1)
-        
+
     def test_dislike_comment_ajax(self):
         """Test dislike comment ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -125,7 +126,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Comment.objects.first().get_dislikes(), 1)
-        
+
     def test_edit_post_ajax(self):
         """Test edit post ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -141,7 +142,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Post.objects.first().content, 'Test post edited')
-        
+
     def test_delete_post_ajax(self):
         """Test delete post ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -155,7 +156,7 @@ class TestViews(TestCase):
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Post.objects.count(), 0)
-        
+
     def test_edit_comment_ajax(self):
         """Test edit comment ajax."""
         self.client.login(username='user', password='Testuser1')
@@ -174,8 +175,9 @@ class TestViews(TestCase):
             'comment_content': 'Test comment edited'
         }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Comment.objects.first().content, 'Test comment edited')
-        
+        self.assertEqual(Comment.objects.first().content,
+                         'Test comment edited')
+
     def test_delete_comment_ajax(self):
         """Test delete comment ajax."""
         self.client.login(username='user', password='Testuser1')

@@ -16,18 +16,18 @@ class CreatePostAjaxView(View):
             post.has_media = True if request.FILES else False
             if post.has_media:
                 post.image = request.FILES['image']
-            
+
             post.author = request.user
             post.save()
             # need to return the post object
             avatar = request.user.profile.avatar_url
-            
+
             post_event = PostEvent.objects.create(
-                initiator = request.user,
-                post = post,
+                initiator=request.user,
+                post=post,
             )
             post_event.save()
-            
+
             post_data = {
                 'author': str(post.author.profile),
                 'author_url': f'/profiles/{post.author.username}',
@@ -41,7 +41,7 @@ class CreatePostAjaxView(View):
             return JsonResponse({'success': True, 'post': post_data})
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
-        
+
 
 class LikePostAjaxView(View):
     def post(self, request, *args, **kwargs):
@@ -50,27 +50,27 @@ class LikePostAjaxView(View):
         if request.user in post.likes.all():
             post.likes.remove(request.user)
             like_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                post = post,
-                like = True,
+                initiator=request.user,
+                post=post,
+                like=True,
             ).first()
             if like_event:
                 like_event.delete()
         elif request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
             dislike_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                post = post,
-                like = False,
+                initiator=request.user,
+                post=post,
+                like=False,
             ).first()
             if dislike_event:
                 dislike_event.delete()
         else:
             post.likes.add(request.user)
             like_event = LikeDislikeEvent.objects.create(
-                initiator = request.user,
-                post = post,
-                like = True,
+                initiator=request.user,
+                post=post,
+                like=True,
             )
             like_event.save()
         post.save()
@@ -84,7 +84,7 @@ class LikePostAjaxView(View):
             'dislikes_count': dislikes_count,
             'liked': liked,
             'disliked': disliked
-            })
+        })
 
 
 class DislikePostAjaxView(View):
@@ -94,27 +94,27 @@ class DislikePostAjaxView(View):
         if request.user in post.dislikes.all():
             post.dislikes.remove(request.user)
             dislike_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                post = post,
-                like = False,
+                initiator=request.user,
+                post=post,
+                like=False,
             ).first()
             if dislike_event:
                 dislike_event.delete()
         elif request.user in post.likes.all():
             post.likes.remove(request.user)
             like_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                post = post,
-                like = True,
+                initiator=request.user,
+                post=post,
+                like=True,
             ).first()
             if like_event:
                 like_event.delete()
         else:
             post.dislikes.add(request.user)
             dislike_event = LikeDislikeEvent.objects.create(
-                initiator = request.user,
-                post = post,
-                like = False,
+                initiator=request.user,
+                post=post,
+                like=False,
             )
             dislike_event.save()
         post.save()
@@ -128,7 +128,7 @@ class DislikePostAjaxView(View):
             'dislikes_count': dislikes_count,
             'disliked': disliked,
             'liked': liked
-            })
+        })
 
 
 class CreateCommentAjaxView(View):
@@ -143,9 +143,9 @@ class CreateCommentAjaxView(View):
         )
         comment.save()
         comment_event = CommentEvent.objects.create(
-            initiator = request.user,
-            post = post,
-            comment = comment,
+            initiator=request.user,
+            post=post,
+            comment=comment,
         )
         comment_event.save()
         avatar = comment.author.profile.avatar_url
@@ -168,27 +168,27 @@ class LikeCommentAjaxView(View):
         if request.user in comment.likes.all():
             comment.likes.remove(request.user)
             like_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                comment = comment,
-                like = True,
+                initiator=request.user,
+                comment=comment,
+                like=True,
             ).first()
             if like_event:
                 like_event.delete()
         elif request.user in comment.dislikes.all():
             comment.dislikes.remove(request.user)
             dislike_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                comment = comment,
-                like = False,
+                initiator=request.user,
+                comment=comment,
+                like=False,
             ).first()
             if dislike_event:
                 dislike_event.delete()
         else:
             comment.likes.add(request.user)
             like_event = LikeDislikeEvent.objects.create(
-                initiator = request.user,
-                comment = comment,
-                like = True,
+                initiator=request.user,
+                comment=comment,
+                like=True,
             )
             like_event.save()
         comment.save()
@@ -202,7 +202,7 @@ class LikeCommentAjaxView(View):
             'dislikes_count': dislikes_count,
             'liked': liked,
             'disliked': disliked
-            })
+        })
 
 
 class DislikeCommentAjaxView(View):
@@ -212,27 +212,27 @@ class DislikeCommentAjaxView(View):
         if request.user in comment.dislikes.all():
             comment.dislikes.remove(request.user)
             dislike_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                comment = comment,
-                like = False,
+                initiator=request.user,
+                comment=comment,
+                like=False,
             ).first()
             if dislike_event:
                 dislike_event.delete()
         elif request.user in comment.likes.all():
             comment.likes.remove(request.user)
             like_event = LikeDislikeEvent.objects.filter(
-                initiator = request.user,
-                comment = comment,
-                like = True,
+                initiator=request.user,
+                comment=comment,
+                like=True,
             ).first()
             if like_event:
                 like_event.delete()
         else:
             comment.dislikes.add(request.user)
             dislike_event = LikeDislikeEvent.objects.create(
-                initiator = request.user,
-                comment = comment,
-                like = False,
+                initiator=request.user,
+                comment=comment,
+                like=False,
             )
             dislike_event.save()
         comment.save()
@@ -246,7 +246,7 @@ class DislikeCommentAjaxView(View):
             'dislikes_count': dislikes_count,
             'disliked': disliked,
             'liked': liked
-            })
+        })
 
 
 class EditPostAjaxView(View):
@@ -255,13 +255,16 @@ class EditPostAjaxView(View):
         if request.user == post.author:
             # remove 'post_id' from request.POST
             request_post = request.POST.copy()
-            del request_post['post_id']        
+            del request_post['post_id']
             form = PostForm(request_post, request.FILES, instance=post)
             if form.is_valid():
-                # check if post had an image before and if form doesn't have an image
-                # delete the image from storage
+                # check if post had an image before
+                # and if form doesn't have an image delete image from storage
                 if post.image and not request.FILES.get('image'):
-                    cloudinary.uploader.destroy(post.image.public_id, invalidate=True)
+                    cloudinary.uploader.destroy(
+                        post.image.public_id,
+                        invalidate=True
+                    )
                     post.image = None
                 form.save()
                 image = post.image
@@ -273,7 +276,7 @@ class EditPostAjaxView(View):
                     post.has_media = False
                 post.edited = True
                 post.save()
-                return JsonResponse({'success': True, 'image': image_url})        
+                return JsonResponse({'success': True, 'image': image_url})
         return JsonResponse({'success': False, 'errors': form.errors})
 
 
@@ -286,7 +289,7 @@ class EditCommentAjaxView(View):
             comment.save()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
-            
+
 
 class DeletePostAjaxView(View):
     def post(self, request, *args, **kwargs):
@@ -296,7 +299,7 @@ class DeletePostAjaxView(View):
             post.delete()
             return JsonResponse({'success': True})
         return JsonResponse({'success': False})
-    
+
 
 class DeleteCommentAjaxView(View):
     def post(self, request, *args, **kwargs):
@@ -306,5 +309,11 @@ class DeleteCommentAjaxView(View):
             comment_count = comment.post.comments_count() - 1
             post_id = comment.post.id
             comment.delete()
-            return JsonResponse({'success': True, 'comment_count': comment_count, 'post_id': post_id})
+            return JsonResponse(
+                {
+                    'success': True,
+                    'comment_count': comment_count,
+                    'post_id': post_id
+                }
+            )
         return JsonResponse({'success': False})

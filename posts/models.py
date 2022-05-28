@@ -5,11 +5,11 @@ from profiles.models import Profile
 from communities.models import Community
 
 
-
 POST_TYPE_CHOICES = (
     (1, 'profile_wall'),
     (2, 'community_wall'),
 )
+
 
 class Post(models.Model):
     author = models.ForeignKey(
@@ -22,9 +22,9 @@ class Post(models.Model):
     has_media = models.BooleanField(default=False)
     image = CloudinaryField(
         'post_image',
-        folder = 'posts',
-        null = True,
-        blank = True
+        folder='posts',
+        null=True,
+        blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,19 +54,19 @@ class Post(models.Model):
         related_name='disliked_posts',
         blank=True
     )
-    
+
     def get_likes(self):
         return self.likes.count()
-    
+
     def get_dislikes(self):
         return self.dislikes.count()
-    
+
     def comments_count(self):
         return self.comments.count()
-    
+
     def get_comments(self):
         return self.comments.all()
-    
+
     def get_url(self):
         if self.post_type == 1:
             return f'/profiles/{self.profile.user.username}/#post-{self.id}'
@@ -75,10 +75,9 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        
+
     def __str__(self):
         return self.content
-
 
 
 class Comment(models.Model):
@@ -110,18 +109,24 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created_at']
-    
+
     def __str__(self):
         return self.content
-    
+
     def get_likes(self):
         return self.likes.count()
-    
+
     def get_dislikes(self):
         return self.dislikes.count()
-    
+
     def get_url(self):
         if self.post.post_type == 1:
-            return f'/profiles/{self.post.profile.user.username}/#post-{self.post.id}'
+            url_start = '/profiles/'
+            url_wall = self.post.profile.user.username
+            url_post = f'#post-{self.post.id}'
+            return url_start + url_wall + url_post
         else:
-            return f'/communities/{self.post.community.slug}/#post-{self.post.id}'
+            url_start = '/communities/'
+            url_wall = self.post.community.slug
+            url_post = f'#post-{self.post.id}'
+            return url_start + url_wall + url_post
