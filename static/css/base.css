@@ -1549,6 +1549,7 @@ form.create-community-form label[for="id_bg_image"]::before {
 
 form.create-community-form button[type="submit"],
 .delete-community-button,
+.delete-profile-button,
 .load-more-communities-button,
 .load-more-profiles-button {
   width: 12em;
@@ -1583,7 +1584,8 @@ form.create-community-form button[type="submit"],
   background-color: #8120ff;
 }
 
-.community-creator-options {
+.community-creator-options,
+.profile-delete-container {
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -1595,22 +1597,26 @@ form.create-community-form button[type="submit"],
 }
 
 
-.delete-community-button {
+.delete-community-button,
+.delete-profile-button {
   width: 100%;
   margin: 0 auto;
   max-width: 15em;
   background-color: #2b2b2b;
 }
 
-.delete-community-button:hover {
+.delete-community-button:hover,
+.delete-profile-button:hover {
   background-color: rgb(30, 0, 65);
 }
 
-.delete-community-button i {
+.delete-community-button i,
+.delete-profile-button i {
   margin-left: 0.2em;
 }
 
-.community-creator-options-dropdown {
+.community-creator-options-dropdown,
+.delete-profile-dropdown {
   width: 100%;
   margin: 1.5em auto;
   font-size: 1.2rem;
@@ -1621,11 +1627,13 @@ form.create-community-form button[type="submit"],
   font-size: 1.5rem;
 }
 
-.community-final-deletion {
+.community-final-deletion,
+.profile-final-deletion {
   margin-top: 1.5em;
 }
 
-.community-final-deletion a {
+.community-final-deletion a,
+.profile-final-deletion a {
   padding: 0.3em 1em;
   color: white;
   font-size: 1.2em;
@@ -1640,19 +1648,23 @@ form.create-community-form button[type="submit"],
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.community-final-deletion .delete-confirm {
+.community-final-deletion .delete-confirm,
+.profile-final-deletion .delete-confirm {
   background-color: #db0000;
 }
 
-.community-final-deletion .delete-confirm:hover {
+.community-final-deletion .delete-confirm:hover,
+.profile-final-deletion .delete-confirm:hover {
   background-color: #ff5d5d;
 }
 
-.community-final-deletion .delete-cancel {
+.community-final-deletion .delete-cancel,
+.profile-final-deletion .delete-cancel {
   background-color: #5200b1;
 }
 
-.community-final-deletion .delete-cancel:hover {
+.community-final-deletion .delete-cancel:hover,
+.profile-final-deletion .delete-cancel:hover {
   background-color: #aa5fff;
 }
 
