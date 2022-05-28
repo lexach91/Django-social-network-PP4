@@ -157,14 +157,14 @@
                 friendsModal.addClass('hidden');
                 $('.close-modal-button').off('click');
                 $(friendsModal).off('click');
-                $(document).off('keypress');
+                $(document).off('keydown');
             });
             $(friendsModal).on('click', function(event) {
                 if (event.target === this) {
                     friendsModal.addClass('hidden');
                     $('.close-modal-button').off('click');
                     $(friendsModal).off('click');
-                    $(document).off('keypress');
+                    $(document).off('keydown');
                 }
             });
             $(document).on('keydown', function(event) {
@@ -172,7 +172,7 @@
                     friendsModal.addClass('hidden');
                     $('.close-modal-button').off('click');
                     $(friendsModal).off('click');
-                    $(document).off('keypress');
+                    $(document).off('keydown');
                 }
             });
             
@@ -184,14 +184,14 @@
                 communitiesModal.addClass('hidden');
                 $('.close-modal-button').off('click');
                 $(communitiesModal).off('click');
-                $(document).off('keypress');
+                $(document).off('keydown');
             });
             $(communitiesModal).on('click', function(event) {
                 if (event.target === this) {
                     communitiesModal.addClass('hidden');
                     $('.close-modal-button').off('click');
                     $(communitiesModal).off('click');
-                    $(document).off('keypress');
+                    $(document).off('keydown');
                 }
             });
             $(document).on('keydown', function(event) {
@@ -199,7 +199,7 @@
                     communitiesModal.addClass('hidden');
                     $('.close-modal-button').off('click');
                     $(communitiesModal).off('click');
-                    $(document).off('keypress');
+                    $(document).off('keydown');
                 }
             });
         });
