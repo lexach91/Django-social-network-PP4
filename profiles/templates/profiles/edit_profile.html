@@ -37,6 +37,19 @@
             </form>
         </div>
     </div>
+    <div class="profile-delete-container">
+        <button class="delete-profile-button">
+        Delete account <i class="fas fa-trash-alt"></i>
+        </button>
+        <div class="delete-profile-dropdown hidden">
+        <p>Are you sure you want to permanently delete your account?</p>
+        <p>This action is irreversible!!!</p>
+        <div class="profile-final-deletion">
+            <a class="delete-confirm" href="{% url 'delete-user' %}">Yes, delete</a>
+            <a class="delete-cancel" href="javascript:void(0);">No, cancel</a>
+        </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -325,6 +338,15 @@
                         }
                     });
                 }
+            });
+            $('.delete-profile-button').on('click', (e) => {
+                $('.delete-profile-dropdown').toggleClass('hidden');
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, 'slow');
+            });
+            $('.delete-cancel').on('click', (e) => {
+                $('.delete-profile-dropdown').addClass('hidden');
             });
         });
     </script>
