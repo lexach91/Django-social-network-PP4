@@ -15,7 +15,7 @@
           <input id="communities" type="radio" name="search_type" value="communities" class="search-checkbox">
           <label for="communities" class="btn label-button right" id="sortCommunities">Communities</label>
         </div>
-        <button type="reset" class="search-reset">Reset</button>
+        <button class="search-reset">Reset</button>
       </div>
     </div>
 
@@ -237,6 +237,17 @@
                     
                     search();
                 }
+            });
+            $('.search-reset').on('click', function() {
+                $('input[name="search_query"]').val('');
+                $('input[name="search_type"][value="people"]').prop('checked', true);
+                sortFriends.classList.add('active');
+                sortCommunities.classList.remove('active');
+                $('.search-results-people').html('');
+                $('.search-results-communities').html('');
+                $('.explore-search-title').addClass('hidden');
+                $('.explore-profiles-container').removeClass('hidden');
+                $('.explore-communities-container').addClass('hidden');
             });
         });
     </script>
