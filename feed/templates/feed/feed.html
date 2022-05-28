@@ -495,7 +495,7 @@
                         {% if event.initiator == request.user %}
                             <div class="feed-community">
                                 You joined the community 
-                                <a href="{% url 'community' event.community.slug %}">
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
                                 <div class="feed-avatar-container">
                                     <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
                                 </div>
@@ -504,14 +504,14 @@
                             </div>
                         {% else %}
                             <div class="feed-community">
-                                <a href="{% url 'user_profile' event.initiator.username %}">
+                                <a href="{% url 'user_profile' event.initiator.username %}" class="post-author">
                                 <div class="feed-avatar-container">
                                     <img src="{{ event.initiator.profile.avatar_url }}" alt="avatar" class="feed-avatar-container">
                                 </div>
                                 {{ event.initiator.profile }}
                                 </a>
                                 joined the community 
-                                <a href="{% url 'community' event.community.slug %}">
+                                <a href="{% url 'community' event.community.slug %}" class="post-author">
                                 <div class="feed-avatar-container">
                                     <img src="{{ event.community.logo_url }}" alt="logo" class="feed-community-logo">
                                 </div>
