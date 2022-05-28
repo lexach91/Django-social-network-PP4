@@ -40,15 +40,73 @@
                         <img src="{{ member.profile.avatar_url }}" alt="{{ member.username }}" class="member-avatar">
                     </a>
                 {% endfor %}
-                <a href="#" class="view-all">View all...</a>
             </div>
+            <a href="javascript:void(0);" class="view-all">View all...</a>
         </div>
     </div>
     <div class="profile-wall">
         {% include 'profiles/post_wall.html' %}
     </div>
+
+    <div class="community-members-modal hidden">
+        <div class="members-modal-container">
+            <button class="close-modal-button">&times;</button>
+            <h3>Members of community: {{ community }}</h3>
+            <div class="modal-members-list">
+                {% for member in community.members.all %}
+                    <a href="{% url 'user_profile' member.username %}" class="profile-list-card small">
+                            <div class="profile-list-avatar">
+                                <img src="{{ member.profile.avatar_url }}" alt="avatar" class="profile-list-avatar-img">
+                            </div>
+                            <div class="profile-list-name">
+                                <strong>
+                                    {{ member.profile }}
+                                    {% if member.profile.online %}
+                                        <span class="online-circle"></span>
+                                    {% endif %}
+                                </strong>
+                            </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
     <input type="hidden" value="{{ community.id }}" id="community_id">
     <input type="hidden" value="2" id="post_type">
     {% csrf_token %}
 </div>
+
+<script>
+    $(document).ready(function() {
+        const membersModal = $('.community-members-modal');
+        const viewMembersButton = $('.view-all');
+
+        viewMembersButton.click(function() {
+            membersModal.removeClass('hidden');
+            $('.close-modal-button').on('click', function() {
+                membersModal.addClass('hidden');
+                $('.close-modal-button').off('click');
+                $(membersModal).off('click');
+                $(document).off('keydown');
+            });
+            $(membersModal).on('click', function(event){
+                if(event.target === this) {
+                    membersModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(membersModal).off('click');
+                    $(document).off('keydown');
+                }
+            });
+            $(document).on('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    membersModal.addClass('hidden');
+                    $('.close-modal-button').off('click');
+                    $(membersModal).off('click');
+                    $(document).off('keydown');
+                }
+            });
+        });
+    })
+</script>
 {% endblock %}
