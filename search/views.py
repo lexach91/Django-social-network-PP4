@@ -6,9 +6,11 @@ from profiles.models import Profile
 from communities.models import Community
 
 # Create your views here.
+
+
 class SearchView(View):
     def get(self, request, *args, **kwargs):
-        # get all profiles that request.user is not friends with and himself
+        # get all profiles that request.user is not friends with
         profiles = Profile.objects.exclude(
             friends__in=[request.user.profile]
         ).exclude(
@@ -18,13 +20,13 @@ class SearchView(View):
         communities = Community.objects.exclude(
             members__in=[request.user]
         )
-        
+
         context = {
             'profiles': profiles,
             'communities': communities,
         }
         return render(request, 'search/search.html', context)
-            
+
 
 class SearchPeopleAjax(View):
     def post(self, request, *args, **kwargs):
@@ -33,18 +35,34 @@ class SearchPeopleAjax(View):
             Q(user__username__icontains=search_query) |
             Q(first_name__icontains=search_query) |
             Q(last_name__icontains=search_query) |
-            Q(first_name__icontains=search_query.split()[0], last_name__icontains=search_query.split()[-1]) |
-            Q(first_name__icontains=search_query.split()[-1], last_name__icontains=search_query.split()[0])
+            Q(
+                first_name__icontains=search_query.split()[0],
+                last_name__icontains=search_query.split()[-1]
+            ) |
+            Q(
+                first_name__icontains=search_query.split()[-1],
+                last_name__icontains=search_query.split()[0]
+            )
         )
         if not search_query:
             profiles = Profile.objects.all()
-        profiles_json = [{'username': profile.user.username, 'name': str(profile), 'avatar': profile.avatar_url, 'online': profile.online } for profile in profiles]
+        profiles_json = [
+            {
+                'username': profile.user.username,
+                'name': str(profile),
+                'avatar': profile.avatar_url,
+                'online': profile.online
+            } for profile in profiles
+        ]
         return JsonResponse({'profiles': profiles_json})
-    
+
+
 class SearchCommunitiesAjax(View):
     def post(self, request, *args, **kwargs):
         search_query = request.POST.get('search_query')
-        communities = Community.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
+        communities = Community.objects.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query))
         if not search_query:
             communities = Community.objects.all()
         communities_json = [{
