@@ -3027,7 +3027,7 @@ form.create-community-form button[type="submit"],
     align-items: center;
     text-decoration: none;
   }
-  .profile-container {
+  .profile-container.profile-container-edit {
     padding: 0.4em;
   }
   .avatar-container.edit-page {
