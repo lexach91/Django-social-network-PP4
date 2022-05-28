@@ -15,10 +15,12 @@ from .models import (
     CommunityDeleteEvent
 )
 
-# Create your views here.
+
 class FeedView(View):
     def get(self, request, *args, **kwargs):
-        # get all post events for the user where the initiator is the user or a friend of the user
+        # get all post events for the user where
+        # the initiator is the user or a friend of the user
+        # or the user is the target of an event
         post_events = PostEvent.objects.filter(
             Q(initiator=request.user) |
             Q(initiator__profile__in=request.user.profile.friends.all()) |
@@ -51,7 +53,7 @@ class FeedView(View):
             Q(initiator__profile__in=request.user.profile.friends.all()) |
             Q(target__profile__in=request.user.profile.friends.all())
         )
-        friend_request_declined_events = FriendRequestDeclinedEvent.objects.filter(
+        request_declined_events = FriendRequestDeclinedEvent.objects.filter(
             Q(initiator=request.user) |
             Q(target=request.user) |
             Q(initiator__profile__in=request.user.profile.friends.all()) |
@@ -73,7 +75,6 @@ class FeedView(View):
             Q(initiator=request.user) |
             Q(initiator__profile__in=request.user.profile.friends.all())
         )
-        # now we need to merge all the events into one list and sort them by -timestamp
         all_events = []
         all_events.extend(post_events)
         all_events.extend(comment_events)
@@ -85,7 +86,7 @@ class FeedView(View):
         all_events.extend(community_leave_events)
         all_events.extend(community_create_events)
         all_events.extend(community_delete_events)
-        all_events.extend(friend_request_declined_events)
+        all_events.extend(request_declined_events)
         # sort the events
         all_events.sort(key=lambda x: x.timestamp, reverse=True)
         return render(request, 'feed/feed.html', {'events': all_events})

@@ -14,7 +14,7 @@ from feed.models import (
     RemoveFriendEvent,
     CommunityJoinEvent,
     CommunityLeaveEvent,
-    CommunityCreateEvent,   
+    CommunityCreateEvent,
     CommunityDeleteEvent,
 )
 
@@ -40,7 +40,7 @@ class TestViews(TestCase):
         )
         self.client = Client()
         self.feed_url = reverse('feed')
-        
+
     def test_feed_view_without_events(self):
         """Test feed view with no events"""
         self.client.login(username='user1', password='Testuser1')
@@ -49,7 +49,7 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'feed/feed.html')
         self.assertEqual(response.context['user'], self.user1)
         self.assertEqual(len(response.context['events']), 0)
-        
+
     def test_feed_view_with_events(self):
         """Test feed view with events"""
         self.client.login(username='user1', password='Testuser1')
@@ -82,7 +82,11 @@ class TestViews(TestCase):
             initiator=self.user1,
             target=self.user2,
         )
-        friend_request_declined_event = FriendRequestDeclinedEvent.objects.create(
+        friend_request_event = FriendRequestEvent.objects.create(
+            initiator=self.user1,
+            target=self.user2,
+        )
+        request_declined_event = FriendRequestDeclinedEvent.objects.create(
             initiator=self.user1,
             target=self.user2,
         )
@@ -98,7 +102,7 @@ class TestViews(TestCase):
         community_join_event = CommunityJoinEvent.objects.create(
             community=community,
             initiator=self.user1,
-        )        
+        )
         community_leave_event = CommunityLeaveEvent.objects.create(
             community=community,
             initiator=self.user1,
@@ -111,17 +115,17 @@ class TestViews(TestCase):
             initiator=self.user1,
         )
         response = self.client.get(self.feed_url)
-        self.assertEqual(len(response.context['events']), 10)
+        self.assertEqual(len(response.context['events']), 11)
         self.assertTemplateUsed(response, 'feed/feed.html')
         self.assertEqual(response.context['user'], self.user1)
         self.assertTrue(post_event in response.context['events'])
         self.assertTrue(comment_event in response.context['events'])
         self.assertTrue(like_dislike_event in response.context['events'])
         self.assertTrue(friend_event in response.context['events'])
-        self.assertTrue(friend_request_declined_event in response.context['events'])
+        self.assertTrue(friend_request_event in response.context['events'])
+        self.assertTrue(request_declined_event in response.context['events'])
         self.assertTrue(remove_friend_event in response.context['events'])
         self.assertTrue(community_join_event in response.context['events'])
         self.assertTrue(community_leave_event in response.context['events'])
         self.assertTrue(community_create_event in response.context['events'])
         self.assertTrue(community_delete_event in response.context['events'])
-        

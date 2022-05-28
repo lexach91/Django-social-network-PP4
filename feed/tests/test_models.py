@@ -13,7 +13,7 @@ from feed.models import (
     RemoveFriendEvent,
     CommunityJoinEvent,
     CommunityLeaveEvent,
-    CommunityCreateEvent,   
+    CommunityCreateEvent,
     CommunityDeleteEvent,
 )
 
@@ -37,7 +37,7 @@ class TestModels(TestCase):
             last_name="Test",
             email="test2@test.comj",
         )
-        
+
     def test_post_event_creation(self):
         """Test post event creation"""
         post = Post.objects.create(
@@ -52,7 +52,7 @@ class TestModels(TestCase):
         self.assertEqual(post_event.post, post)
         self.assertEqual(post_event.initiator, self.user1)
         self.assertEqual(post_event.type, "post")
-        
+
     def test_comment_event_creation(self):
         """Test comment event creation"""
         post = Post.objects.create(
@@ -74,7 +74,7 @@ class TestModels(TestCase):
         self.assertEqual(comment_event.initiator, self.user1)
         self.assertEqual(comment_event.type, "comment")
         self.assertEqual(comment_event.post, post)
-        
+
     def test_like_dislike_event_creation(self):
         """Test like dislike event creation"""
         post = Post.objects.create(
@@ -105,8 +105,7 @@ class TestModels(TestCase):
         self.assertEqual(like_dislike_event.initiator, self.user2)
         self.assertEqual(like_dislike_event.type, "like_dislike")
         self.assertFalse(like_dislike_event.like)
-            
-            
+
     def test_friend_event_creation(self):
         """Test friend event creation"""
         friend_event = FriendEvent.objects.create(
@@ -116,7 +115,7 @@ class TestModels(TestCase):
         self.assertEqual(friend_event.initiator, self.user1)
         self.assertEqual(friend_event.target, self.user2)
         self.assertEqual(friend_event.type, "friend_added")
-        
+
     def test_friend_request_event_creation(self):
         """Test friend request event creation"""
         friend_request_event = FriendRequestEvent.objects.create(
@@ -126,17 +125,18 @@ class TestModels(TestCase):
         self.assertEqual(friend_request_event.initiator, self.user1)
         self.assertEqual(friend_request_event.target, self.user2)
         self.assertEqual(friend_request_event.type, "friend_request")
-        
+
     def test_friend_request_declined_event_creation(self):
         """Test friend request declined event creation"""
-        friend_request_declined_event = FriendRequestDeclinedEvent.objects.create(
+        request_declined_event = FriendRequestDeclinedEvent.objects.create(
             initiator=self.user1,
             target=self.user2,
         )
-        self.assertEqual(friend_request_declined_event.initiator, self.user1)
-        self.assertEqual(friend_request_declined_event.target, self.user2)
-        self.assertEqual(friend_request_declined_event.type, "friend_request_declined")
-        
+        self.assertEqual(request_declined_event.initiator, self.user1)
+        self.assertEqual(request_declined_event.target, self.user2)
+        self.assertEqual(request_declined_event.type,
+                         "friend_request_declined")
+
     def test_remove_friend_event_creation(self):
         """Test remove friend event creation"""
         remove_friend_event = RemoveFriendEvent.objects.create(
@@ -146,7 +146,7 @@ class TestModels(TestCase):
         self.assertEqual(remove_friend_event.initiator, self.user1)
         self.assertEqual(remove_friend_event.target, self.user2)
         self.assertEqual(remove_friend_event.type, "friend_removed")
-        
+
     def test_community_join_event_creation(self):
         """Test community join event creation"""
         community = Community.objects.create(
@@ -161,7 +161,7 @@ class TestModels(TestCase):
         self.assertEqual(community_join_event.community, community)
         self.assertEqual(community_join_event.initiator, self.user2)
         self.assertEqual(community_join_event.type, "community_join")
-        
+
     def test_community_leave_event_creation(self):
         """Test community leave event creation"""
         community = Community.objects.create(
@@ -176,7 +176,7 @@ class TestModels(TestCase):
         self.assertEqual(community_leave_event.community, community)
         self.assertEqual(community_leave_event.initiator, self.user2)
         self.assertEqual(community_leave_event.type, "community_leave")
-        
+
     def test_community_create_event_creation(self):
         """Test community create event creation"""
         community = Community.objects.create(
@@ -191,9 +191,9 @@ class TestModels(TestCase):
         self.assertEqual(community_create_event.initiator, self.user1)
         self.assertEqual(community_create_event.community, community)
         self.assertEqual(community_create_event.type, "community_create")
-        
+
     def test_community_delete_event_creation(self):
-        """Test community delete event creation"""        
+        """Test community delete event creation"""
         community_delete_event = CommunityDeleteEvent.objects.create(
             initiator=self.user1,
         )
