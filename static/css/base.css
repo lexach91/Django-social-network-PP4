@@ -3044,6 +3044,9 @@ form.create-community-form button[type="submit"],
   form.password-form button.password-form-btn {
     width: 10rem !important;
   }
+  form.create-community-form button[type="submit"] {
+    width: 10rem !important;
+  }
 }
 
 
