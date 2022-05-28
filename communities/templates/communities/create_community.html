@@ -72,6 +72,9 @@
         });
         $('.delete-community-button').on('click', (e) => {
             $('.community-creator-options-dropdown').toggleClass('hidden');
+            $('html, body').animate({
+                scrollTop: $(document).height()
+            }, 'slow');
         });
         $('.delete-cancel').on('click', (e) => {
             $('.community-creator-options-dropdown').addClass('hidden');
