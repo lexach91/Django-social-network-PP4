@@ -3,7 +3,14 @@
 {% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
 <form class="post-form create">
     {% csrf_token %}
-    {{ post_form }}
+    {% for field in post_form %}
+        {% if field.is_hidden %}
+            {{ field }}
+        {% else %}
+            {{ field.label_tag }}
+            {{ field }}
+        {% endif %}
+    {% endfor %}
     <button type="submit" class="post-submit save-form">Post</button>
 </form>
 {% endif %}
@@ -149,7 +156,14 @@
             {% if request.user in community.members.all or request.user.profile in user_profile.friends.all or request.user == user_profile.user %}
             <form class="comment-form" data-post-id="{{ post.id }}">
                 {% csrf_token %}
-                {{ comment_form }}
+                {% for field in comment_form %}
+                    {% if field.is_hidden %}
+                        {{ field }}
+                    {% else %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
                 <button type="submit" class="comment-submit">Comment</button>
             </form>
             {% endif %}
