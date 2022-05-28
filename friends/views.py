@@ -3,9 +3,14 @@ from django.views import View
 from django.http import JsonResponse
 from .models import FriendRequest
 from profiles.models import Profile
-from feed.models import FriendEvent, FriendRequestEvent, RemoveFriendEvent, FriendRequestDeclinedEvent
+from feed.models import (
+    FriendEvent,
+    FriendRequestEvent,
+    RemoveFriendEvent,
+    FriendRequestDeclinedEvent
+)
 
-# Create your views here.
+
 class SendFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -60,8 +65,7 @@ class AcceptFriendRequest(View):
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
 
-    
-    
+
 class DeclineFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -77,20 +81,22 @@ class DeclineFriendRequest(View):
                 friend_request.accepted = False
                 friend_request.declined = True
                 friend_request.delete()
-                request_declined_event = FriendRequestDeclinedEvent.objects.create(
+                request_declined = FriendRequestDeclinedEvent.objects.create(
                     initiator=declining_profile.user,
                     target=declined_profile.user,
                 )
-                request_declined_event.save()
+                request_declined.save()
                 return JsonResponse({'status': 'ok'})
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
-    
+
+
 class RemoveFriend(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             remover = request.user.profile
-            friend = get_object_or_404(Profile, id=request.POST.get('profile_id'))
+            friend = get_object_or_404(
+                Profile, id=request.POST.get('profile_id'))
             remover.friends.remove(friend)
             friend.friends.remove(remover)
             remover.save()
@@ -101,13 +107,14 @@ class RemoveFriend(View):
             )
             remove_friend_event.save()
             return JsonResponse({'status': 'ok'})
-        
-        
+
+
 class CancelFriendRequest(View):
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             profile1 = request.user.profile
-            profile2 = get_object_or_404(Profile, id=request.POST.get('profile_id'))
+            profile2 = get_object_or_404(
+                Profile, id=request.POST.get('profile_id'))
             friend_request = get_object_or_404(
                 FriendRequest,
                 from_profile=profile1,
@@ -121,6 +128,7 @@ class CancelFriendRequest(View):
             friend_request_event.delete()
             return JsonResponse({'status': 'ok'})
         return JsonResponse({'status': 'error'})
+
 
 class MyFriendsView(View):
     def get(self, request, *args, **kwargs):
