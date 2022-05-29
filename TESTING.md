@@ -128,3 +128,12 @@ Usability was tested with the below user acceptance testing, sent to new users t
 | 3 | User clicks on the community card in the search results | Redirects user to the community page | Y |          |
 
 ---
+
+## Testing User Story
+
+| First Time Visitor Goals | Requirement met | Image |
+| ------------------------- | --------------- | ----- |
+| As a First Time Visitor, I want to be able to easily understand the main purpose of the app, so that I can learn more about this app. | Y | ![Home page](documentation/features/home_page.png)|
+| As a First Time Visitor, I want to be able to easily navigate through the app, so that I can find presented content. | Y | ![Home page](documentation/features/navbar.png)|
+| As a First Time Visitor, I want to be able to register my account, so that I can learn the benefits of the app as a user. | Y | ![Home page](documentation/features/sign_up_page.png)|
+| As a First Time Visitor, I want to be able to find the app useful, so that I can use it according to my needs. | Y | ![Home page](documentation/features/profile_page.png)|
