@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
 
-
 class MyMessagesView(View):
     def get(self, request, *args, **kwargs):
         chats = Chat.objects.filter(members=request.user)

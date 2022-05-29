@@ -1,5 +1,10 @@
 from django.urls import path
-from .views import MyMessagesView, ChatView, GetMessageTimeView, UpdateMessageReadStatusView
+from .views import (
+    MyMessagesView,
+    ChatView,
+    GetMessageTimeView,
+    UpdateMessageReadStatusView
+)
 
 
 urlpatterns = [
