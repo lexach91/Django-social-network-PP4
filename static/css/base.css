@@ -2132,10 +2132,12 @@ form.create-community-form button[type="submit"],
   text-align: center;
 }
 
-.allauth.allauth-logout .allauth-container {
+.allauth.allauth-logout .allauth-container,
+.errors-container {
   margin: 0;
   margin-left: 15rem;
 }
+
 .allauth-title,
 .error-title {
   font-size: 2em;
