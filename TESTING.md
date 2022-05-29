@@ -249,3 +249,11 @@ The responsiveness was checked manually by using devtools (Chrome) throughout th
 [Responsiveness Report](documentation/responsiveness/responsiveness.pdf)
 
 ---
+
+## Bugs
+
+### Solved bugs
+
+### Known bugs
+
+- There is a bug with saving timezone aware datetime objects in the database. It is always saved in UTC timezone. I tried to use built-in `use tz` feature of django, but it did not work. I also tried to modify the save method of models to use `timezone.now()` instead of `datetime.now()`, but it did not work either. I installed `django-easy-timezones` and tried to use it, but it did not work as well. I decided to leave it as it is and just use `timesince` filter in django templates to humanize the displayed time.
