@@ -28,19 +28,25 @@ People who cannot stand the complexity of modern social media apps and want to h
 - As a Frequent User, I can be able to change my password, so that I can be sure that nobody else can access my account.
 - As a Frequent User, I want to be able to update my personal data, so that I can keep my account up to date.
 - As a Frequent User, I want to be able to update my avatar, so that I can keep my avatar up to date.
+- As a Frequent User, I want to be able to delete my profile, so that I can remove my account from the app.
 - As a Frequent User, I want to be able to add friends, so that I can communicate with my friends.
 - As a Frequent User, I want to be able to delete friends, so that I can feel safe in this social network.
+- **As a Frequent User, I want to be able to see whether users are online, so that I can know who is online.**
 - As a Frequent User, I want to be able to search through the users of the social network, so that I can find people who I am interested in.
 - As a Frequent User, I want to be able to search people by their names, so that I can find people who I know.
 - As a Frequent User, I want to be able to add a new post on my page or my friends' pages, so that I can share my knowledge and experiences with others.
 - As a Frequent User, I want to be able to add a new comment on my post, so that I can share my knowledge and experiences with others.
 - As a Frequent User, I want to be able to add a new comment to other people's post, so that I can share my knowledge and experiences with others.
+- As a Frequent User, I want to be able to react to my post, so that I can share my knowledge and experiences with others.
+- As a Frequent User, I want to be able to react to other people's post, so that I can share my knowledge and experiences with others.
+- As a Frequent User, I want to be able to be able to edit/delete my posts, so that I can change my knowledge and experiences.
 - As a Frequent User, I want to be able to create a community, so that I can share my ideas and interests with others.
 - As a Frequent User, I want to be able to join a community, so that I can be a part of that community.
 - As a Frequent User, I want to be able to add a new post in a community, so that I can share my ideas and interests with others.
 - As a Frequent User, I want to be able to add a new comment on my community post, so that I can share my ideas and interests with others.
 - As a Frequent User, I want to be able to share my experiences with other users, so that I can share my knowledge and experiences with others.
 - As a Frequent User, I want to be able to send messages to other users, so that I can communicate with them.
+- As a Frequent User, I want to be able to delete communities that I created, so that I can remove my community from the app.
 
 ## Technologies used
 - ### Languages:
