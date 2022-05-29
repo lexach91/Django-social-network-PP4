@@ -310,7 +310,6 @@ POST_TYPE_CHOICES = (
 | Timestamp     | timestamp     | DateTimeField | auto_now_add=True    |
 | Type          | type          | CharField    | community_delete"      |
 
----
 
 ---
 ## Testing
@@ -354,8 +353,14 @@ Please refer to the [TESTING.md](TESTING.md) file for all test-related documenta
 - [GoFullPage](chrome://extensions/?id=fdpohaocaechififmbbbbbknoalclacl): for allowing to create free full web page screenshots;
 - [Favicon Generator. For real.](https://realfavicongenerator.net/): for providing a free platform to generate favicons.
 - [getcssscan](https://getcssscan.com/css-box-shadow-examples/): for providing a free platform to generate CSS box shadow examples.
+- [Moment.js](https://momentjs.com/): for providing a free platform to humanize time-related data.
+- [EmojiOne](https://emojione.com/): for providing a free platform to use emoji picker.
+- [Google Fonts](https://fonts.google.com/): for providing a free platform to use Google Fonts.
+- [Linkify](https://linkify.js.org/): for providing a free platform to generate links from plain text.
 *All names are fictional and any resemblance to actual events or locales or persons, living or dead, is entirely coincidental.*
 ---
+
 ## Acknowledgments
+
 - [Tim Nelson](https://github.com/TravelTimN), my mentor, who guided me through the development of the project with his advice.
-- [Iuliia Konovalova](https://github.com/IuliiaKonovalova), my wife and my coding partner, who helped me to stay sane and happy during the project development, and helped me to choose the right styles and colors for the project design.
+- [Iuliia Konovalova](https://github.com/IuliiaKonovalova), my wife and my coding partner, who helped me to stay sane and happy during the project development, and assisted me with functionality testing and choosing the right design.
