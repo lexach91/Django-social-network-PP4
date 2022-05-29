@@ -2127,6 +2127,11 @@ form.create-community-form button[type="submit"],
   margin: 1em;
   max-width: 40rem;
 }
+
+.errors-container {
+  text-align: center;
+}
+
 .allauth.allauth-logout .allauth-container {
   margin: 0;
   margin-left: 15rem;
