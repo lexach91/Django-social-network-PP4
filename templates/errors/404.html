@@ -3,8 +3,8 @@
 {% block title %}
     404 - Page not found
 {% endblock %}
-{% if not request.user.is_authorized %}
-  {% block extracss %}
+{% block extracss %}
+{% if not user.is_authenticated %}
     <style>
       body {
         padding-left: 0 !important;
@@ -21,8 +21,8 @@
         }
       }
     </style>
-  {% endblock %}
 {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="errors allauth allauth-logout">
