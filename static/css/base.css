@@ -2133,7 +2133,7 @@ form.create-community-form button[type="submit"],
 }
 
 .allauth.allauth-logout .allauth-container,
-.errors-container {
+.allauth.allauth-logout .errors-container {
   margin: 0;
   margin-left: 15rem;
 }
@@ -2480,7 +2480,7 @@ form.create-community-form button[type="submit"],
   }
 
   .allauth.allauth-logout .allauth-container,
-  .errors-container {  
+  .allauth.allauth-logout .errors-container {  
     margin-left: 7rem;
   }
 
@@ -2698,7 +2698,7 @@ form.create-community-form button[type="submit"],
   }
 
   .allauth.allauth-logout .allauth-container,
-  .errors-container {
+  .allauth.allauth-logout .errors-container {
     margin-left: 4rem;
   }
 
