@@ -241,3 +241,11 @@ Testing was conducted on the following browsers;
 [Compatibility Report](documentation/compatibility/compatibility_firefox.png)
 
 ---
+
+# Responsiveness
+
+The responsiveness was checked manually by using devtools (Chrome) throughout the whole development. It was also checked with [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb/related?hl=en) Chrome extension.
+
+[Responsiveness Report](documentation/responsiveness/responsiveness.pdf)
+
+---
