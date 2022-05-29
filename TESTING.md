@@ -254,6 +254,12 @@ The responsiveness was checked manually by using devtools (Chrome) throughout th
 
 ### Solved bugs
 
+- There was a bug when the user was trying to create a post or a comment, the button could be clicked multiple times and user was getting an error message about sending an empty post or comment. This bug was fixed by adding a disabled attribute to the button and not allowing the user to click it again, until the post or comment was created.
+
+- There was a bug when the user was trying to register a profile was not created automatically and error 500 was returned. This bug was fixed by creating signals that are connected to the user model, and when the user is created, the signal is sent to create the profile as well.
+
+- There was a bug when user was trying to change avatar, all avatars were changed on the page, including the other users' avatars. This bug was fixed by specifying the selector to find the avatars for the current user only and change them.
+
 ### Known bugs
 
 - There is a bug with saving timezone aware datetime objects in the database. It is always saved in UTC timezone. I tried to use built-in `use tz` feature of django, but it did not work. I also tried to modify the save method of models to use `timezone.now()` instead of `datetime.now()`, but it did not work either. I installed `django-easy-timezones` and tried to use it, but it did not work as well. I decided to leave it as it is and just use `timesince` filter in django templates to humanize the displayed time.
