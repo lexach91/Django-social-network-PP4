@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    500 - Internal Server Error
+{% endblock %}
+{% block content %}
+    <div class="error-container">
+        
+            <div class="error">
+                
+                    <h1>Oops!</h1>
+                    <h2>500 Internal Server Error</h2>
+                    <div class="error-details">
+                        Sorry, an error has occurred, Internal Server Error!
+                    </div>
+                    <div class="error-actions">
+                        <a href="{% url 'home' %}" class="save-form">Take Me Home <i class="fa fa-home"></i></a>
+                    </div>
+                
+            </div>
+        
+    </div>
+{% endblock %}
