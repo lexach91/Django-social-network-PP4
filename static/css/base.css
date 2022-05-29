@@ -2104,7 +2104,6 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
-
 .allauth.allauth-logout {
   width: 100%;
   max-width: 75rem;
@@ -2113,8 +2112,6 @@ form.create-community-form button[type="submit"],
   flex-direction: column;
   min-height: 100vh;
 }
-
-
 .allauth-container,
 .errors-container {
   background-color: #535353;
@@ -2130,37 +2127,35 @@ form.create-community-form button[type="submit"],
   margin: 1em;
   max-width: 40rem;
 }
-
-
 .allauth.allauth-logout .allauth-container {
   margin: 0;
   margin-left: 15rem;
 }
-
-.allauth-title {
+.allauth-title,
+.error-title {
   font-size: 2em;
   font-weight: 700;
   margin-bottom: 0.5em;
 }
-
 .allauth-note {
   font-size: 1.2em;
   font-weight: 400;
   margin-bottom: 0.5em;
   text-align: center;
 }
-
+.errors-actions-container {
+  padding-top: 1em;
+}
 .allauth-link,
 .errors-actions {
   font-size: 1.2em;
   font-weight: 700;
-  color: #ddb9ff;
+  color: #DDB9FF;
   text-decoration: none;
 }
-
 .allauth-link:hover,
 .errors-actions:hover {
-  color: #5801ca;
+  color: #5801CA;
 }
 
 .allauth-form {

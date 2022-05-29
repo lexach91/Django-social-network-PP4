@@ -15,13 +15,13 @@
 {% block content %}
     <div class="errors">
         <div class="errors-container">
-            <h1>Oops!</h1>
+            <h1 class="error-title">Oops!</h1>
             <h2>500 Internal Server Error</h2>
             <div class="errors-details">
                 Sorry, an error has occurred, Internal Server Error!
             </div>
-            <div class="errors-actions">
-                <a href="{% url 'home' %}" class="save-form">Take Me Home <i class="fa fa-home"></i></a>
+            <div class="errors-actions-container">
+                <a href="{% url 'home' %}" class="errors-actions">Take Me Home <i class="fa fa-home"></i></a>
             </div>
         </div>
     </div>
