@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import SendFriendRequest, AcceptFriendRequest, DeclineFriendRequest, RemoveFriend, MyFriendsView, CancelFriendRequest
+from .views import (
+    SendFriendRequest,
+    AcceptFriendRequest,
+    DeclineFriendRequest,
+    RemoveFriend,
+    MyFriendsView,
+    CancelFriendRequest
+)
 
 
 urlpatterns = [
