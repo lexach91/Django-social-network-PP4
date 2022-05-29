@@ -3,6 +3,15 @@
 {% block title %}
     500 - Internal Server Error
 {% endblock %}
+{% if not request.user.is_authorized %}
+{% block extracss %}
+<style>
+    body {
+        padding-left: 0 !important;
+    }
+</style>
+{% endblock %}
+{% endif %}
 {% block content %}
     <div class="error-container">
         
