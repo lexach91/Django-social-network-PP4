@@ -162,3 +162,19 @@ Usability was tested with the below user acceptance testing, sent to new users t
 | As a Frequent User, I want to be able to delete communities that I created, so that I can remove my community from the app. | Y | ![Community page. Delete](documentation/features/community_edit_page_delete_options.png)|
 
 ---
+
+## Automated testing
+
+### Django unit testing
+
+Django unit testing is a framework that allows you to write tests for your Django application. It is a good way to test your application's functionality and to make sure that your code is working as expected. 
+
+I tried to cover as much of the project functionality as possible. The total coverage is 93%.
+
+![Full Testing Coverage](documentation/testing/django_testing_1.png)
+
+![Full Testing Coverage](documentation/testing/django_testing_2.png)
+
+![Full Testing Coverage](documentation/testing/django_testing_3.png)
+
+I could not properly test the consumers and routing of the chats and notifications apps, because of the lack of documentation on django-channels website.
