@@ -200,3 +200,12 @@ Jest unit testing will go here......
 - [Full CSS Validation Report](documentation/validation/css_validation.png)
 
 - No errors or warnings were found when passing through the official [W3C (Jigsaw)](https://jigsaw.w3.org/css-validator/#validate_by_uri) validator except for the warnings about the use of css root variables and webkit css rules for the box-shadow. However, css code works perfectly on various devices.
+
+
+### JS Validation:
+
+- [JS Validation Report. base.js](documentation/validation/js_validation_base.png)
+- [JS Validation Report. chatRoom.js](documentation/validation/js_validation_chatroom.png)
+- [JS Validation Report. notifications.js](documentation/validation/js_validation_notifications.png)
+
+- No errors or warning messages were found when passing through the official [JSHint](https://www.jshint.com/) validator. However, the validator complained about undefined variables that come from JS libraries.
