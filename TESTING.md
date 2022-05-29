@@ -181,7 +181,9 @@ I could not properly test the consumers and routing of the chats and notificatio
 
 ### Jest unit testing
 
-Jest unit testing will go here......
+I was not able to do the Jest unit testing because it was throwing an error that a variable $ was not defined.
+The lack of documentation of the official website and around the Internet made it difficult to find the solution. So I decided to skip this part of testing.
+![Jest error](documentation/testing/jest-error.png)
 
 ---
 
