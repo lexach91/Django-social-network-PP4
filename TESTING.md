@@ -137,3 +137,28 @@ Usability was tested with the below user acceptance testing, sent to new users t
 | As a First Time Visitor, I want to be able to easily navigate through the app, so that I can find presented content. | Y | ![Home page](documentation/features/navbar.png)|
 | As a First Time Visitor, I want to be able to register my account, so that I can learn the benefits of the app as a user. | Y | ![Home page](documentation/features/sign_up_page.png)|
 | As a First Time Visitor, I want to be able to find the app useful, so that I can use it according to my needs. | Y | ![Home page](documentation/features/profile_page.png)|
+
+| Frequent Visitor Goals | Requirement met | Image |
+| ----------------------- | --------------- | ----- |
+| As a Frequent User, I want to be able to see whether users are online, so that I can know who is online. | Y | ![Profile page](documentation/features/user_profile_online.png) ![Post wall](documentation/features/user_online.png) ![Friends page](documentation/features/friends_page_user_online.png) ![Messages page](documentation/features/messages_page_user_online.png) ![Chat page](documentation/features/chat_page_user_online.png)|
+| As a Frequent User, I want to be able to log in to my account, so that I can have a personal account. | Y | ![Sign in page](documentation/features/sign_in_page.png)|
+| As a Frequent User, I want to be able to easily navigate through the app, so that I can find the content without additional efforts. | Y | ![Navbar](documentation/features/navbar.png)|
+| As a Frequent User, I want to be able to easily log in and log out, so that I can access my personal account information. | Y | ![Logout page](documentation/features/logout_page.png)|
+| As a Frequent User, I want to be able to easily recover my password in case I forget it, so that I can recover access to my account. | Y | ![Forgot Password page](documentation/features/forgot_password_page.png)|
+| 1. As a Frequent User, I can be able to change my password, so that I can be sure that nobody else can access my account. 2. As a Frequent User, I can be able to change my password, so that I can be sure that nobody else can access my account. 3. As a Frequent User, I want to be able to update my personal data, so that I can keep my account up to date. 4. As a Frequent User, I want to be able to update my avatar, so that I can keep my avatar up to date. | Y | ![Profile Settings page](documentation/features/profile_settings_page.png)|
+| As a Frequent User, I want to be able to delete my profile, so that I can remove my account from the app. | Y | ![Delete Profile page](documentation/features/profile_setting_page_delete_profile_button.png)|
+| As a Frequent User, I want to be able to add friends, so that I can communicate with my friends. | Y | ![Profile page. Add to friends](documentation/features/user_profile_add_to_friends.png)|
+| As a Frequent User, I want to be able to delete friends, so that I can feel safe in this social network. | Y | ![Profile page. Unfriends](documentation/features/user_profile_chat_unfriend_buttons.png)|
+| 1. As a Frequent User, I want to be able to search through the users of the social network, so that I can find people who I am interested in. 2.  As a Frequent User, I want to be able to search people by their names, so that I can find people who I know.| Y | ![Home page](documentation/features/search_page.png)|
+| As a Frequent User, I want to be able to add a new post on my page or my friends' pages, so that I can share my knowledge and experiences with others. | Y | ![Profile page. New post](documentation/features/profile_page_new_post_container.png)|
+| 1. As a Frequent User, I want to be able to react to my post, so that I can share my knowledge and experiences with others. 2. As a Frequent User, I want to be able to react to other people's post, so that I can share my knowledge and experiences with others. | Y | ![Profile page. Reaction post](documentation/features/post_statistics.png)|
+| As a Frequent User, I want to be able to be able to edit/delete my posts, so that I can change my knowledge and experiences. | Y | ![Profile page. Edit post](documentation/features/post_wall_edit_delete_buttons.png)|
+| 1. As a Frequent User, I want to be able to add a new comment on my post, so that I can share my knowledge and experiences with others. 2. As a Frequent User, I want to be able to add a new comment to other people's post, so that I can share my knowledge and experiences with others. | Y | ![Home page](documentation/features/post_wall_comments_all.png)|
+| As a Frequent User, I want to be able to create a community, so that I can share my ideas and interests with others. | Y | ![Community new page](documentation/features/community_new_page.png)|
+| As a Frequent User, I want to be able to join a community, so that I can be a part of that community. | Y | ![Community page. Not creator](documentation/features/community_page_not_creator.png)|
+| As a Frequent User, I want to be able to add a new post in a community, so that I can share my ideas and interests with others. | Y | ![Community page](documentation/features/community_page.png)|
+| As a Frequent User, I want to be able to share my experiences with other users, so that I can share my knowledge and experiences with others. | Y | ![Profile page. Wall Posts](documentation/features/wall_posts.png)|
+|  As a Frequent User, I want to be able to send messages to other users, so that I can communicate with them. | Y | ![Chat page](documentation/features/chat_page.png)|
+| As a Frequent User, I want to be able to delete communities that I created, so that I can remove my community from the app. | Y | ![Community page. Delete](documentation/features/community_edit_page_delete_options.png)|
+
+---
