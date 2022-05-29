@@ -194,3 +194,9 @@ Jest unit testing will go here......
 - [Full HTML Validation Report](documentation/validation/html_validation.pdf)
 
 - There were errors and warnings about duplicated IDs on pages, where there's a posting and commenting functionality. That occurred because of the fact that multiple comment forms were on the same page, under each post. However, this does not affect the functionality of the app, because each comment form is processed separately.
+
+### CSS Validation:
+
+- [Full CSS Validation Report](documentation/validation/css_validation.png)
+
+- No errors or warnings were found when passing through the official [W3C (Jigsaw)](https://jigsaw.w3.org/css-validator/#validate_by_uri) validator except for the warnings about the use of css root variables and webkit css rules for the box-shadow. However, css code works perfectly on various devices.
