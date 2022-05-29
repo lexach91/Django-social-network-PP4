@@ -6,8 +6,18 @@
 {% if not request.user.is_authorized %}
   {% block extracss %}
     <style>
-        body {
+         body {
             padding-left: 0 !important;
+        }
+        @media all and (max-width: 1040px) {
+          .errors-container {
+            margin-left: 0 !important;
+          }
+        }
+        @media all and (max-width: 662px) {
+          .errors-container {
+            margin-left: 0 !important;
+          }
         }
     </style>
   {% endblock %}
