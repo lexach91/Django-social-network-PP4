@@ -4,30 +4,26 @@
     404 - Page not found
 {% endblock %}
 {% if not request.user.is_authorized %}
-{% block extracss %}
-<style>
-    body {
-        padding-left: 0 !important;
-    }
-</style>
-{% endblock %}
+  {% block extracss %}
+    <style>
+        body {
+            padding-left: 0 !important;
+        }
+    </style>
+  {% endblock %}
 {% endif %}
 
 {% block content %}
-    <div class="error-container">
-        
-            <div class="error">
-                
-                    <h1>Oops!</h1>
-                    <h2>404 Not Found</h2>
-                    <div class="error-details">
-                        Sorry, an error has occurred, Requested page not found!
-                    </div>
-                    <div class="error-actions">
-                        <a href="{% url 'home' %}" class="save-form">Take Me Home <i class="fa fa-home"></i></a>
-                    </div>
-                
+    <div class="errors">
+        <div class="errors-container">
+            <h1>Oops!</h1>
+            <h2>404 Not Found</h2>
+            <div class="errors-details">
+                Sorry, an error has occurred, Requested page not found!
             </div>
-        
+            <div class="errors-actions">
+                <a href="{% url 'home' %}" class="save-form">Take Me Home <i class="fa fa-home"></i></a>
+            </div>
+        </div>
     </div>
 {% endblock %}
