@@ -260,6 +260,12 @@ The responsiveness was checked manually by using devtools (Chrome) throughout th
 
 - There was a bug when user was trying to change avatar, all avatars were changed on the page, including the other users' avatars. This bug was fixed by specifying the selector to find the avatars for the current user only and change them.
 
+- Another bug was with a datepicker. The user could choose a birthday that was in the future, and than the age shown in profile was negative. THis bug was fix by allowing the user to choose a date that was in the past minus 10 years.
+
+- There was a bug when the user saw that there are unread messages in their chats, even though they had read them. This bug was fixed by adding a new field to the message model, and checking if the message was read or not.
+
+- Another bug was with the search page. When user was resetting the search query, it would not remove the previous search results from the page. THis bug was fixed by removing the search results from the page when the user reset the search query with help of javascript.
+
 ### Known bugs
 
 - There is a bug with saving timezone aware datetime objects in the database. It is always saved in UTC timezone. I tried to use built-in `use tz` feature of django, but it did not work. I also tried to modify the save method of models to use `timezone.now()` instead of `datetime.now()`, but it did not work either. I installed `django-easy-timezones` and tried to use it, but it did not work as well. I decided to leave it as it is and just use `timesince` filter in django templates to humanize the displayed time.
