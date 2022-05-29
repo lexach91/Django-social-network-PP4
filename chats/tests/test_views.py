@@ -96,8 +96,11 @@ class TestViews(TestCase):
             content='Test message'
         )
         message_id = message.id
-        response = self.client.post(self.get_message_time_url, {
-                                    'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(
+            self.get_message_time_url,
+            {'message_id': message_id},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
         self.assertEqual(response.status_code, 200)
         self.assertJSONEqual(response.content.decode(
             'utf-8'), {'sent_at': message.sent_at})
@@ -114,6 +117,9 @@ class TestViews(TestCase):
         )
         self.assertEqual(message.is_read, False)
         message_id = message.id
-        self.client.post(self.update_message_read_status_url, {
-                         'message_id': message_id}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post(
+            self.update_message_read_status_url,
+            {'message_id': message_id},
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
         self.assertEqual(Message.objects.get(id=message_id).is_read, True)
