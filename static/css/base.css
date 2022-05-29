@@ -2477,7 +2477,8 @@ form.create-community-form button[type="submit"],
     padding-left: 7em;
   }
 
-  .allauth.allauth-logout .allauth-container {
+  .allauth.allauth-logout .allauth-container,
+  .errors-container {
     margin-left: 7rem;
   }
 
@@ -2617,14 +2618,16 @@ form.create-community-form button[type="submit"],
 }
 
 @media all and (max-width: 750px) {
-  .allauth-container {
+  .allauth-container,
+  .errors-container {
     border-radius: 0.4em;
     color: white;
     padding: 1.5em 1em;
     max-width: 30rem;
   }
 
-  .allauth-title {
+  .allauth-title,
+  .error-title {
     font-size: 1.5em;
     margin-bottom: 0.4em;
   }
@@ -2635,7 +2638,8 @@ form.create-community-form button[type="submit"],
     max-width: 90%;
   }
 
-  .allauth-link {
+  .allauth-link,
+  .errors-actions {
     font-size: 1.05em;
     font-weight: 700;
   }
@@ -2691,7 +2695,8 @@ form.create-community-form button[type="submit"],
     padding-left: 4em;
   }
 
-  .allauth.allauth-logout .allauth-container {
+  .allauth.allauth-logout .allauth-container,
+  .errors-container {
     margin-left: 4rem;
   }
 
