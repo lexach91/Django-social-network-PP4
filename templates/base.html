@@ -30,7 +30,11 @@
     {% endblock %}
 
 
-    <title>Document</title>
+    <title>
+      Honeycomb |
+      {% block title %}
+      {% endblock %}
+    </title>
 </head>
 <body>
         {% if user.is_authenticated %}

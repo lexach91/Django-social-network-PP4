@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} {% if community %} Edit: {{ community.name }} {% else %} Create community {% endif %} {% endblock %}
 {% block content %}
 <div class="community-container">
     <div class="community-header">
