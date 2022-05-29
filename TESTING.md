@@ -222,4 +222,22 @@ Jest unit testing will go here......
 
 - Lighthouse report was generated for every pages, using Chrome Dev Tools.
 
+--- 
+
+## Compatibility
+
+Testing was conducted on the following browsers;
+
+- Brave;
+
+[Compatibility Report](documentation/compatibility/compatibility_brave.png)
+
+- Chrome;
+
+[Compatibility Report](documentation/compatibility/compatibility_chrome.png)
+
+- Firefox;
+
+[Compatibility Report](documentation/compatibility/compatibility_firefox.png)
+
 ---
