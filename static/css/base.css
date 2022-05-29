@@ -596,7 +596,7 @@ form.password-form label[for="id_new_password2"] {
   border-radius: 0.2em;
   padding: 1em;
   margin-bottom: 1em;
-  resize: vertical;
+  resize: none;
 }
 
 .post-form label[for="id_content"],
