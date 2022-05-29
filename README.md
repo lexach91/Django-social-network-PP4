@@ -90,6 +90,46 @@ People who cannot stand the complexity of modern social media apps and want to h
 
 
 
+---
+
+## Design
+
+The design of the application is based on the Material Design principles.
+The central theme of the application is the simplicity of use. It was aimed to guide the user to the best experience.
+
+### Color Scheme
+
+The color scheme of the application is based on the dark grey and light purple colors:
+
+  ![Color Scheme](documentation/design/color_palette.png)
+
+The decision to use this color palette was made due to the trend in the modern web design.
+
+
+### Typography
+
+The main font used in the application is Ubuntu. The use of this font is consistent with the color scheme. Needless to say, the Ubuntu font was chosen due to its readability, which increases user experience.
+
+  ![Typography](documentation/design/ubuntu.png)
+
+
+To emphasize the importance of the text, the font-weight was set to 900. To make the accent on the buttons, the font-weight was set to 700. For the rest of the text, the font-weight was set to 400.
+
+### Imagery
+
+- The main background image was generated with the use of the [BGJar](https://www.bgjar.com/) tool. The image was generated with the following settings:
+
+  ![Background](documentation/design/background_main.svg)
+
+To generate this particular pattern, I used Contour Line Generator with white background and #93D3FD54 as the color of the lines. 
+
+
+- The main part is allocated to the use of icons from the [font awesome](https://fontawesome.com/) website. The use of icons is essential for the user experience when it comes to multifunctional websites.
+
+
+### Wireframes
+
+- [Wireframes can be accessed here](documentation/design/wireframes.pdf).
 
 ---
 
