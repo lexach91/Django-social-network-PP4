@@ -178,3 +178,19 @@ I tried to cover as much of the project functionality as possible. The total cov
 ![Full Testing Coverage](documentation/testing/django_testing_3.png)
 
 I could not properly test the consumers and routing of the chats and notifications apps, because of the lack of documentation on django-channels website.
+
+### Jest unit testing
+
+Jest unit testing will go here......
+
+---
+
+## Validation
+
+### HTML Validation:
+
+- HTML validation was done by using the official [W3C](https://validator.w3.org/) validator. This checking was done manually by copying the view page source code (Ctrl+U) and pasting it into the validator.
+
+- [Full HTML Validation Report](documentation/validation/html_validation.pdf)
+
+- There were errors and warnings about duplicated IDs on pages, where there's a posting and commenting functionality. That occurred because of the fact that multiple comment forms were on the same page, under each post. However, this does not affect the functionality of the app, because each comment form is processed separately.
