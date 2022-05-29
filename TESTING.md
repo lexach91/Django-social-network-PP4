@@ -204,7 +204,7 @@ Jest unit testing will go here......
 
 ### JS Validation:
 
-- [JS Validation Report. base.js](documentation/validation/js_validation_base.png)
+- [JS Validation Report. base.js](documentation/validation/js_validation_base_js.png)
 - [JS Validation Report. chatRoom.js](documentation/validation/js_validation_chatroom.png)
 - [JS Validation Report. notifications.js](documentation/validation/js_validation_notifications.png)
 
@@ -214,3 +214,4 @@ Jest unit testing will go here......
 - [Full Python Validation Report](documentation/validation/python_validation.pdf)
 
 - No errors were found when the code was passed through Valentin Bryukhanov's [online validation tool](http://pep8online.com/). According to the reports, the code is [Pep 8-compliant](https://legacy.python.org/dev/peps/pep-0008/). This checking was done manually by copying python code from all the files and pasting it into the validator.
+
