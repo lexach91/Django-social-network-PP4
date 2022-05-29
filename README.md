@@ -317,21 +317,137 @@ Please refer to the [TESTING.md](TESTING.md) file for all test-related documenta
 ---
 ## Deployment
 
+### Heroku
+
+The website is hosted on Heroku and can be accessed by visiting this [link](https://django-social-network-project.herokuapp.com/).
+
+The process for deploying the website to Heroku is as follows:
+
+1. Create a Heroku account if you don't already have one.
+
+2. Create a new app on Heroku.
+
+    1. Go to the [Heroku dashboard](https://dashboard.heroku.com/apps).
+    2. Click on the "New" button.
+    3. Click on the "Create new app" button.
+    4. Choose a name for your app.
+    5. Choose a region.
+    6. Click on the "Create app" button.
+
+3. In your app go to the "Resources" tab.
+
+    1. Add a Heroku Postgres database.
+    2. Add a Heroku Redis database (heroku may ask you for your credit card details, but won't charge).
+
+4. In your app go to the "Settings" tab, press "Reveal Config Vars", and add the following config vars if they are not already set:
+
+    1. ```ALLOWED_HOSTS``` = your heroku domain name.
+    2. ```CLOUDINARY_CLOUD_NAME``` = the cloud name you used when creating your cloudinary account.
+    3. ```CLOUDINARY_API_KEY``` = the api key you got when created your cloudinary account.
+    4. ```CLOUDINARY_API_SECRET``` = the api secret you got when created your cloudinary account.
+    5. ```DATABASE_URL``` = the url of your heroku postgres database.
+    6. ```REDIS_URL``` = the url of your heroku redis database.
+    7. ```SECRET_KEY``` = a secret key for your app.
+    8. ```EMAIL_HOST_USER``` = the email address you going to use to send emails.
+    9. ```EMAIL_HOST_PASSWORD``` = the password for the email address you are using.
+    10. ```DEBUG``` = True during development, False during production.
+    11. ```DISABLE_COLLECTSTATIC``` = 1 during development. Remove this when deploying to production.
+
+5. In your app go to the "Deploy" tab.
+
+    1. If it's already possible, connect your Heroku account to your GitHub account and then click on the "Deploy" button.
+    2. If not, you need to copy the Heroku CLI command to connect your heroku app and your local repository.
+
+        - ```heroku git:remote -a <your-heroku-app-name>```
+
+6. Go to your local repository.
+
+7. Login to your Heroku account in your terminal and connect your local repository to your heroku app.
+
+    1. ```heroku login -i``` - Enter all your Heroku credentials it will ask for.
+    2. Paste the command you copied from step 5 into your terminal.
+
+8. Create Procfile.
+
+    For this project I used Daphne server for its ability to run asynchronous applications, so in my case I had the following Procfile:
+
+    - ```release: python manage.py migrate``` - this command will apply all migrations every time you re-deploy the app.
+    - ```web: daphne social_network.asgi:application --port $PORT --bind 0.0.0.0 -v2``` - this command will run the app.
+    - ```worker: python manage.py runworker -v2 channel_layer``` - this command will run the worker for the channel layer to run the async tasks.
+
+9. Create ```requirements.txt```. This can be done by running the following command:
+
+    - ```pip freeze > requirements.txt```
+    or
+    - ```pipreqs requirements.txt``` - if you have pipreqs installed.
+
+10. Add and commit all changes.
+
+11. Push your changes to Heroku.
+
+    - ```git push heroku master```
+    or
+    - ```git push heroku main```
+
+12. Check the logs of your app in heroku dashboard and make sure everything is working.
+
+13. After the development is done, you can change the ```DEBUG``` config var to ```False``` and remove the ```DISABLE_COLLECTSTATIC``` config var from the config vars on heroku.
 
 
+### Local Deployment
+
+1. Clone the repository.
+
+    - ```git clone https://github.com/lexach91/Django-social-network-PP4.git```
+
+2. Go to the ```Django-social-network-PP4``` directory.
+
+    - ```cd Django-social-network-PP4```
+
+3. Create a virtual environment.
+
+    - ```python3 -m venv venv```
+
+    - ```source venv/bin/activate```
+
+4. Install all dependencies.
+
+    - ```pip install -r requirements.txt```
+
+5. Create a ```env.py``` file.
+
+    - ```touch env.py```
+
+6. Add the following lines to ```env.py```:
+
+    - ```import os```
+    - ```os.environ["SECRET_KEY"]``` = your secret key.
+    - ```os.environ["DEBUG"]``` = "True" or "False" depending on whether you are in development or production.
+    - ```os.environ["DEVELOPMENT"]``` = "True" or "False" depending on whether you are in development or production.
+    - ```os.environ["ALLOWED_HOSTS"]``` = your domain name.
+    - ```os.environ["DATABASE_URL"]``` = your database url.
+    - ```os.environ["CLOUDINARY_CLOUD_NAME"]``` = your cloudinary cloud name.
+    - ```os.environ["CLOUDINARY_API_KEY"]``` = your cloudinary api key.
+    - ```os.environ["CLOUDINARY_API_SECRET"]``` = your cloudinary api secret.
+    - ```os.environ["REDIS_URL"]``` = your redis url.
+
+7. Create and migrate the database.
+
+    - ```python manage.py makemigrations```
+    - ```python manage.py migrate```
+
+8. Create the superuser.
+
+    - ```python manage.py createsuperuser```
+
+9. Run the server.
+
+    - ```python manage.py runserver```
+
+10. Access the website by the link provided in terminal. Add ```/admin/``` at the end of the link to access the admin panel.
 
 
-
-
-
-
-
-
-
-
-
-
-
+P.S. If you are using Gitpod, you can skip steps 1-3 by clicking this [link](https://gitpod.io/#https://github.com/lexach91/Django-social-network-PP4), and start from step 4.
 
 
 
