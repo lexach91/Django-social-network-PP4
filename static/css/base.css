@@ -2478,8 +2478,7 @@ form.create-community-form button[type="submit"],
     padding-left: 7em;
   }
 
-  .allauth.allauth-logout .allauth-container,
-  .allauth.allauth-logout .errors-container {  
+  .allauth.allauth-logout .allauth-container {  
     margin-left: 7rem;
   }
 
@@ -2696,8 +2695,7 @@ form.create-community-form button[type="submit"],
     padding-left: 4em;
   }
 
-  .allauth.allauth-logout .allauth-container,
-  .allauth.allauth-logout .errors-container {
+  .allauth.allauth-logout .allauth-container {
     margin-left: 4rem;
   }
 
