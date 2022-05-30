@@ -313,6 +313,29 @@ Under the community data box, there is a post wall, which starts from the new po
 
 ![Post wall. New Post](documentation/features/community_page_wall.png)
 
+
+**New Community Page**
+
+This page has a main container in which the user can create a new community, add background image, logo, name, description.
+
+![New community page](documentation/features/community_new_page.png)
+
+**Community Settings Page**
+
+This page has a main container in which the user can see a pre populated form with the community's data, which the user can edit.
+
+![Community settings page](documentation/features/community_edit_page.png)
+
+
+Under this form user can see the deletion button. When the user clicks on the button the user will see two options: Yes, delete and No, cancel.
+
+![Community settings page](documentation/features/community_edit_page_delete_options.png)
+
+If the user clicks on the Yes button, the community will be permanently deleted from the database.
+
+
+
+
 ---
 
 ## Design
