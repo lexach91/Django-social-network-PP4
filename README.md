@@ -333,6 +333,19 @@ Under this form user can see the deletion button. When the user clicks on the bu
 
 If the user clicks on the Yes button, the community will be permanently deleted from the database.
 
+**Messages Page**
+
+This page represents the chats list of the user.
+
+![Messages page](documentation/features/messages_page.png)
+
+Each card has an avatar of the user with whom the user is chatting, their name, how long ago the last message was sent, and the last message content + online/offline status.
+
+![User is online](documentation/features/messages_page_user_online.png)
+
+Unread messages are shown in pinkish circle with the number of unread messages in the chat.
+
+![Unread Messages](documentation/features/messages_page_date_unread_messages.png)
 
 
 
