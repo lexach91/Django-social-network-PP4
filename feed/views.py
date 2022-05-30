@@ -17,7 +17,10 @@ from .models import (
 
 
 class FeedView(View):
+    """Class based view for the feed page"""
+
     def get(self, request, *args, **kwargs):
+        """GET method for the feed page"""
         # get all post events for the user where
         # the initiator is the user or a friend of the user
         # or the user is the target of an event
@@ -87,6 +90,6 @@ class FeedView(View):
         all_events.extend(community_create_events)
         all_events.extend(community_delete_events)
         all_events.extend(request_declined_events)
-        # sort the events
+        # sort the events by date from newest to oldest
         all_events.sort(key=lambda x: x.timestamp, reverse=True)
         return render(request, 'feed/feed.html', {'events': all_events})
