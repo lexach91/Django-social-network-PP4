@@ -280,6 +280,39 @@ When the user clicks on the new community button, the user will be redirected to
 
 If the user clicks on the community card, the user will be redirected to the community page.
 
+
+**Community Page**
+
+This page represents the community page.
+
+![Community page](documentation/features/community_page.png)
+
+It has a header with the community data: name, description, number of members and a button. If the user is the creator of the community, the user can see the settings button:
+
+![Community header](documentation/features/community_page_settings_button.png)
+
+When the user clicks on the settings button, the user will be redirected to the community settings page.
+
+
+If the user views a community that the user is a member of but not a creator, the user will see leave community button:
+
+![Community header](documentation/features/leave_community.png)
+
+
+If the user views a community that the user is not a member of, the user will see join community button:
+
+![Community header](documentation/features/community_page_not_creator.png)
+
+It also has data on the members of the community:
+
+![Community members](documentation/features/community_page_members_button.png)
+
+If the user clicks "view all", the modal window will appear with the list of the community's members.
+
+Under the community data box, there is a post wall, which starts from the new post form where the user can write a new post.
+
+![Post wall. New Post](documentation/features/community_page_wall.png)
+
 ---
 
 ## Design
