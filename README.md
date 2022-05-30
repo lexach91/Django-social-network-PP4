@@ -401,6 +401,29 @@ If the user clicks on the community selection button in the search navbar, the s
 If the user clicks on the friend card or community card, the user will be redirected to the profile page of the user or community.
 
 
+**Logout Page**
+
+This page has a main container in which the user can logout.
+
+![Logout page](documentation/features/logout_page.png)
+
+**404 Error Page**
+
+This page is shown when the user tries to access a page that doesn't exist.
+It may contain a navbar if the user is logged in.
+
+![404 error page](documentation/features/error_page_404_logged_in.png)
+
+Or just an error message if the user is not logged in.
+
+![404 error page](documentation/features/error_page_404.png)
+
+**500 Error Page**
+
+This page is shown when the server is not able to process the request.
+
+![500 error page](documentation/features/error_page_500.png)
+
 ---
 
 ## Design
