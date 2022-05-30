@@ -86,6 +86,17 @@ People who cannot stand the complexity of modern social media apps and want to h
 
 
 
+## Features
+
+**Home Page**
+
+When the user is logged out, the website will display a landing page with a login button and a sign up button.
+
+![Home page](documentation/features/home_page.png)
+
+At the bottom of the page, the user can see a the name of the coder and links to the coder's email, linkedin, and github.
+
+
 
 
 
