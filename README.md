@@ -157,6 +157,47 @@ This box also consists of the following information about the user:
 - location;
 - bio;
 
+If the user is viewing another user's profile, the user can see additional information on whether the user is online or not:
+
+![User data container](documentation/features/user_profile_offline.png)
+
+![User data container](documentation/features/user_profile_online.png)
+
+If the user is viewing user's profile of someone who send a friend request to the current user, the user can see the following buttons:
+
+![User data container](documentation/features/user_profile_accept_decline_button.png)
+
+If the user clicks on the accept button, the user will become friends with the user who sent the friend request. If the user clicks on the decline button, the friend request will be declined.
+
+As a result of accepting the friend request, the user will see the following buttons:
+
+![User data container](documentation/features/user_profile_chat_unfriend_buttons.png)
+
+If the user clicks on the chat button, the user will be redirected to the chat page with this user. If the user clicks on the unfriend button, the user will be removed from the friends list.
+
+If the user is viewing user's profile of someone who has not sent a friend request to the current user, the user can see the following:
+
+![User data container](documentation/features/user_profile_add_to_friends.png)
+
+When the user clicks on the add to friends button, the user will see the following buttons:
+
+![User data container](documentation/features/user_profile_pending_request_cancel.png).
+
+If the user clicks cancel button, the friend request will be canceled. Request pending button is disabled till the other user confirms the friend request.
+
+If the user views the other user's profile, under the profile data box their will find 2 blocks:
+
+![Post](documentation/features/user_profile_community_friends_data.png)
+
+This block consists of the information of how many friends the user has and how many communities the user is in. If the user clicks on the button show in the friends container, the modal window will appear with the list of the user's friends. if the user clicks on the button show in the communities container, the modal window will appear with the list of the user's communities.
+
+![Friends modal](documentation/features/friends_modal.png)
+
+![Communities Modal](documentation/features/communities_modal.png)
+
+Under the profile data box, there is a post wall, which starts from the new post form where the user can write a new post.
+
+![Post wall. New Post](documentation/features/profile_page_new_post_container.png)
 ---
 
 ## Design
