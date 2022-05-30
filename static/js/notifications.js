@@ -14,9 +14,12 @@ $(document).ready(function () {
         }, 1000);
     };
 
-    const updateMessagesCount = function (num) {
-        if (num > 0) {
+    const updateMessagesCount = function (data) {
+        if (data.unread_messages > 0) {
             $('.nav-badge.messages-count').text(`(${num})`);
+            $('.message-count[data-chat-id="' + data.chat_id + '"]').text(`(${data.unread_messages})`);
+            $('.message-count[data-chat-id="' + data.chat_id + '"]').removeClass('hidden');
+            $('.message-last-message[data-chat-id="' + data.chat_id + '"]').text(data.message);
         }
         // highlight it
         $('.nav-badge.messages-count').effect('highlight', {
@@ -39,7 +42,7 @@ $(document).ready(function () {
     notificationSocket.onmessage = function (event) {
         const data = JSON.parse(event.data);
         if (data.data.unread_messages) {
-            updateMessagesCount(data.data.unread_messages);
+            updateMessagesCount(data.data);
         } else if (data.data.pending_requests) {
             updateFriendRequests(data.data.pending_requests);
         }
