@@ -347,7 +347,34 @@ Unread messages are shown in pinkish circle with the number of unread messages i
 
 ![Unread Messages](documentation/features/messages_page_date_unread_messages.png)
 
+**Chat Page**
 
+This page represents the chat page with the user's friend.
+
+![Chat page](documentation/features/chat_page.png)
+
+It has a chat a navbar with the following data:
+
+- friend's name and avatar with the link to the friend's profile
+- online/offline status
+
+![Chat navbar](documentation/features/chat_page_user_online.png)
+
+![Chat page](documentation/features/chat_page_user_offline.png)
+
+It also has a chat window where the user can find all the messages between the user and the friend.
+
+![Chat window](documentation/features/chat_page_chat_window.png)
+
+At the bottom of the chat window, the user can write a new in the message box.
+
+![New message box](documentation/features/chat_page_text_input.png)
+
+This box has an emoji button and a send button.
+
+Additionally, the user can see whether the friend is typing or not.
+
+![Typing status](documentation/features/chat_page_user_typing.png)
 
 ---
 
