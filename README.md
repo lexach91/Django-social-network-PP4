@@ -268,6 +268,18 @@ If the friend is online, it will be shown on their card:
 
 ![Friend online](documentation/features/friends_page_user_online.png)
 
+**Communities Page**
+
+This page represents the communities list of the user.
+
+![Communities page](documentation/features/communities_page.png)
+
+It has a new community button in the top right corner, which allows the user to create a new community.
+
+When the user clicks on the new community button, the user will be redirected to the create community page.
+
+If the user clicks on the community card, the user will be redirected to the community page.
+
 ---
 
 ## Design
