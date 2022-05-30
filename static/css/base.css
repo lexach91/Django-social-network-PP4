@@ -2126,6 +2126,7 @@ form.create-community-form button[type="submit"],
   justify-content: center;
   align-items: center;
 }
+
 .allauth.allauth-logout {
   width: 100%;
   max-width: 75rem;
@@ -2134,6 +2135,7 @@ form.create-community-form button[type="submit"],
   flex-direction: column;
   min-height: 100vh;
 }
+
 .allauth-container,
 .errors-container {
   background-color: #535353;
@@ -2165,15 +2167,18 @@ form.create-community-form button[type="submit"],
   font-weight: 700;
   margin-bottom: 0.5em;
 }
+
 .allauth-note {
   font-size: 1.2em;
   font-weight: 400;
   margin-bottom: 0.5em;
   text-align: center;
 }
+
 .errors-actions-container {
   padding-top: 1em;
 }
+
 .allauth-link,
 .errors-actions {
   font-size: 1.2em;
@@ -2181,6 +2186,7 @@ form.create-community-form button[type="submit"],
   color: #DDB9FF;
   text-decoration: none;
 }
+
 .allauth-link:hover,
 .errors-actions:hover {
   color: #5801CA;
@@ -2500,7 +2506,7 @@ form.create-community-form button[type="submit"],
     padding-left: 7em;
   }
 
-  .allauth.allauth-logout .allauth-container {  
+  .allauth.allauth-logout .allauth-container {
     margin-left: 7rem;
   }
 
@@ -2649,6 +2655,7 @@ form.create-community-form button[type="submit"],
 }
 
 @media all and (max-width: 750px) {
+
   .allauth-container,
   .errors-container {
     border-radius: 0.4em;
@@ -2994,6 +3001,7 @@ form.create-community-form button[type="submit"],
 }
 
 @media all and (max-width: 490px) {
+
   .community-final-deletion,
   .profile-final-deletion {
     margin-top: 1em;
@@ -3072,25 +3080,42 @@ form.create-community-form button[type="submit"],
     align-items: center;
     text-decoration: none;
   }
+
   .profile-container.profile-container-edit {
     padding: 0.4em;
   }
+
   .avatar-container.edit-page {
     width: 100%;
   }
+
   .avatar-container.edit-page img {
     width: 10em;
     height: 10em;
   }
+
   .password-form input[type=password] {
     width: 10em;
   }
+
   form.edit-bio button.profile-bio-edit-btn,
   form.password-form button.password-form-btn {
     width: 10rem !important;
   }
+
   form.create-community-form button[type="submit"] {
     width: 10rem !important;
+  }
+
+  .feed-event {
+    padding: 0.5em;
+  }
+
+  .feed-event-header,
+  .feed-community,
+  .feed-friend-request {
+    font-size: 0.8rem;
+    min-height: 4rem:
   }
 }
 
