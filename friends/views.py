@@ -13,7 +13,10 @@ from feed.models import (
 
 
 class SendFriendRequest(View):
+    """Class based view for the sending a friend request"""
+
     def post(self, request, *args, **kwargs):
+        """POST ajax handler for the sending a friend request"""
         if request.is_ajax():
             from_profile = request.user.profile
             profile_id = request.POST.get('profile_id')
@@ -39,7 +42,10 @@ class SendFriendRequest(View):
 
 
 class AcceptFriendRequest(View):
+    """Class based view for the accepting a friend request"""
+
     def post(self, request, *args, **kwargs):
+        """POST ajax handler for the accepting a friend request"""
         if request.is_ajax():
             accepting_profile = request.user.profile
             profile_id = request.POST.get('profile_id')
@@ -63,12 +69,16 @@ class AcceptFriendRequest(View):
                 )
                 friend_event.save()
                 return JsonResponse({'status': 'ok'})
+            # if the request is not found return error
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
 
 
 class DeclineFriendRequest(View):
+    """Class based view for the declining a friend request"""
+
     def post(self, request, *args, **kwargs):
+        """POST ajax handler for the declining a friend request"""
         if request.is_ajax():
             declining_profile = request.user.profile
             profile_id = request.POST.get('profile_id')
@@ -88,12 +98,16 @@ class DeclineFriendRequest(View):
                 )
                 request_declined.save()
                 return JsonResponse({'status': 'ok'})
+            # if the request is not found return error
             return JsonResponse({'status': 'error'})
         return JsonResponse({'status': 'error'})
 
 
 class RemoveFriend(View):
+    """Class based view for the removing a friend"""
+
     def post(self, request, *args, **kwargs):
+        """POST ajax handler for the removing a friend"""
         if request.is_ajax():
             remover = request.user.profile
             friend = get_object_or_404(
@@ -102,23 +116,28 @@ class RemoveFriend(View):
             friend.friends.remove(remover)
             remover.save()
             friend.save()
+            # create an event for the friend removed
             remove_friend_event = RemoveFriendEvent.objects.create(
                 initiator=remover.user,
                 target=friend.user,
             )
             remove_friend_event.save()
+            # find and delete a chat between the two users
             chat = Chat.objects.filter(
-                members=remover.user,                
+                members=remover.user,
             ).filter(
                 members=friend.user,
-            )            
+            )
             if chat:
                 chat.delete()
             return JsonResponse({'status': 'ok'})
 
 
 class CancelFriendRequest(View):
+    """Class based view for the canceling a friend request"""
+
     def post(self, request, *args, **kwargs):
+        """POST ajax handler for the canceling a friend request"""
         if request.is_ajax():
             profile1 = request.user.profile
             profile2 = get_object_or_404(
@@ -139,7 +158,10 @@ class CancelFriendRequest(View):
 
 
 class MyFriendsView(View):
+    """Class based view for the my friends page"""
+
     def get(self, request, *args, **kwargs):
+        """GET method for the my friends page"""
         friends = request.user.profile.friends.all()
         pending_requests = FriendRequest.get_pending_requests().filter(
             to_profile=request.user.profile

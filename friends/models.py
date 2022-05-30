@@ -8,6 +8,7 @@ import json
 
 
 class FriendRequest(models.Model):
+    """Friend Request model"""
     from_profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
@@ -26,34 +27,43 @@ class FriendRequest(models.Model):
     declined = models.BooleanField(default=False)
 
     def __str__(self):
+        """Friend Request model string representation"""
         return f'{self.from_profile} to {self.to_profile}'
 
     def accept(self):
+        """Accepts friend request"""
         self.accepted = True
         self.save()
 
     def decline(self):
+        """Declines friend request"""
         self.declined = True
         self.save()
 
     def is_accepted(self):
+        """Returns True if friend request is accepted"""
         return self.accepted
 
     def is_declined(self):
+        """Returns True if friend request is declined"""
         return self.declined
 
     def is_pending(self):
+        """Returns True if friend request is pending"""
         return not (self.accepted or self.declined)
 
     @classmethod
     def get_all_requests(self):
+        """Class method to get all friend requests"""
         return FriendRequest.objects.all()
 
     @classmethod
     def get_pending_requests(self):
+        """Class method to get all pending friend requests"""
         return FriendRequest.objects.filter(accepted=False, declined=False)
 
     def save(self, *args, **kwargs):
+        """Saves friend request and sends notification to target user"""
         super().save(*args, **kwargs)
         channel_layer = get_channel_layer()
         receiver = self.to_profile.user
