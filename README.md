@@ -131,6 +131,31 @@ For the mobile version, the navbar will be also on the left side of the screen b
 
 ![Navbar](documentation/features/navbar_mobile.png)
 
+**Profile Page**
+
+![Profile page](documentation/features/profile_page.png)
+
+This page has a main container in which the user can see their profile information and post wall.
+
+At the very top of the page, the user data container has the following information:
+
+![User data container](documentation/features/profile_user_data.png)
+
+If the user is logged in and the user is viewing their own profile, the user can see the following buttons:
+
+- Settings button, which leads to the settings page.
+
+![Settings button](documentation/features/profile_settings_button.png)
+
+- Edit avatar button, which allows the user to change the avatar directly from the profile page with the use of ajax without reloading the page.
+
+![Edit avatar button](documentation/features/profile_page_avatar.png)
+
+This box also consists of the following information about the user:
+- name;
+- age;
+- location;
+- bio;
 
 ---
 
