@@ -220,6 +220,27 @@ if the user wants to add comments to the post, the user will see the following:
 
 ![Post](documentation/features/comment_box.png)
 
+
+**Profile Settings Page**
+
+This page has a main container in which the user can see their profile information and edit it.
+
+![Profile settings page](documentation/features/profile_settings_page.png)
+
+Settings page has 3 forms:
+
+1. Changing avatar form
+2. Changing personal information form
+3. Changing password form
+
+
+Under these forms user can see the deletion button. When the user clicks on the button the user will see two options: Yes, delete and No, cancel.
+![Profile settings. Delete account button](documentation/features/profile_setting_page_delete_profile_button.png)
+
+![Profile settings page Delete](documentation/features/profile_delete_options.png)
+
+If the user clicks on the Yes button, the user's account will be permanently deleted from the database.
+
 ---
 
 ## Design
