@@ -40,12 +40,12 @@ class Profile(models.Model):
         related_name='friends'
     )
     country = models.CharField(
-        max_length=25,
+        max_length=50,
         blank=True,
         null=True
     )
     city = models.CharField(
-        max_length=25,
+        max_length=50,
         blank=True,
         null=True
     )
