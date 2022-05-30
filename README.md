@@ -249,6 +249,25 @@ This page represents the activity feed of the users that you are friends with an
 
 It shows the posts of the user's friends and the posts of the user himself, activities in the communities and info about confirmed friends requests.
 
+
+**Friends Page**
+
+This page represents the friends list of the user and friends requests.
+
+![Friends page](documentation/features/friends_page.png)
+
+It also has a navbar with the following buttons:
+
+![Navbar](documentation/features/friends_page_navbar.png)
+
+If the user clicks on the requests button, the user may see the incoming friend requests.
+
+![Incoming friend requests](documentation/features/friends_page_requests.png)
+
+If the friend is online, it will be shown on their card:
+
+![Friend online](documentation/features/friends_page_user_online.png)
+
 ---
 
 ## Design
