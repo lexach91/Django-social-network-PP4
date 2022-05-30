@@ -124,8 +124,6 @@ $(document).ready(function() {
     };
 
     $('.chat-send-button').click(sendMessage);
-    // put a focus on the emojionearea-editor
-    // $(".chat-input").data("emojioneArea").editor.focus();
     // send a message when the enter+ctrl key is pressed
     $(document).keydown(function(event) {
         if (event.keyCode === 13 && event.ctrlKey) {
@@ -139,9 +137,6 @@ $(document).ready(function() {
         } 
     });
     $(document).keyup(function(event) {
-        // if (!(event.keyCode === 13 && event.ctrlKey)) {
-        //     sendTyping();
-        // } 
         // check if user is typing inside the .chat-input or .emojionearea-editor
         if ($('.chat-input').is(':focus') || $('.emojionearea-editor').is(':focus')) {
             sendTyping();
