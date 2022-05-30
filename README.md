@@ -111,6 +111,26 @@ Log in page has a box with 2 inputs where the user can enter their username/emai
 When the user enters the correct username/email and password, the user will be redirected to the feed page.
 
 
+**Navbar**
+
+![Navarbar](documentation/features/navbar.png)
+
+Navbar is located on the left side of the screen and has the following buttons:
+
+- Profile button, which leads to the user's profile page.
+- Feed button, which leads to the feed page.
+- Friends button, which leads to the friends page.
+- Communities button, which leads to the communities page.
+- Messages button, which leads to the messages page.
+- Search button, which leads to the search page.
+- Logout button, which leads to the logout page.
+
+If there are some incoming messages or friends requests, the user will see a notification icon on the navbar. **They are updated real-time with the use of the Django Channels library.**
+
+For the mobile version, the navbar will be also on the left side of the screen but will show only icons and possible incoming messages or friends requests.
+
+![Navbar](documentation/features/navbar_mobile.png)
+
 
 ---
 
