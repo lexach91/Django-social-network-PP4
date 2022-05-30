@@ -7,7 +7,7 @@ $(document).ready(function () {
         const href = $(this).find("a").attr("href").split("/")[1];
         if (href === pathname) {
             // change background color of an active nav item
-            $(this).css("background-color", "#434343");
+            $(this).css("background-color", "#373737");
         }
     });
 
