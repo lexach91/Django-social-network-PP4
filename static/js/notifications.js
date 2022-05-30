@@ -34,7 +34,6 @@ $(document).ready(function() {
 
     notificationSocket.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        console.log(data);
         if(data.data.unread_messages) {
             updateMessagesCount(data.data.unread_messages);
         } else if(data.data.pending_requests) {

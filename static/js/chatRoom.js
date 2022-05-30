@@ -4,7 +4,6 @@ $(document).ready(function() {
     const socketProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 
     const socket = new WebSocket(socketProtocol + '//' + window.location.host + '/ws/chat/' + roomName + '/');
-    console.log(socket);
     const messageContainer = $('.chat-messages');
     messageContainer.scrollTop(messageContainer.prop('scrollHeight'));
 
@@ -22,7 +21,7 @@ $(document).ready(function() {
                 'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value
             },
             success: function(data) {
-                console.log(data);
+                console.log('Message status updated');
             },
             error: function(data) {
                 console.log(data);
@@ -34,7 +33,6 @@ $(document).ready(function() {
 
     socket.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        console.log(data);
         const type = data.type;
         if (type === 'chat_message'){
             $('.no-messages').remove();
@@ -96,13 +94,11 @@ $(document).ready(function() {
     const sendMessage = () => {
         const message = $('.chat-input').val();
         
-        console.log(message);
         // pick up line breaks and links
         let messageContent = message;
         messageContent = messageContent.replace(/\n/g, '<br>');
         // use linkifyjs to convert links to html
         messageContent = linkifyHtml(messageContent);
-        // console.log(username);
         if (message.length > 0) {
             socket.send(
               JSON.stringify({
@@ -140,7 +136,6 @@ $(document).ready(function() {
             message = message.replace(/<\/div>/g, '');
             $('.chat-input').val(message);
             sendMessage();
-            console.log('send message');
         } 
     });
     $(document).keyup(function(event) {
