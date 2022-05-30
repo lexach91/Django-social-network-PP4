@@ -68,6 +68,7 @@ People who cannot stand the complexity of modern social media apps and want to h
     + [SQLite](https://www.sqlite.org/): was used as a database during the development stage of the website.
     + [PostgreSQL](https://www.postgresql.org/): the database used to store all the data.
 - ### Other tools:
+    + [Github Projects and kanban boards](https://github.com/lexach91/Django-social-network-PP4/projects) was used to track the progress of the project in general and of every application in the project.
     + [Linkify](https://linkify.js.org/) was used to transform URLs sent as chat messages into clickable link elements.
     + [EmojiOneArea](https://mervick.github.io/emojionearea/) was used to implement emoji picker in the chat.
     + [Moment.js](https://momentjs.com/) was used to format dates and times in the chat.
