@@ -54,12 +54,20 @@ $(document).ready(function () {
 
             messageText.append(data.message.content);
 
-            let time = moment.utc(data.message.timestamp, 'MMMM D, YYYY, h:mm a').fromNow();
-
-            // let time = moment(data.message.timestamp).fromNow();
-            messageTime.append(time);
-
-            // messageTime.append(data.message.timestamp);
+            let time = new Date();
+            
+            messageTime.append(data.message.timestamp);
+            let timeInterval = setInterval(function () {
+                if (messageTime.text() !== 'a minute ago') {
+                    messageTime.text(moment(time).fromNow());
+                } else {
+                    clearInterval(timeInterval);
+                    timeInterval = setInterval(function () {
+                        messageTime.text(moment(time).fromNow());
+                    }, 60000);
+                }
+            }, 3000);
+            
             chatMessage.append(messageAuthor);
             chatMessage.append(messageText);
             chatMessage.append(messageTime);
