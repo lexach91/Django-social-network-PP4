@@ -92,4 +92,6 @@ class FeedView(View):
         all_events.extend(request_declined_events)
         # sort the events by date from newest to oldest
         all_events.sort(key=lambda x: x.timestamp, reverse=True)
+        # remove duplicates
+        all_events = list(dict.fromkeys(all_events))
         return render(request, 'feed/feed.html', {'events': all_events})
