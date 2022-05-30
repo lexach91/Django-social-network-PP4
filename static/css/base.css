@@ -1996,6 +1996,10 @@ form.create-community-form button[type="submit"],
   border: 1px solid black;
 }
 
+.chat-message:last-child {
+  margin-bottom: 4rem;
+}
+
 .message-author {
   display: flex;
   flex-direction: row;
