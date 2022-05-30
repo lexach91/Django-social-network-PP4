@@ -817,6 +817,20 @@ The process for deploying the website to Heroku is as follows:
 
 13. After the development is done, you can change the ```DEBUG``` config var to ```False``` and remove the ```DISABLE_COLLECTSTATIC``` config var from the config vars on heroku.
 
+To get cloudinary cloud name, api key, and api secret:
+
+1. Go to the [Cloudinary website](https://cloudinary.com/).
+
+2. Log in to your account or sign up if you don't have an account.
+
+3. Go to the [Cloudinary dashboard](https://cloudinary.com/console/).
+
+4. At the top of the page you will see your cloud name, api key, and api secret.
+
+5. To reveal api secret, hover over the api key container and click on the button that looks like an eye.
+
+6. Copy these values and paste them into the config vars on heroku and into your `env.py` file.
+
 
 ### Local Deployment
 
