@@ -45,8 +45,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'type': 'chat_message',  # call chat_message method
                     'message': {
                         'content': message.content,
-                        'timestamp': message.created_at.strftime('%B %d, %Y,'
-                                                                 '%I:%M %p'),
+                        'timestamp': message.sent_at,
                     },
                     'author': {
                         'username': str(profile),
