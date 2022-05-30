@@ -268,6 +268,12 @@ The responsiveness was checked manually by using devtools (Chrome) throughout th
 
 - Another bug was with the search page. When user was resetting the search query, it would not remove the previous search results from the page. THis bug was fixed by removing the search results from the page when the user reset the search query with help of javascript.
 
+GitHub projects and kanban boards were used throughout the project development, which allowed me to track the progress of the project and solve bugs.
+
+![GitHub projects](documentation/testing/projects_list.png)
+
+![Closed issues](documentation/testing/closed_issues.png)
+
 ### Known bugs
 
 - There is a bug with saving timezone aware datetime objects in the database. It is always saved in UTC timezone. I tried to use built-in `use tz` feature of django, but it did not work. I also tried to modify the save method of models to use `timezone.now()` instead of `datetime.now()`, but it did not work either. I installed `django-easy-timezones` and tried to use it, but it did not work as well. I decided to leave it as it is and just use `timesince` filter in django templates to humanize the displayed time.
