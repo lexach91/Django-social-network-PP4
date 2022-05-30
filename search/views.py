@@ -9,7 +9,10 @@ from communities.models import Community
 
 
 class SearchView(View):
+    """Class based view for a search page"""
+
     def get(self, request, *args, **kwargs):
+        """Get method for search page"""
         # get all profiles that request.user is not friends with
         profiles = Profile.objects.exclude(
             friends__in=[request.user.profile]
@@ -29,7 +32,10 @@ class SearchView(View):
 
 
 class SearchPeopleAjax(View):
+    """Class based ajax handler for searching people"""
+
     def post(self, request, *args, **kwargs):
+        """Post method for searching people"""
         search_query = request.POST.get('search_query')
         profiles = Profile.objects.filter(
             Q(user__username__icontains=search_query) |
@@ -45,6 +51,7 @@ class SearchPeopleAjax(View):
             )
         )
         if not search_query:
+            # on empty search query, return all profiles
             profiles = Profile.objects.all()
         profiles_json = [
             {
@@ -58,12 +65,16 @@ class SearchPeopleAjax(View):
 
 
 class SearchCommunitiesAjax(View):
+    """Class based ajax handler for searching communities"""
+
     def post(self, request, *args, **kwargs):
+        """Post method for searching communities"""
         search_query = request.POST.get('search_query')
         communities = Community.objects.filter(
             Q(name__icontains=search_query) |
             Q(description__icontains=search_query))
         if not search_query:
+            # on empty search query, return all communities
             communities = Community.objects.all()
         communities_json = [{
             'name': community.name,
