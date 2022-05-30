@@ -69,6 +69,8 @@ class Message(models.Model):
 
         data = {
             'unread_messages': receivers_unread_messages_count,
+            'chat_id': self.chat.id,
+            'message': str(self.content).replace('<br>', ' ')[:50],
         }
         async_to_sync(channel_layer.group_send)(
             f'notifications_{receiver.username}', {
