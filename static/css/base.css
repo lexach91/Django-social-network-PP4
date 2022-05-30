@@ -1999,7 +1999,7 @@ form.create-community-form button[type="submit"],
   border: 1px solid black;
 }
 
-.chat-message:last-child {
+.chat-messages .chat-message:nth-last-child(2) {
   margin-bottom: 4rem !important;
 }
 
