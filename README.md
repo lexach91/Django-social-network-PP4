@@ -886,7 +886,7 @@ P.S. If you are using Gitpod, you can skip steps 1-3 by clicking this [link](htt
 - [Coolors](https://coolors.co/): for providing a free platform to generate your own palette.
 - [Postgresql](https://www.postgresql.org/): for providing a free database.
 - [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb/related?hl=en): for providing a free platform to test website responsiveness
-- [GoFullPage](chrome://extensions/?id=fdpohaocaechififmbbbbbknoalclacl): for allowing to create free full web page screenshots;
+- [GoFullPage](https://gofullpage.com/): for allowing to create free full web page screenshots;
 - [Favicon Generator. For real.](https://realfavicongenerator.net/): for providing a free platform to generate favicons.
 - [getcssscan](https://getcssscan.com/css-box-shadow-examples/): for providing a free platform to generate CSS box shadow examples.
 - [Moment.js](https://momentjs.com/): for providing a free platform to humanize time-related data.
