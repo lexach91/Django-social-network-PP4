@@ -2,9 +2,9 @@ from django.contrib import admin
 from .models import Profile
 
 
-# admin.site.register(Profile)
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
+    """Profile model admin page configuration"""
     list_display = (
         'user',
         'first_name',

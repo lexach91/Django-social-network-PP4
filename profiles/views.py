@@ -10,7 +10,10 @@ from .models import Profile
 
 
 class MyProfileView(View):
+    """Class based view for my profile page"""
+
     def get(self, request, *args, **kwargs):
+        """Get method for my profile page"""
         post_form = PostForm()
         comment_form = CommentForm()
         posts = Profile.objects.get(user=request.user).posts.all()
@@ -28,7 +31,10 @@ class MyProfileView(View):
 
 
 class UserProfileView(View):
+    """Class based view for other user's profile pages"""
+
     def get(self, request, username, *args, **kwargs):
+        """Get method for other user's profile page"""
         user_profile = Profile.objects.get(user__username=username)
         if user_profile.user == request.user:
             return HttpResponseRedirect(reverse('my_profile'))
@@ -45,7 +51,10 @@ class UserProfileView(View):
 
 
 class EditAvatarAjaxView(View):
+    """Class based ajax handler for changing an avatar"""
+
     def post(self, request, *args, **kwargs):
+        """Post method for changing an avatar"""
         user = request.user
         new_avatar = request.FILES['avatar']
         user.profile.avatar = new_avatar
@@ -55,7 +64,10 @@ class EditAvatarAjaxView(View):
 
 
 class EditProfileView(View):
+    """Class based view for editing a user's profile"""
+
     def get(self, request, *args, **kwargs):
+        """Get method for editing a user's profile"""
         profile_form = EditProfileInfoForm(instance=request.user.profile)
         password_form = PasswordChangeForm(user=request.user)
         password_form.fields['old_password'].widget.attrs['autofocus'] = False
@@ -69,6 +81,8 @@ class EditProfileView(View):
         return render(request, 'profiles/edit_profile.html', context)
 
     def post(self, request, *args, **kwargs):
+        """Post ajax handler for editing a user's profile"""
+        # check which form was submitted and handle separately
         if request.POST['form_type'] == 'profile':
             profile_form = EditProfileInfoForm(
                 request.POST, instance=request.user.profile)
@@ -89,7 +103,10 @@ class EditProfileView(View):
 
 
 class CheckUserOnlineStatusView(View):
+    """Class based view for checking if a user is online"""
+
     def get(self, request, *args, **kwargs):
+        """Get method for checking if a user is online"""
         if request.is_ajax():
             username = request.GET.get('username')
             user = User.objects.get(username=username)
@@ -98,7 +115,10 @@ class CheckUserOnlineStatusView(View):
 
 
 class ResetAvatarView(View):
+    """Class based view for resetting a user's avatar"""
+
     def post(self, request, *args, **kwargs):
+        """Post method for resetting a user's avatar"""
         if request.is_ajax():
             user = request.user
             user.profile.avatar = None
@@ -108,7 +128,10 @@ class ResetAvatarView(View):
 
 
 class DeleteUserView(View):
+    """Class based view for deleting an account"""
+
     def post(self, request, *args, **kwargs):
+        """Post method for deleting an account"""
         if request.user.is_authenticated:
             user = request.user
             user.delete()

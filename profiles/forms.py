@@ -3,7 +3,9 @@ from .models import Profile
 
 
 class ChangeAvatarForm(forms.ModelForm):
+    """Change avatar form"""
     class Meta:
+        """Change avatar form meta"""
         model = Profile
         fields = ['avatar']
         widgets = {
@@ -15,7 +17,9 @@ class ChangeAvatarForm(forms.ModelForm):
 
 
 class EditProfileInfoForm(forms.ModelForm):
+    """Edit profile info form"""
     class Meta:
+        """Edit profile info form meta"""
         model = Profile
         fields = ['first_name', 'last_name',
                   'country', 'city', 'bio', 'birth_date']

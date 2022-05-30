@@ -9,6 +9,7 @@ from chats.models import Message
 
 
 class Profile(models.Model):
+    """Profile model"""
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -56,6 +57,7 @@ class Profile(models.Model):
     )
 
     def __str__(self):
+        """Profile model string representation"""
         if self.first_name and self.last_name:
             return f'{self.first_name} {self.last_name}'
         if self.first_name:
@@ -64,12 +66,14 @@ class Profile(models.Model):
 
     @property
     def avatar_url(self):
+        """Returns either profile's avatar url or the default avatar url"""
         if self.avatar:
             return self.avatar.url
         return '/static/images/default_avatar.svg'
 
     @property
     def age(self):
+        """Calculates and returns the age of the user"""
         if self.birth_date:
             today = date.today()
             return (
@@ -82,6 +86,7 @@ class Profile(models.Model):
 
     @property
     def location(self):
+        """Returns the user's location if it exists"""
         if self.country and self.city:
             return f'{self.country}, {self.city}'
         if self.country:
@@ -92,6 +97,7 @@ class Profile(models.Model):
 
     @property
     def pending_friends_in(self):
+        """Returns the list of pending incoming friend requests"""
         profiles_list = []
         for friend_request in self.friend_request_to_profile.all():
             if not friend_request.accepted and not friend_request.declined:
@@ -100,10 +106,12 @@ class Profile(models.Model):
 
     @property
     def pending_requests_count(self):
+        """Returns the number of pending friend requests"""
         return len(self.pending_friends_in)
 
     @property
     def pending_friends_out(self):
+        """Returns the list of pending outgoing friend requests"""
         profiles_list = []
         for friend_request in self.friend_request_from_profile.all():
             if not friend_request.accepted and not friend_request.declined:
@@ -112,8 +120,7 @@ class Profile(models.Model):
 
     @property
     def unread_messages_count(self):
-        # need to find all unread messages in chats
-        # that user a member of that are unread
+        """Returns the number of unread messages for the user"""
         messages = Message.objects.filter(
             chat__members=self.user,
             is_read=False
@@ -123,10 +130,12 @@ class Profile(models.Model):
         return messages
 
     def last_seen(self):
+        """Returns the last time the user was seen"""
         return cache.get('seen_%s' % self.user.username)
 
     @property
     def online(self):
+        """Returns True if the user was seen in the last 5 minutes"""
         if self.last_seen():
             now = datetime.datetime.now()
             if now > self.last_seen() + datetime.timedelta(
