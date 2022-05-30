@@ -62,7 +62,7 @@
                     {{ message.content|safe|linebreaksbr }}
                 </div>
                 <div class="message-time">
-                    {{ message.created_at|timesince }} ago
+                    {{ message.sent_at }}
                 </div>
             </div>
         {% endfor %}
