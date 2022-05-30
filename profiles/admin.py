@@ -18,5 +18,6 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ['user', 'country', 'city']
 
     def friends_count(self, obj):
+        """Returns the number of friends the user has"""
         return obj.friends.count()
     friends_count.short_description = 'Friends count'

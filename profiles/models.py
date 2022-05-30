@@ -1,9 +1,9 @@
+import datetime
+from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
-from datetime import date
 from django.core.cache import cache
-import datetime
+from cloudinary.models import CloudinaryField
 from social_network import settings
 from chats.models import Message
 

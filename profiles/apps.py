@@ -12,6 +12,7 @@ class ProfilesConfig(AppConfig):
 
     def ready(self):
         """Connect signals to models"""
+        # we do imports here because we can't do it until the app is ready
         from profiles.signals import create_profile
         from django.contrib.auth.models import User
         post_save.connect(create_profile, sender=User)

@@ -1,10 +1,10 @@
 from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.http import JsonResponse, HttpResponseRedirect
-from posts.forms import PostForm, CommentForm
-from .forms import EditProfileInfoForm, ChangeAvatarForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
+from posts.forms import PostForm, CommentForm
+from .forms import EditProfileInfoForm, ChangeAvatarForm
 
 from .models import Profile
 
