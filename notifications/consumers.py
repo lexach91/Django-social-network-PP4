@@ -3,7 +3,9 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
+    """Async websocket consumer to process notifications"""
     async def connect(self):
+        """Connect to notification group"""
         print('connected')
         self.user = self.scope['user']
         self.room_name = self.user.username
@@ -18,6 +20,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             await self.close()
 
     async def disconnect(self, close_code):
+        """Disconnect from notification group"""
         print('disconnected')
         await self.channel_layer.group_discard(
             self.room_group_name,
@@ -25,4 +28,5 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         )
 
     async def send_notification(self, event):
+        """Send notification to WebSocket"""
         await self.send(text_data=json.dumps(event))
