@@ -1,12 +1,10 @@
 from django.contrib import admin
 from .models import Post, Comment
-# Register your models here.
-
-# admin.site.register(Post)
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    """Post model admin page configuration"""
     list_display = (
         'author',
         'content',
@@ -21,6 +19,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """Comment model admin page configuration"""
     list_display = (
         'author',
         'post',

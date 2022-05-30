@@ -12,6 +12,7 @@ POST_TYPE_CHOICES = (
 
 
 class Post(models.Model):
+    """Post model"""
     author = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -56,31 +57,39 @@ class Post(models.Model):
     )
 
     def get_likes(self):
+        """Returns count of the post's likes"""
         return self.likes.count()
 
     def get_dislikes(self):
+        """Returns count of the post's dislikes"""
         return self.dislikes.count()
 
     def comments_count(self):
+        """Returns count of the post's comments"""
         return self.comments.count()
 
     def get_comments(self):
+        """Returns all post's comments"""
         return self.comments.all()
 
     def get_url(self):
+        """Returns post's url with its id"""
         if self.post_type == 1:
             return f'/profiles/{self.profile.user.username}/#post-{self.id}'
         else:
             return f'/communities/{self.community.slug}/#post-{self.id}'
 
     class Meta:
+        """Post model meta"""
         ordering = ['-created_at']
 
     def __str__(self):
+        """Post model string representation"""
         return self.content
 
 
 class Comment(models.Model):
+    """Comment model"""
     author = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -108,18 +117,23 @@ class Comment(models.Model):
     )
 
     class Meta:
+        """Comment model meta"""
         ordering = ['created_at']
 
     def __str__(self):
+        """Comment model string representation"""
         return self.content
 
     def get_likes(self):
+        """Returns count of the comment's likes"""
         return self.likes.count()
 
     def get_dislikes(self):
+        """Returns count of the comment's dislikes"""
         return self.dislikes.count()
 
     def get_url(self):
+        """Returns comment's url with its post id"""
         if self.post.post_type == 1:
             url_start = '/profiles/'
             url_wall = self.post.profile.user.username

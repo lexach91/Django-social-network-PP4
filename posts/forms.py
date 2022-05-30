@@ -3,7 +3,9 @@ from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
+    """Post model form"""
     class Meta:
+        """Post model form meta options"""
         model = Post
         fields = ['content', 'image', 'post_type', 'community', 'profile']
         widgets = {
@@ -21,7 +23,9 @@ class PostForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    """Comment model form"""
     class Meta:
+        """Comment model form meta options"""
         model = Comment
         fields = ['content']
         widgets = {
