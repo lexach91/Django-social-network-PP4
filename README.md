@@ -376,6 +376,31 @@ Additionally, the user can see whether the friend is typing or not.
 
 ![Typing status](documentation/features/chat_page_user_typing.png)
 
+
+**Search Page**
+
+This page represents the search page where the user can search for users and communities.
+
+![Search page](documentation/features/search_page.png)
+
+If the user didn't type anything in the search bar yet, they will be shown recommendations for users they may know if 'people' checkbox is checked, or recommendations for communities they can join if 'communities' checkbox is checked.
+
+
+At the top of the search page, the user can see the search bar with text input, people/communities selection and reset button.
+
+![Search bar](documentation/features/search_page_reset.png)
+
+When the user types in the search bar, the search results will be shown. The search query is sent to the server on every key press.
+
+![Search results](documentation/features/search_page_input.png)
+
+If the user clicks on the community selection button in the search navbar, the search results will be communities.
+
+![Search results](documentation/features/search_page_communities.png)
+
+If the user clicks on the friend card or community card, the user will be redirected to the profile page of the user or community.
+
+
 ---
 
 ## Design
