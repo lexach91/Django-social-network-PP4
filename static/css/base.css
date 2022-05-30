@@ -1949,17 +1949,12 @@ form.create-community-form button[type="submit"],
 
 .typing {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  margin: .5em;
-  margin-bottom: 1.5em;
-  max-width: 10em;
-  word-break: break-word;
-  word-wrap: break-word;
+  padding-left: 1.2em;  
   color: rgb(77, 77, 77);
-  font-size: 1em;
+  font-size: .8em;
   font-weight: 400;
-  padding: 0.5em;
 }
 
 .chat-input {
@@ -1972,6 +1967,7 @@ form.create-community-form button[type="submit"],
 
 .emojionearea .emojionearea-editor {
   max-height: 8em !important;
+  margin-top: .5em !important;
 }
 
 .chat-send-button {
@@ -2003,7 +1999,7 @@ form.create-community-form button[type="submit"],
   border: 1px solid black;
 }
 
-.chat-messages .chat-message:nth-last-child(2) {
+.chat-messages .chat-message:nth-last-child(1) {
   margin-bottom: 4rem !important;
 }
 
