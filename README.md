@@ -524,6 +524,10 @@ To generate this particular pattern, I used Contour Line Generator with white ba
 
 ### Data Modeling
 
+**Entity relationship diagram**
+
+![Entity relationship diagram](documentation/design/entity_relational_diagram.png)
+
 1. **Allauth User Model**
     - The user model was created using [Django-allauth](https://django-allauth.readthedocs.io/en/latest/).
     - The user model was then migrated to PostgreSQL.
@@ -893,6 +897,7 @@ P.S. If you are using Gitpod, you can skip steps 1-3 by clicking this [link](htt
 - [EmojiOne](https://emojione.com/): for providing a free platform to use emoji picker.
 - [Google Fonts](https://fonts.google.com/): for providing a free platform to use Google Fonts.
 - [Linkify](https://linkify.js.org/): for providing a free platform to generate links from plain text.
+- [Trevor.io](https://trevor.io/): for providing a free platform to create the entity relationship diagram.
 *All names are fictional and any resemblance to actual events or locales or persons, living or dead, is entirely coincidental.*
 ---
 
