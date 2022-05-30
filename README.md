@@ -426,6 +426,47 @@ This page is shown when the server is not able to process the request.
 
 ---
 
+## Future Improvements and Features
+
+**Sign-up and Login options**
+
+In the future I would like to add sign-up and login with Facebook, Google, and other social media platforms.
+Also, I would like to add an option to use a phone number instead of an email and send a verification code to the user's phone.
+
+**Full asynchronous functionality**
+
+In the future I would like to make the application fully asynchronous. So all elements in the frontend will be updated real-time as soon as the backend sends the data.
+
+**Video and audio calls**
+
+In the future I would like to add video and audio calls besides text messages.
+
+**Chat improvements**
+
+In the future I would like to allow users to send images, videos, files, and audio messages in the chat.
+
+**Security improvements**
+
+In the future I would like to make the application foolproof against attacks and security vulnerabilities.
+
+**User settings**
+
+In the future I would like to more customization options for the user.
+
+**Group chatting**
+
+In the future I would like to add group chatting for friends and communities.
+
+**Community moderation**
+
+In the future I would like to add community moderation options.
+
+**Dynamic page loading**
+
+In the future I would like to make the application load the pages dynamically and not to pass all the posts and users to the page at once.
+
+---
+
 ## Design
 
 The design of the application is based on the Material Design principles.
