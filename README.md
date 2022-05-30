@@ -241,6 +241,14 @@ Under these forms user can see the deletion button. When the user clicks on the 
 
 If the user clicks on the Yes button, the user's account will be permanently deleted from the database.
 
+**Feed Page**
+
+This page represents the activity feed of the users that you are friends with and the communities that you are in.
+
+![Feed page](documentation/features/feed_page.png)
+
+It shows the posts of the user's friends and the posts of the user himself, activities in the communities and info about confirmed friends requests.
+
 ---
 
 ## Design
