@@ -3109,6 +3109,7 @@ form.create-community-form button[type="submit"],
   form.edit-bio button.profile-bio-edit-btn,
   form.password-form button.password-form-btn {
     width: 10rem !important;
+    font-size: 0.8rem;
   }
 
   form.create-community-form button[type="submit"] {
