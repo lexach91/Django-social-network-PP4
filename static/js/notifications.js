@@ -17,7 +17,7 @@ $(document).ready(function () {
     const updateMessagesCount = function (data) {
         if (data.unread_messages > 0) {
             $('.nav-badge.messages-count').text(`(${data.unread_messages})`);
-            $('.message-count[data-chat-id="' + data.chat_id + '"]').text(`(${data.unread_messages})`);
+            $('.message-count[data-chat-id="' + data.chat_id + '"]').text(`${data.unread_messages}`);
             $('.message-count[data-chat-id="' + data.chat_id + '"]').removeClass('hidden');
             $('.message-last-message[data-chat-id="' + data.chat_id + '"]').text(data.message);
         }
