@@ -20,7 +20,7 @@
                                     {% endif %}
                                     </p>
                                 </div>
-                                <div class="message-last-message">
+                                <div class="message-last-message" data-chat-id="{{ chat.id }}">
                                     {% if chat.get_last_message %}
                                         {% if chat.get_last_message.author == request.user %}
                                             Me: {{ chat.get_last_message|truncatechars:50 }}
@@ -28,7 +28,7 @@
                                             {{ chat.get_last_message|truncatechars:50 }}
                                         {% endif %}
                                     {% else %}
-                                        Chat is empty
+                                        Start chatting
                                     {% endif %}
                                 </div>
                             </div>
@@ -37,8 +37,12 @@
                                     {{ chat.get_last_message.sent_at }}
                                 </div>
                                 {% if chat.unread_messages_count > 0 and chat.get_last_message.author != request.user %}
-                                    <div class="message-count">
+                                    <div class="message-count" data-chat-id="{{ chat.id }}">
                                         {{ chat.unread_messages_count }}
+                                    </div>
+                                {% else %}
+                                    <div class="message-count hidden" data-chat-id="{{ chat.id }}">
+                                        0
                                     </div>
                                 {% endif %}
                             </div>
