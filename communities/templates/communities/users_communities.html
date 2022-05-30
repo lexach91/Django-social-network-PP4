@@ -1,42 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} My communities {% endblock %}
-
 {% block content %}
-<div class="communities-container">
-  <div class="add-community">
-    <a href="{% url 'create_community' %}" class="add-community-button">
-      <div class="add-community-button-name">Create community</div>
-      <i class="fa fa-plus"></i>
-    </a>
-  </div>
-{% if communities %}
-    {% for community in communities %}
-      <a href="{% url 'community' community.slug %}" class="community-card-container">
-        <div class="community-card">
-            <div class="community-card-logo">
-                <img src="{{ community.logo_url }}" alt="{{ community.name }}" class="community-logo-img">
-            </div>
-            <div class="community-card-info">
-              <div class="community-card-name">
-                {{ community }}
-              </div>
-              <div class="community-card-description">
-                {{ community.description }}
-              </div>
-            </div>
-            <div class="community-card-members-count">
-              {{ community.member_count }} members
-            </div>
-        </div>
+  <div class="communities-container">
+    <div class="add-community">
+      <a href="{% url 'create_community' %}" class="add-community-button">
+        <div class="add-community-button-name">Create community</div>
+        <i class="fa fa-plus"></i>
       </a>
-    {% endfor %}
-</div>
-{% else %}
-<h3>You are not a member of any community.</h3>
-<p>Find communities to join on the <a href="{% url 'search' %}">search page</a>.</p>
-<p>Or create your own community using the button above.</p>
-
-{% endif %}
+    </div>
+    {% if communities %}
+      {% for community in communities %}
+        <a href="{% url 'community' community.slug %}" class="community-card-container">
+          <div class="community-card">
+              <div class="community-card-logo">
+                  <img src="{{ community.logo_url }}" alt="{{ community.name }}" class="community-logo-img">
+              </div>
+              <div class="community-card-info">
+                <div class="community-card-name">
+                  {{ community }}
+                </div>
+                <div class="community-card-description">
+                  {{ community.description }}
+                </div>
+              </div>
+              <div class="community-card-members-count">
+                {{ community.member_count }} members
+              </div>
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="no-communities">
+        <h3>You are not a member of any community.</h3>
+        <p>Find communities to join on the <a href="{% url 'search' %}">search page</a>.</p>
+        <p>Or create your own community using the button above.</p>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
