@@ -183,13 +183,13 @@ When the user clicks on the add to friends button, the user will see the followi
 
 ![User data container](documentation/features/user_profile_pending_request_cancel.png).
 
-If the user clicks cancel button, the friend request will be canceled. Request pending button is disabled till the other user confirms the friend request.
+If the user clicks cancel button, the friend request will be canceled. Request pending button is disabled till the other user accepts or declines the friend request, or the user cancels the friend request.
 
 If the user views the other user's profile, under the profile data box their will find 2 blocks:
 
 ![Post](documentation/features/user_profile_community_friends_data.png)
 
-This block consists of the information of how many friends the user has and how many communities the user is in. If the user clicks on the button show in the friends container, the modal window will appear with the list of the user's friends. if the user clicks on the button show in the communities container, the modal window will appear with the list of the user's communities.
+These blocks consists of the information of how many friends the user has and how many communities the user is in. If the user clicks on the button 'show' in the friends container, the modal window will appear with the list of the user's friends. if the user clicks on the button 'show' in the communities container, the modal window will appear with the list of the user's communities.
 
 ![Friends modal](documentation/features/friends_modal.png)
 
@@ -198,6 +198,28 @@ This block consists of the information of how many friends the user has and how 
 Under the profile data box, there is a post wall, which starts from the new post form where the user can write a new post.
 
 ![Post wall. New Post](documentation/features/profile_page_new_post_container.png)
+
+Under the new post box, there is a posts container, which consists of the posts of the user's profile, it might be the posts from the user himself or the posts from the user's friends.
+
+![Posts container](documentation/features/wall_posts.png)
+
+Each post has author's name, how long ago the post was made, and the post itself with statistics.
+if the user is online, the user will see the following:
+
+![Post](documentation/features/user_online.png)
+
+The statistics consist of the number of likes, comments, and dislikes.
+
+![Post](documentation/features/post_statistics.png)
+
+If the user clicks on the comments icon, the comments will be displayed if there are any.
+
+![Post](documentation/features/post_wall_comments_all.png)
+
+if the user wants to add comments to the post, the user will see the following:
+
+![Post](documentation/features/comment_box.png)
+
 ---
 
 ## Design
