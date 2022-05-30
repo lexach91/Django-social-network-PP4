@@ -63,7 +63,7 @@ $(document).ready(function () {
             chatMessage.append(messageAuthor);
             chatMessage.append(messageText);
             chatMessage.append(messageTime);
-            $(messageContainer).find('.typing').before(chatMessage);
+            $(messageContainer).append(chatMessage);
             // check if .typing contains the message author and clear it
             if ($('.typing').text().includes(data.author.username)) {
                 $('.typing').text('');
