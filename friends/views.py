@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from .models import FriendRequest
 from profiles.models import Profile
+from chats.models import Chat
 from feed.models import (
     FriendEvent,
     FriendRequestEvent,
@@ -106,6 +107,13 @@ class RemoveFriend(View):
                 target=friend.user,
             )
             remove_friend_event.save()
+            chat = Chat.objects.filter(
+                members=remover.user,                
+            ).filter(
+                members=friend.user,
+            )            
+            if chat:
+                chat.delete()
             return JsonResponse({'status': 'ok'})
 
 
