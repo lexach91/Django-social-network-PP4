@@ -3,7 +3,9 @@ from .models import Community
 
 
 class CommunityForm(forms.ModelForm):
+    """Community model form"""
     class Meta:
+        """Community model form meta options"""
         model = Community
         fields = ['name', 'description', 'bg_image', 'logo']
 

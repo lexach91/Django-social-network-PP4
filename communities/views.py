@@ -13,7 +13,10 @@ from feed.models import (
 
 
 class UsersCommunitiesView(View):
+    """Class based view for users_communities page"""
+
     def get(self, request, *args, **kwargs):
+        """GET method for users_communities page"""
         user = request.user
         communities = Community.objects.filter(members__in=[user])
         return render(
@@ -24,7 +27,10 @@ class UsersCommunitiesView(View):
 
 
 class CommunityView(View):
+    """Class based view for community page"""
+
     def get(self, request, slug, *args, **kwargs):
+        """GET method for community page"""
         community = Community.objects.get(slug=slug)
         post_form = PostForm()
         comment_form = CommentForm()
@@ -39,7 +45,10 @@ class CommunityView(View):
 
 
 class JoinCommunityView(View):
+    """Class based ajax view for joining community"""
+
     def post(self, request, *args, **kwargs):
+        """POST method for joining community"""
         if request.is_ajax():
             community_id = request.POST.get('community_id')
             community = Community.objects.get(id=community_id)
@@ -55,7 +64,10 @@ class JoinCommunityView(View):
 
 
 class LeaveCommunityView(View):
+    """Class based ajax view for leaving community"""
+
     def post(self, request, *args, **kwargs):
+        """POST method for leaving community"""
         if request.is_ajax():
             community_id = request.POST.get('community_id')
             community = Community.objects.get(id=community_id)
@@ -71,7 +83,10 @@ class LeaveCommunityView(View):
 
 
 class CreateCommunityView(View):
+    """Class based view for creating community"""
+
     def get(self, request, *args, **kwargs):
+        """GET method for creating community"""
         form = CommunityForm()
         return render(
             request,
@@ -80,6 +95,7 @@ class CreateCommunityView(View):
         )
 
     def post(self, request, *args, **kwargs):
+        """POST method for creating community"""
         form = CommunityForm(request.POST, request.FILES)
         if form.is_valid():
             community = form.save(commit=False)
@@ -96,7 +112,10 @@ class CreateCommunityView(View):
 
 
 class EditCommunityView(View):
+    """Class based view for editing community"""
+
     def get(self, request, slug, *args, **kwargs):
+        """GET method for editing community"""
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
             form = CommunityForm(instance=community)
@@ -108,6 +127,7 @@ class EditCommunityView(View):
         return HttpResponseRedirect(f'/communities/{community.slug}/')
 
     def post(self, request, slug, *args, **kwargs):
+        """POST method for editing community"""
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
             form = CommunityForm(
@@ -124,7 +144,10 @@ class EditCommunityView(View):
 
 
 class DeleteCommunityView(View):
+    """Class based view for deleting community"""
+
     def post(self, request, slug, *args, **kwargs):
+        """POST method for deleting community"""
         community = Community.objects.get(slug=slug)
         if request.user == community.creator:
             community_delete_event = CommunityDeleteEvent.objects.create(

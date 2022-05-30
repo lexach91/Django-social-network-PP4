@@ -4,6 +4,7 @@ from .models import Community
 
 @admin.register(Community)
 class CommunityAdmin(admin.ModelAdmin):
+    """Community model admin page configuration"""
     list_display = ('name', 'slug', 'description', 'creator', 'members_count')
     list_filter = ('creator',)
     search_fields = ('name', 'description')
