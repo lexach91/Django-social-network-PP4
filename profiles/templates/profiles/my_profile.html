@@ -23,7 +23,7 @@
             <span>Name: </span>{{ user.profile }}
         </div>
         <div class="profile-age">
-            <span>Age: </span>{{ user.profile.age }} years old
+            <span>Age: </span>{% if user.profile.age %}  {{ user.profile.age }} years old {% else %} Unknown {% endif %}
         </div>
         <div class="profile-location">
             <span>Location:</span>
