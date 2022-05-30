@@ -96,8 +96,19 @@ When the user is logged out, the website will display a landing page with a logi
 
 At the bottom of the page, the user can see a the name of the coder and links to the coder's email, linkedin, and github.
 
+**Sign Up Page**
 
+Sign up page has a box for the user to enter their username, email, email confirmation, password, and password confirmation. After the user clicks the sign up button, the user will be advised to check their email for a confirmation link. It has also a link to sign in page. If the user clicks the link, the user will be redirected to the sign in page.
 
+![Sign up page](documentation/features/sign_up_page.png)
+
+**Login Page**
+
+Log in page has a box with 2 inputs where the user can enter their username/email and password. It also has a remember me checkbox and a login button. It has also a link to the sign up page at the top of the container and Forgot Password link at the bottom of the container. If user clicks on the Forgot Password link, the user will be redirected to the Forgot Password page. If user clicks on the Sign Up link, the user will be redirected to the Sign Up page.
+
+![Home page](documentation/features/sign_in_page.png)
+
+When the user enters the correct username/email and password, the user will be redirected to the feed page.
 
 
 
