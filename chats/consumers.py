@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 from channels.db import database_sync_to_async
 
 
-# consumer for one-to-one chat
 class ChatConsumer(AsyncWebsocketConsumer):
+    """Async websocket consumer to process chat messages"""
     async def connect(self):
+        """Connect to chat group"""
         self.user = self.scope['user']
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
-        # Join room group
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -19,17 +19,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Leave room group
+        """Disconnect from chat group"""
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    # Receive message from WebSocket
     async def receive(self, text_data):
+        """Receive message from WebSocket"""
         text_data_json = json.loads(text_data)
-        type = text_data_json['type']
-        if type == 'chat_message':
+        # message type is passed from js client
+        event_type = text_data_json['type']
+        if event_type == 'chat_message':  # regular chat message
             message = text_data_json['message']
             username = text_data_json['username']
             chat_id = text_data_json['chatId']
@@ -41,7 +42,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'chat_message',
+                    'type': 'chat_message',  # call chat_message method
                     'message': {
                         'content': message.content,
                         'timestamp': message.created_at.strftime('%B %d, %Y,'
@@ -56,24 +57,24 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'sendBy': username,
                 }
             )
-        elif type == 'typing':
+        elif event_type == 'typing':  # user is typing
             username = text_data_json['username']
             chat_id = text_data_json['chatId']
             profile = await self.get_profile(username)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'typing',
+                    'type': 'typing',  # call typing method
                     'username': username,
                     'profile_name': str(profile),
                     'chatId': chat_id,
                 }
             )
 
-    # Receive message from room group
     async def chat_message(self, event):
-        type = event['type']
-        if type == 'chat_message':
+        """Processes chat message event"""
+        event_type = event['type']
+        if event_type == 'chat_message':
             message = event['message']
             author = event['author']
             send_by = event['sendBy']
@@ -88,8 +89,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }))
 
     async def typing(self, event):
-        type = event['type']
-        if type == 'typing':
+        """Processes typing event"""
+        event_type = event['type']
+        if event_type == 'typing':
             username = event['username']
             profile_name = event['profile_name']
             chat_id = event['chatId']
@@ -100,9 +102,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'chatId': chat_id,
             }))
 
-    # function to save message to database
+    # functions to access database and get data asynchronously
     @database_sync_to_async
     def save_message(self, message, username, chat_id):
+        """Saves message to database"""
         chat = Chat.objects.get(id=chat_id)
         author = User.objects.get(username=username)
         content = message
@@ -118,10 +121,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_avatar_url(self, username):
+        """Returns avatar url of user's profile"""
         user = User.objects.get(username=username)
         return user.profile.avatar_url
 
     @database_sync_to_async
     def get_profile(self, username):
+        """Returns user's profile"""
         profile = User.objects.get(username=username).profile
         return profile

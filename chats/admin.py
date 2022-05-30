@@ -4,7 +4,7 @@ from .models import Chat, Message
 
 @admin.register(Chat)
 class ChatAdmin(admin.ModelAdmin):
-    """Chat admin"""
+    """Chat model admin page configuration"""
     list_display = ('get_members', 'created_at',
                     'last_message_at', 'unread_messages_count')
 
@@ -14,7 +14,7 @@ class ChatAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    """Message admin"""
+    """Message model admin page configuration"""
     list_display = ('chat', 'author', 'content',
                     'is_read', 'created_at', 'updated_at')
     list_filter = ('chat', 'author', 'is_read')

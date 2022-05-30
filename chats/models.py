@@ -7,28 +7,33 @@ from asgiref.sync import async_to_sync
 import json
 
 
-# Create your models here.
 class Chat(models.Model):
+    """Chat model"""
     members = models.ManyToManyField(User, related_name='chats')
     created_at = models.DateTimeField(auto_now_add=True)
     last_message_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        """Chat model string representation"""
         members_list = [str(member) for member in self.members.all()]
         members_str = ' and '.join(members_list)
         return f'Chat between {members_str}'
 
     def get_last_message(self):
+        """Returns last message in chat"""
         return self.messages.last()
 
     def unread_messages_count(self):
+        """Returns count of unread messages in chat"""
         return self.messages.filter(is_read=False).count()
 
     class Meta:
+        """Chat model meta options"""
         ordering = ['-last_message_at']
 
 
 class Message(models.Model):
+    """Message model"""
     chat = models.ForeignKey(
         Chat, on_delete=models.CASCADE, related_name='messages')
     author = models.ForeignKey(
@@ -39,13 +44,18 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        """Message model string representation"""
+        # <br> tags are passed from frontend to render new lines easily
         return str(self.content).replace('<br>', ' ')
 
     class Meta:
+        """Message model meta options"""
         ordering = ['created_at']
 
-    # on save update chat's last_message_at and send notification
     def save(self, *args, **kwargs):
+        """
+        Saves message, updates chat's last_message_at, and sends notification
+        """
         super().save(*args, **kwargs)
         self.chat.last_message_at = self.created_at
         self.chat.save()
@@ -69,6 +79,7 @@ class Message(models.Model):
 
     @property
     def sent_at(self):
+        """Returns message's created_at as human readable string"""
         now = datetime.now()
         diff = now - self.created_at.replace(tzinfo=None)
         seconds = diff.seconds
