@@ -116,7 +116,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             content=content
         )
 
-        new_message.save()
         return new_message
 
     @database_sync_to_async
