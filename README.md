@@ -133,6 +133,10 @@ Navbar is located on the left side of the screen and has the following buttons:
 
 If there are some incoming messages or friends requests, the user will see a notification icon on the navbar. **They are updated real-time with the use of the Django Channels library.**
 
+![Navbar incoming message](documentation/features/navbar_incoming_message.png)
+
+![Navbar incoming friend request](documentation/features/navbar_incoming_request.png)
+
 For the mobile version, the navbar will be also on the left side of the screen but will show only icons and possible incoming messages or friends requests.
 
 ![Navbar](documentation/features/navbar_mobile.png)
