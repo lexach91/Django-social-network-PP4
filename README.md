@@ -4,7 +4,7 @@
 
 ## About
 
-The live website can be accessed by visiting this [link](https://django-social-network-project.herokuapp.com/).
+The live website can be accessed by visiting this [link](https://honeycomb-social.onrender.com).
 
 This web application is a social network for people who want to share their knowledge and experiences with others and at the same time keep in touch with the people who are interested in the same things.
 The application allows to communicate with other users by messages, posting, commenting, and reacting to their posts and comments.
@@ -746,10 +746,12 @@ Please refer to the [TESTING.md](TESTING.md) file for all test-related documenta
 ---
 ## Deployment
 
-### Heroku
+### ~~Heroku~~ Render
 
-The website is hosted on Heroku and can be accessed by visiting this [link](https://django-social-network-project.herokuapp.com/).
+The website is hosted on ~~Heroku~~ Render and can be accessed by visiting this [link](https://honeycomb-social.onrender.com).
 
+
+<del>
 The process for deploying the website to Heroku is as follows:
 
 1. Create a Heroku account if you don't already have one.
@@ -835,7 +837,7 @@ To get cloudinary cloud name, api key, and api secret:
 5. To reveal api secret, hover over the api key container and click on the button that looks like an eye.
 
 6. Copy these values and paste them into the config vars on heroku and into your `env.py` file.
-
+</del>
 
 ### Local Deployment
 
