@@ -78,7 +78,7 @@ People who cannot stand the complexity of modern social media apps and want to h
     + [Cloudinary](https://cloudinary.com/): the image hosting service used to upload images and other media.
     + [Psycopg2](https://www.python.org/dev/peps/pep-0249/): the database driver used to connect to the database.
     + [Django-allauth](https://django-allauth.readthedocs.io/en/latest/): the authentication library used to create the user accounts.
-    + [Heroku](https://dashboard.heroku.com/): the hosting service used to host the website.
+    + [Render](https://render.com/): the hosting service used to deploy the website.
     + [GitHub](https://github.com/): used to host the website's source code.
     + [VSCode](https://code.visualstudio.com/): the IDE used to develop the website.
     + [Chrome DevTools](https://developer.chrome.com/docs/devtools/open/): was used to debug the website.
@@ -746,12 +746,15 @@ Please refer to the [TESTING.md](TESTING.md) file for all test-related documenta
 ---
 ## Deployment
 
-### ~~Heroku~~ Render
+**The app was initially deployed to Heroku then moved to Render since Heroku has removed its free tier services from November 29 2022**
 
-The website is hosted on ~~Heroku~~ Render and can be accessed by visiting this [link](https://honeycomb-social.onrender.com).
+- The app was deployed to [Render](https://render.com/).
+- The database was deployed to [ElephantSQL](https://www.elephantsql.com/).
 
+- The app can be reached by the [link](https://honeycomb-social.onrender.com).
 
-<del>
+### Heroku
+
 The process for deploying the website to Heroku is as follows:
 
 1. Create a Heroku account if you don't already have one.
@@ -837,7 +840,111 @@ To get cloudinary cloud name, api key, and api secret:
 5. To reveal api secret, hover over the api key container and click on the button that looks like an eye.
 
 6. Copy these values and paste them into the config vars on heroku and into your `env.py` file.
-</del>
+
+### Render Deployment
+
+#### Create Database on ElephantSQL
+
+1. Go to [ElephantSQL](https://www.elephantsql.com/) and create a new account.
+
+2. Create a new instance of the database.
+
+3. Select a name for your database and select the free plan.
+
+4. Click "Select Region"
+
+5. Select a region close to you.
+
+6. Click "Review"
+
+7. Click "Create Instance"
+
+8. Click on the name of your database to open the dashboard.
+
+9. You will see the dashboard of your database. You will need the URL of your database to connect it to your Django project.
+
+#### Create a new app on Render
+
+Link to the deployed application on Render: [Honeycomb](https://honeycomb-social.onrender.com).
+
+1. Create a new Render account if you don't already have one here [Render](https://render.com/).
+
+2. Create a new application on the following page here [New Render App](https://dashboard.render.com/), choose **Webserver**:
+
+3. Select the GitHub option and connect the application to the repository you created.
+
+4. Search for the repository you created and click "Connect."
+
+5. Create name for the application
+
+6. Select the region where you want to deploy the application.
+
+7. Select branch to deploy.
+
+8. Select environment.
+
+9. Render build command: `./build.sh`
+
+10. Render start command: `gunicorn <NAME OF YOUR APP>.wsgi:application` + You can delete `Procfile` from your repository.
+
+11. Select Free plan.
+
+12. Click on "Advanced" settings.
+
+13. Add the following environment variables:
+
+    - Key: WEB_CONCURRENCY Value: 4
+    - Key: DATABASE_URL Value: *************
+    - Key: SECRET_KEY Value: *************
+    - Key: DEBUG Value: False
+    - Key: EMAIL_HOST_USER Value: *************
+    - Key: EMAIL_HOST_PASSWORD Value: *************
+
+    *DATABASE_URL value is takes from ElephantSQL dashboard, SECRET_KEY value is takes from your local env.py file, DEBUG value is set to False, EMAIL_HOST_USER and EMAIL_HOST_PASSWORD values are takes from your Gmail account.*
+
+
+14. Open VS Code and create a new file called `build.sh` in the root directory of your project.
+
+15. Copy the following code into the `build.sh` file:
+
+    ```bash
+      set -o errexit
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py makemigrations && python manage.py migrate
+    ```
+
+16. Save the file `build.sh`.
+
+17. Go to `settings.py` file and add the following code to add Render.com to allowed hosts:
+
+    ```python
+        RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+        if RENDER_EXTERNAL_HOSTNAME:
+          ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ```
+
+   *If you have heroku in your allowed hosts, delete it*
+
+18. Save the file `settings.py`.
+
+19. Go to `env.py` and change to DATEBASE_URL value to the one you got from ElephantSQL.
+
+    ```python
+        os.environ["DATABASE_URL"] = '*************'
+    ```
+
+20. Create a superuser for your database.
+
+    ```bash
+        python manage.py createsuperuser
+    ```
+
+21. Commit and push the changes to GitHub.
+
+22. Go back to Render and click "Create Web Service."
+
+23. Wait for the completion of the deployment.
 
 ### Local Deployment
 
@@ -903,7 +1010,8 @@ P.S. If you are using Gitpod, you can skip steps 1-3 by clicking this [link](htt
 - [Django-allauth](https://django-allauth.readthedocs.io/) for the authentication library.
 - [BGJar](https://www.bgjar.com/): for the free access to the background images build tool.
 - [Font awesome](https://fontawesome.com/): for the free access to icons.
-- [Heroku](https://www.heroku.com/): for the free hosting of the website.
+- [Render](https://render.com/): for the free access to the hosting service.
+- [ElephantSQL](https://www.elephantsql.com/): for the free access to the database hosting service.
 - [Cloudinary](https://cloudinary.com/): for the free access to the image hosting service.
 - [Redis](https://redis.io/): for the free access to channel layer.
 - [jQuery](https://jquery.com/): for providing varieties of tools to make standard HTML code look appealing.
@@ -925,4 +1033,4 @@ P.S. If you are using Gitpod, you can skip steps 1-3 by clicking this [link](htt
 ## Acknowledgments
 
 - [Tim Nelson](https://github.com/TravelTimN), my mentor, who guided me through the development of the project with his advice.
-- [Iuliia Konovalova](https://github.com/IuliiaKonovalova), my wife and my coding partner, who helped me to stay sane and happy during the project development, and assisted me with functionality testing and choosing the right design.
+- [Iuliia Konovalova](https://github.com/IuliiaKonovalova), my wife and my coding partner, who helped me to stay sane and happy during the project development, and assisted me with functionality testing and design.
