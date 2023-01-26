@@ -803,7 +803,9 @@ form.password-form label[for="id_new_password2"] {
 /* No posts */
 .no-posts,
 .no-friends,
-.no-communities {
+.no-communities,
+.no-feed,
+.no-messages {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -821,8 +823,13 @@ form.password-form label[for="id_new_password2"] {
 
 .no-posts h2,
 .no-friends h2,
-.no-communities h2 {
+.no-communities h2,
+.no-feed h2,
+.no-messages h2 {
   padding-bottom: 1em;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: #282828 !important;
 }
 
 .no-messages h2 {
