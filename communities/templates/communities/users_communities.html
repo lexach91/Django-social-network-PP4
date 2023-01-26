@@ -31,11 +31,11 @@
         </a>
       {% endfor %}
     {% else %}
-      <div class="no-communities">
-        <h3>You are not a member of any community.</h3>
-        <p>Find communities to join on the <a href="{% url 'search' %}">search page</a>.</p>
-        <p>Or create your own community using the button above.</p>
-      </div>
+        <div class="no-communities">
+          <h2>You are not a member of any community.</h2>
+          <p>Find communities to join on the <a href="{% url 'search' %}">search page</a>.</p>
+          <p>Or create your own community using the button above.</p>
+        </div>
     {% endif %}
   </div>
 {% endblock %}
